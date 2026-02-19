@@ -22,7 +22,6 @@ namespace HW00
             tt.tuesday[4] = sem2;
             tt.thursday[7] = cou2;
             tt.thursday[8] = cou2;
-            
         }
 
         public static void Main()
