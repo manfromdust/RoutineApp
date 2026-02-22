@@ -13,6 +13,8 @@ namespace HW00
             testCourse.AddSeminarGroup(testSeminar);  // should print msg about seminar group limit
             testSeminar.AddStudent("123456");
             testSeminar.AddStudent("234567");  // should print msg about seminar group limit
+            Course testCourse2 = new Course("Test Course 2", "TEST02", new string[] { "Test Professor" }, new TimeFrame(12, 14, "Monday"), "A103", 0, 20);
+            testCourse2.AddSeminarGroup(testSeminar);  // should print msg about not being able to add seminar group to course with 0 seminar group limit
         }
 
         public static void FillTimetable(Timetable tt)
