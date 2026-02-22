@@ -43,6 +43,10 @@ namespace HW00
                 students[idx] = students[studentsCount - 1];
                 studentsCount--;
             }
+            else
+            {
+                Console.WriteLine("Student %s is not enrolled in course/seminar group %s.", uco, this.name);
+            }
         }
     }
 }
