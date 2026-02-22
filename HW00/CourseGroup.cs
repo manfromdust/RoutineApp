@@ -35,9 +35,9 @@ namespace HW00
             students[studentsCount++] = uco;
         }
 
-        public void RemoveStudent(string name)
+        public void RemoveStudent(string uco)
         {
-            int idx = Array.IndexOf(students, name, 0, studentsCount);
+            int idx = Array.IndexOf(students, uco, 0, studentsCount);
             if (idx != -1)
             {
                 students[idx] = students[studentsCount - 1];
