@@ -23,13 +23,13 @@ namespace HW00
         {
             if (seminarGroup == null)
             {
-                Console.WriteLine("Course %s does not support seminar groups.", name);
+                Console.WriteLine("Course {0} does not support seminar groups.", name);
                 return;
             }
 
             if (seminarGroupCount >= seminarGroup.Length)
             {
-                Console.WriteLine("Cannot add seminar group to course %s. Maximum number of seminar groups reached.", name);
+                Console.WriteLine("Cannot add seminar group to course {0}. Maximum number of seminar groups reached.", name);
                 return;
             }
 
