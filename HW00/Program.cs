@@ -14,6 +14,11 @@ namespace HW00
             SeminarGroup sem2 = new SeminarGroup(new string[] { "T. Cvejn", "E. Hatalčíková" }, new TimeFrame(10, 12, "Tuesday"), "C119", 30, "Programming in C#", "PB178", 10);
             cou2.AddSeminarGroup(sem2);
 
+            cou1.AddStudent("446348");
+            sem1.AddStudent("446348");
+            cou2.AddStudent("446348");
+            sem2.AddStudent("446348");
+
             tt.tuesday[1] = cou1;
             tt.tuesday[2] = cou1;
             tt.monday[1] = sem1;
