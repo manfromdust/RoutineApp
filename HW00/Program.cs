@@ -43,7 +43,7 @@ namespace HW00
         {
             Timetable tt = new Timetable();
             FillTimetable(tt);
-            TestLimit();
+            //TestLimit();
         }
     }
 }
