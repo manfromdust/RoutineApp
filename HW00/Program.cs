@@ -5,6 +5,16 @@ namespace HW00
 {
     internal class Program
     {
+        public static void TestLimit()
+        {
+            Course testCourse = new Course("Test Course", "TEST01", new string[] { "Test Professor" }, new TimeFrame(8, 10, "Monday"), "A101", 1, 20);
+            SeminarGroup testSeminar = new SeminarGroup(new string[] { "Test Professor" }, new TimeFrame(10, 12, "Monday"), "A102", 1, "Test Course", "TEST01", 1);
+            testCourse.AddSeminarGroup(testSeminar);
+            testCourse.AddSeminarGroup(testSeminar);  // should print msg about seminar group limit
+            testSeminar.AddStudent("123456");
+            testSeminar.AddStudent("234567");  // should print msg about seminar group limit
+        }
+
         public static void FillTimetable(Timetable tt)
         {
             Course cou1 = new Course("Programming in Java", "PB162", new string[] { "Doc. Oslejšek" }, new TimeFrame(8, 10, "Tuesday"), "A318", 10, 80);
@@ -33,6 +43,7 @@ namespace HW00
         {
             Timetable tt = new Timetable();
             FillTimetable(tt);
+            TestLimit();
         }
     }
 }
