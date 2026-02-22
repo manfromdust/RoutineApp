@@ -29,7 +29,7 @@ namespace HW00
         {
             if (studentsCount >= students.Length)
             {
-                Console.WriteLine("Capacity of course/seminar group room is full. Student %d hasn't been added.", uco);
+                Console.WriteLine("Capacity of course/seminar group room is full. Student %s hasn't been added.", uco);
                 return;
             }
             students[studentsCount++] = uco;
