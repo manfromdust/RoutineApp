@@ -6,7 +6,7 @@ namespace HW00
 {
     internal abstract class CourseGroup
     {
-        protected int[] students;
+        protected string[] students;
         protected int studentsCount = 0;
         public string[] teachers;
         public TimeFrame timeFrame;
@@ -20,12 +20,12 @@ namespace HW00
             this.teachers = teachers;
             this.timeFrame = timeFrame;
             this.room = room;
-            students = new int[roomCap];
+            students = new string[roomCap];
             this.name = name;
             this.id = id;
         }
 
-        public void AddStudent(int uco)
+        public void AddStudent(string uco)
         {
             if (studentsCount >= students.Length)
             {
