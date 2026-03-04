@@ -8,6 +8,40 @@ namespace Expedition178.Characters
 {
     internal class Monster : Character
     {
-        public Monster(string name, CharacterType charType, AttackType attackType) : base(name, charType, attackType) { }
+        private MonsterType MonsterType { get; init; }
+        private Dictionary<AttackType, float> damage = new();
+        public Monster(string name, CharacterType charType, AttackType attackType, MonsterType monType, int wave) : base(name, charType, attackType)
+        {
+            // Scale monster stats based on wave number
+            Attack += wave * 2;
+            Life += wave * 20;
+            Speed += wave;
+            MonsterType = monType;
+
+            switch (monType)
+            {
+                case MonsterType.Natural:
+                    damage[AttackType.Fire] = 1.5f;
+                    damage[AttackType.Frost] = 1.5f;
+                    damage[AttackType.Physical] = 1.0f;
+                    damage[AttackType.Light] = 0.5f;
+                    damage[AttackType.Dark] = 1.0f;
+                    break;
+                case MonsterType.Radiant:
+                    damage[AttackType.Fire] = 1.0f;
+                    damage[AttackType.Frost] = 1.0f;
+                    damage[AttackType.Physical] = 1.0f;
+                    damage[AttackType.Light] = 0.0f;
+                    damage[AttackType.Dark] = 1.5f;
+                    break;
+                case MonsterType.Shadow:
+                    damage[AttackType.Fire] = 1.0f;
+                    damage[AttackType.Frost] = 1.0f;
+                    damage[AttackType.Physical] = 0.5f;
+                    damage[AttackType.Light] = 1.5f;
+                    damage[AttackType.Dark] = 0.0f;
+                    break;
+            }
+        }
     }
 }
