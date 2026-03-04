@@ -12,14 +12,14 @@ namespace Expedition178.Characters
         protected int Attack { get; set; }
         protected int Life { get; set; }
         protected int Speed { get; set; }
-        protected CharacterType Type { get; init; }
+        protected CharacterType CharType { get; init; }
         protected AttackType AttackType { get; init; }
 
         public Character(string name, CharacterType charType, AttackType attackType)
         {
             Name = name;
             AttackType = attackType;
-            Type = charType;
+            CharType = charType;
 
             switch (charType)
             {
@@ -35,5 +35,9 @@ namespace Expedition178.Characters
                     break;
             }
         }
-    }
+
+        public override string ToString()
+        {
+            return $"{Name} ({CharType}, {AttackType}) - Attack: {Attack}, Life: {Life}, Speed: {Speed}";
+        }
 }
