@@ -15,9 +15,25 @@ namespace Expedition178.Characters
         protected CharacterType Type { get; init; }
         protected AttackType AttackType { get; init; }
 
-        public Character(string name, int attack)
+        public Character(string name, CharacterType charType, AttackType attackType)
         {
             Name = name;
+            AttackType = attackType;
+            Type = charType;
+
+            switch (charType)
+            {
+                case CharacterType.Tank:
+                    Attack = 15;
+                    Life = 120;
+                    Speed = 5;
+                    break;
+                case CharacterType.Dps:
+                    Attack = 30;
+                    Life = 70;
+                    Speed = 10;
+                    break;
+            }
         }
     }
 }
