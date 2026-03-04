@@ -40,4 +40,5 @@ namespace Expedition178.Characters
         {
             return $"{Name} ({CharType}, {AttackType}) - Attack: {Attack}, Life: {Life}, Speed: {Speed}";
         }
+    }
 }
