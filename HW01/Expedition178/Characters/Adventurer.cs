@@ -19,4 +19,5 @@ namespace Expedition178.Characters
         {
             return $"{base.ToString()}, Level: {Level}";
         }
+    }
 }
