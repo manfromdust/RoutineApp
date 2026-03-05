@@ -19,13 +19,8 @@ namespace Expedition178.Game
         // can return only with 2. Fight or 6. Quit choices
         private Choice ChooseInput()
         {
-            Console.WriteLine("Choose an action:");
-            Console.WriteLine("check");
-            Console.WriteLine("fight");
-            Console.WriteLine("info");
-            Console.WriteLine("help");
-            Console.WriteLine("sort");
-            Console.WriteLine("quit");
+            Console.WriteLine("Choose an action (if you're not sure, type 'help'):");
+
             while (true)
             {
                 string? input = Console.ReadLine();
