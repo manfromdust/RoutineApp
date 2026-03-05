@@ -20,28 +20,28 @@ namespace Expedition178.Game
         private Choice ChooseInput()
         {
             Console.WriteLine("Choose an action:");
-            Console.WriteLine("1. Check");
-            Console.WriteLine("2. Fight");
-            Console.WriteLine("3. Info");
-            Console.WriteLine("4. Help");
-            Console.WriteLine("5. Sort");
-            Console.WriteLine("6. Quit");
+            Console.WriteLine("check");
+            Console.WriteLine("fight");
+            Console.WriteLine("info");
+            Console.WriteLine("help");
+            Console.WriteLine("sort");
+            Console.WriteLine("quit");
             while (true)
             {
                 string? input = Console.ReadLine();
                 switch (input)
                 {
-                    case "1":
+                    case "check":
                         return Choice.Check;
-                    case "2":
+                    case "fight":
                         return Choice.Fight;
-                    case "3":
+                    case "info":
                         return Choice.Info;
-                    case "4":
+                    case "help":
                         return Choice.Help;
-                    case "5":
+                    case "sort":
                         return Choice.Sort;
-                    case "6":
+                    case "quit":
                         return Choice.Quit;
                     default:
                         Console.WriteLine("Invalid input, please try again.");
