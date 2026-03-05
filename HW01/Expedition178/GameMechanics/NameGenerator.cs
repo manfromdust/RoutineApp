@@ -7,12 +7,26 @@ namespace Expedition178.GameMechanics
     internal static class NameGenerator
     {
         private static readonly string path = "names.txt";
+        private static readonly string[] names = File.ReadAllLines(path);
 
-        public static string GenerateName()
+        public static string[] GenerateName(int count)
         {
-            var names = File.ReadAllLines(path);
             var random = new Random();
-            return names[random.Next(names.Length)];
+            var indexes = new HashSet<int>();
+            string[] result = new string[count];
+
+            for (int i = 0; i < count; i++)
+            {
+                int index;
+                do
+                {
+                    index = random.Next(names.Length);
+                } while (!indexes.Contains(index));
+                
+                indexes.Add(index);
+                result[i] = names[index];
+            }
+            return result;
         }
     }
 }
