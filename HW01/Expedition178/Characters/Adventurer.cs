@@ -8,16 +8,14 @@ namespace Expedition178.Characters
 {
     internal class Adventurer : Character
     {
-        private int Level { get; set; }
+        private int level = 1;
+        private int experience = 0;
 
-        public Adventurer(string name, CharacterType charType, AttackType attackType) : base(name, charType, attackType)
-        {
-            Level = 1;
-        }
+        public Adventurer(string name, CharacterType charType, AttackType attackType) : base(name, charType, attackType) { }
 
         public override string ToString()
         {
-            return $"{base.ToString()}, Level: {Level}";
+            return $"{base.ToString()}, Level: {level}, Experience {experience}.";
         }
     }
 }
