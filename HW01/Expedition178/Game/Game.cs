@@ -97,10 +97,67 @@ namespace Expedition178.Game
 
         private void PrintAdventurers()
         {
+            Console.WriteLine("Your adventurers and their order:");
+
             for (int i = 0; i < adventurers.Length; i++)
             {
                 Console.WriteLine($"{i + 1}: {adventurers[i].ToString()}");
             }
+        }
+
+        private void SortAdventurers()
+        {
+            PrintAdventurers();
+            Console.WriteLine("Enter the new order of your adventurers (e.g., '2 1 3'):");
+            Console.Write("Your new order: ");
+
+            int[] indexes = new int[3];
+
+            string? input = Console.ReadLine();
+
+            if (input == null)
+            {
+                Console.WriteLine("Invalid input. Order not changed.");
+                return;
+            }
+
+            string[] indexesStr = input.Split(' ');
+
+            if (indexesStr.Length != 3)
+            {
+                Console.WriteLine("You need to choose exactly 3 characters. Please try again.");
+                return;
+            }
+
+            for (int i = 0; i < indexesStr.Length; i++)
+            {
+                if (!int.TryParse(indexesStr[i], out indexes[i]))
+                {
+                    Console.WriteLine("Invalid input. Please enter numbers corresponding to the adventurers.");
+                    return;
+                }
+                if (indexes[i] < 1 || indexes[i] > 3)
+                {
+                    Console.WriteLine("Invalid input. Please enter numbers between 1 and 3.");
+                    return;
+                }
+                indexes[i] -= 1; // Adjust for 0-based indexing
+            }
+
+            if (indexes.Length != indexes.Distinct().Count())
+            {
+                Console.WriteLine("Invalid input. Not all positional values were stated.");
+                return;
+            }
+
+            Adventurer[] newOrder = new Adventurer[3];
+
+            for (int i = 0; i < indexes.Length; i++)
+            {
+                newOrder[i] = adventurers[indexes[i]];
+            }
+
+            adventurers = newOrder;
         }
 
         // can return only with fight or quit choices
@@ -127,7 +184,8 @@ namespace Expedition178.Game
                         DisplayHelp();
                         break;
                     case "sort":
-                        return Choice.Sort;
+                        SortAdventurers();
+                        break;
                     case "quit":
                         return Choice.Quit;
                     default:
