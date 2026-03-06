@@ -9,6 +9,7 @@ namespace Expedition178.Game.Parameters
         public const int MaxAdventurers = 3;
         public const int MaxWaves = 3;
         public const int MaxMonsters = 3;
+        public const int AdventuresChoiseCount = 6;
 
         public const int MaxDpsAttack = 30;
         public const int MinDpsAttack = 20;
