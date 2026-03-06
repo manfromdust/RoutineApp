@@ -1,19 +1,20 @@
 ﻿using Expedition178.Characters;
 using Expedition178.GameMechanics;
+using Expedition178.Game.Parameters;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Expedition178.Game
 {
-    internal class Game : IGame
+    public class Game : IGame
     {
         private int round = 1;
         private Adventurer[] adventurers;
 
         public Game()
         {
-            adventurers = new Adventurer[3];
+            adventurers = new Adventurer[Parameters.Parameters.MaxAdventurers];
             Console.WriteLine("Welcome to Expedition 178!");
         }
 
@@ -29,8 +30,8 @@ namespace Expedition178.Game
 
         private void ChooseAdventurers()
         {
-            var chosen = CharacterGenerator.GenerateAdventurers(6);
-            int[] indexes = new int[3];
+            var chosen = CharacterGenerator.GenerateAdventurers();
+            int[] indexes = new int[Parameters.Parameters.MaxAdventurers];
             bool success = true;
 
             while (true)
@@ -44,22 +45,22 @@ namespace Expedition178.Game
                     Console.WriteLine($"{i + 1}: {chosen[i].ToString()}");
                 }
 
-                Console.WriteLine("Choose your 3 adventurers(in format eg. '4 1 2'");
+                Console.WriteLine($"Choose your {Parameters.Parameters.MaxAdventurers} adventurers (in format eg. '4 1 2'");
                 Console.Write("Your choice: ");
 
                 string? input = Console.ReadLine();
 
                 if (input == null)
                 {
-                    Console.WriteLine("You have not chosen any character. You need to choose 3...");
+                    Console.WriteLine($"You have not chosen any character. You need to choose {Parameters.Parameters.MaxAdventurers}...");
                     continue;
                 }
 
                 string[] indexesStr = input.Split(' ');
 
-                if (indexesStr.Length != 3)
+                if (indexesStr.Length != Parameters.Parameters.MaxAdventurers)
                 {
-                    Console.WriteLine("You need to choose exactly 3 characters. Please try again.");
+                    Console.WriteLine($"You need to choose exactly {Parameters.Parameters.MaxAdventurers} characters. Please try again.");
                     continue;
                 }
 
@@ -123,9 +124,9 @@ namespace Expedition178.Game
 
             string[] indexesStr = input.Split(' ');
 
-            if (indexesStr.Length != 3)
+            if (indexesStr.Length != Parameters.Parameters.MaxAdventurers)
             {
-                Console.WriteLine("You need to choose exactly 3 characters. Please try again.");
+                Console.WriteLine($"You need to choose exactly {adventurers.Length} characters. Please try again.");
                 return;
             }
 
@@ -136,9 +137,9 @@ namespace Expedition178.Game
                     Console.WriteLine("Invalid input. Please enter numbers corresponding to the adventurers.");
                     return;
                 }
-                if (indexes[i] < 1 || indexes[i] > 3)
+                if (indexes[i] < 1 || indexes[i] > Parameters.Parameters.MaxAdventurers)
                 {
-                    Console.WriteLine("Invalid input. Please enter numbers between 1 and 3.");
+                    Console.WriteLine($"Invalid input. Please enter numbers between 1 and {Parameters.Parameters.MaxAdventurers}.");
                     return;
                 }
                 indexes[i] -= 1; // Adjust for 0-based indexing
@@ -150,7 +151,7 @@ namespace Expedition178.Game
                 return;
             }
 
-            Adventurer[] newOrder = new Adventurer[3];
+            Adventurer[] newOrder = new Adventurer[Parameters.Parameters.MaxAdventurers];
 
             for (int i = 0; i < indexes.Length; i++)
             {
@@ -161,7 +162,7 @@ namespace Expedition178.Game
         }
 
         // can return only with fight or quit choices
-        private Choice ChooseInput()
+        private Choice ChooseInput(Battle battle)
         {
             Console.WriteLine("Choose an action (if you're not sure, type 'help'),");
             Console.WriteLine("don't forget to check monsters in next round and choose order of your adventurers.");
@@ -198,7 +199,7 @@ namespace Expedition178.Game
         public void Start()
         {
             ChooseAdventurers();
-            Choice chosen = ChooseInput();
+            // Choice chosen = ChooseInput();
         }
     }
 }
