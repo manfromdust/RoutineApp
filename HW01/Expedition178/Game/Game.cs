@@ -95,7 +95,7 @@ namespace Expedition178.Game
             }
         }
 
-        private void PrintAdventures()
+        private void PrintAdventurers()
         {
             for (int i = 0; i < adventurers.Length; i++)
             {
@@ -121,7 +121,7 @@ namespace Expedition178.Game
                     case "fight":
                         return Choice.Fight;
                     case "info":
-                        PrintAdventures();
+                        PrintAdventurers();
                         break;
                     case "help":
                         DisplayHelp();
