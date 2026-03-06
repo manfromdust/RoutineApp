@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Expedition178.Characters;
+
+namespace Expedition178.GameMechanics
+{
+    internal static class CharacterGenerator
+    {
+        public static Adventurer[] GenerateAdventurers(int count)
+        {
+            var adventurers = new Adventurer[count];
+            var names = NameGenerator.GenerateName(6);
+            Random random = new Random();
+
+            for (int i = 0; i < count; i++)
+            {
+                adventurers[i] = new Adventurer(names[i],
+                                                (CharacterType)random.Next(Enum.GetValues<CharacterType>().Length),
+                                                (AttackType)random.Next(Enum.GetValues<AttackType>().Length));
+            }
+            return adventurers;
+        }
+    }
+}
