@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Expedition178.GameMechanics
 {
-    internal static class NameGenerator
+    public static class NameGenerator
     {
         private static readonly string path = "names.txt";
         private static readonly string[] names = File.ReadAllLines(path);

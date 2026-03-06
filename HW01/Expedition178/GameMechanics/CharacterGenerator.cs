@@ -5,7 +5,7 @@ using Expedition178.Characters;
 
 namespace Expedition178.GameMechanics
 {
-    internal static class CharacterGenerator
+    public static class CharacterGenerator
     {
         public static Adventurer[] GenerateAdventurers(int count)
         {

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Expedition178.Game
 {
-    internal enum Choice
+    public enum Choice
     {
         Check,
         Fight,

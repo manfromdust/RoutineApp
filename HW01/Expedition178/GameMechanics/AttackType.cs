@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Expedition178.GameMechanics
 {
-    internal enum AttackType
+    public enum AttackType
     {
         Light,
         Dark,
