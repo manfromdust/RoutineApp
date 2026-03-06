@@ -1,4 +1,5 @@
 ﻿using Expedition178.Characters;
+using Expedition178.GameMechanics;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,10 +17,90 @@ namespace Expedition178.Game
             Console.WriteLine("Welcome to Expedition 178!");
         }
 
-        // can return only with 2. Fight or 6. Quit choices
+        private void DisplayHelp()
+        {
+            Console.WriteLine("Available commands:");
+            Console.WriteLine("  'check': to see what monsters you will fight in next round");
+            Console.WriteLine("  'fight': to begin next round");
+            Console.WriteLine("  'info': to see your adventurers and their order");
+            Console.WriteLine("  'sort': for a menu to decide in what order send your adventurers to next round");
+            Console.WriteLine("  'quit': to exit the game");
+        }
+
+        private void ChooseAdventurers()
+        {
+            var chosen = CharacterGenerator.GenerateAdventurers(6);
+            int[] indexes = new int[3];
+            bool success = true;
+
+            while (true)
+            {
+                success = true;
+
+                Console.WriteLine("Adventurers to choose from:");
+
+                for (int i = 0; i < chosen.Length; i++)
+                {
+                    Console.WriteLine("i: " + chosen[i].ToString());
+                }
+
+                Console.WriteLine("Choose your 3 adventurers(in format eg. '4 1 2'");
+                Console.Write("Your choice: ");
+
+                string? input = Console.ReadLine();
+
+                if (input == null)
+                {
+                    Console.WriteLine("You have not chosen any character. You need to choose 3...");
+                    continue;
+                }
+
+                string[] indexesStr = input.Split(' ');
+
+                if (indexesStr.Length != 3)
+                {
+                    Console.WriteLine("You need to choose exactly 3 characters. Please try again.");
+                    continue;
+                }
+
+                for (int i = 0; i < indexesStr.Length; i++)
+                {
+                    if (!int.TryParse(indexesStr[i], out indexes[i]))
+                    {
+                        Console.WriteLine("Invalid input. Please enter numbers corresponding to the adventurers.");
+                        success = false;
+                        break;
+                    }
+                }
+
+                if (success)
+                {
+                    Console.WriteLine("You have chosen:");
+                    foreach (int i in indexes)
+                    {
+                        Console.WriteLine(chosen[i].ToString());
+                        adventurers[i] = chosen[i];
+                    }
+                    Console.WriteLine("Is this your final decision? You can change only their order during the game.");
+                    Console.Write("Type 'yes' to confirm or 'no' to choose again: ");
+
+                    string? confirmation = Console.ReadLine();
+
+                    if (confirmation != null && confirmation.ToLower() == "yes")
+                    {
+                        return;
+                    }
+                }
+            }
+        }
+
+        // can return only with fight or quit choices
         private Choice ChooseInput()
         {
-            Console.WriteLine("Choose an action (if you're not sure, type 'help'):");
+            Console.WriteLine("Choose an action (if you're not sure, type 'help'),");
+            Console.WriteLine("don't forget to check monsters in next round and choose order of your adventurers.");
+            Console.WriteLine("Your action:");
+            Console.Write("[Player]: ");
 
             while (true)
             {
@@ -33,7 +114,8 @@ namespace Expedition178.Game
                     case "info":
                         return Choice.Info;
                     case "help":
-                        return Choice.Help;
+                        DisplayHelp();
+                        break;
                     case "sort":
                         return Choice.Sort;
                     case "quit":
@@ -47,6 +129,7 @@ namespace Expedition178.Game
 
         public void Start()
         {
+            ChooseAdventurers();
             Choice chosen = ChooseInput();
         }
     }
