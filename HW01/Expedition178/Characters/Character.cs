@@ -6,7 +6,7 @@ using Expedition178.GameMechanics;
 
 namespace Expedition178.Characters
 {
-    internal abstract class Character
+    public abstract class Character
     {
         public readonly string name;
         protected int attack;

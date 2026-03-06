@@ -6,7 +6,7 @@ using Expedition178.GameMechanics;
 
 namespace Expedition178.Characters
 {
-    internal class Monster : Character
+    public class Monster : Character
     {
         private MonsterType MonsterType { get; init; }
         private Dictionary<AttackType, float> damage = new();

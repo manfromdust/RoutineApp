@@ -6,7 +6,7 @@ using Expedition178.GameMechanics;
 
 namespace Expedition178.Characters
 {
-    internal class Adventurer : Character
+    public class Adventurer : Character
     {
         private int level = 1;
         private int experience = 0;
