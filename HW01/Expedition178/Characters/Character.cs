@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 using Expedition178.GameMechanics;
+using Expedition178.Game.Parameters;
 
 namespace Expedition178.Characters
 {
@@ -21,17 +22,19 @@ namespace Expedition178.Characters
             this.attackType = attackType;
             this.charType = charType;
 
+            Random random = new Random();
+
             switch (charType)
             {
                 case CharacterType.Tank:
-                    attack = 15;
-                    life = 120;
-                    speed = 5;
+                    attack = random.Next(Parameters.MinTankAttack, Parameters.MaxTankAttack + 1);
+                    life = random.Next(Parameters.MinTankLife, Parameters.MaxTankLife + 1);
+                    speed = random.Next(Parameters.MinTankSpeed, Parameters.MaxTankSpeed + 1);
                     break;
                 case CharacterType.Dps:
-                    attack = 30;
-                    life = 70;
-                    speed = 10;
+                    attack = random.Next(Parameters.MinDpsAttack, Parameters.MaxDpsAttack + 1);
+                    life = random.Next(Parameters.MinDpsLife, Parameters.MaxDpsLife + 1);
+                    speed = random.Next(Parameters.MinDpsSpeed, Parameters.MaxDpsSpeed + 1);
                     break;
             }
         }
