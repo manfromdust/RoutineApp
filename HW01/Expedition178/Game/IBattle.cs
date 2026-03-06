@@ -1,3 +1,5 @@
+using Expedition178.Characters;
+
 public interface IBattle
 {
     /// <summary>
@@ -6,7 +8,7 @@ public interface IBattle
     /// <param name="player">The player's team</param>
     /// <param name="enemy">The enemy team</param>
     /// <returns>The winner</returns>
-    //TODO:
+    public Character[] PerformBattle(Adventurer[] player, Monster[] enemy);
 
     /// <summary>
     /// Performs one round of battle between two characters.
@@ -14,5 +16,5 @@ public interface IBattle
     /// <param name="adventurer">The player's adventurer</param>
     /// <param name="creature">The enemy creature</param>
     /// <returns>The character that wins the round</returns>
-    //TODO:
+    public Character PerformRound(Adventurer adventurer, Monster creature);
 }
