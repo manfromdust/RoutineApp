@@ -41,7 +41,7 @@ namespace Expedition178.Game
 
                 for (int i = 0; i < chosen.Length; i++)
                 {
-                    Console.WriteLine("i: " + chosen[i].ToString());
+                    Console.WriteLine($"{i + 1}: {chosen[i].ToString()}");
                 }
 
                 Console.WriteLine("Choose your 3 adventurers(in format eg. '4 1 2'");
@@ -71,6 +71,7 @@ namespace Expedition178.Game
                         success = false;
                         break;
                     }
+                    indexes[i] -= 1; // Adjust for 0-based indexing
                 }
 
                 if (success)
@@ -82,15 +83,23 @@ namespace Expedition178.Game
                         adventurers[i] = chosen[i];
                     }
                     Console.WriteLine("Is this your final decision? You can change only their order during the game.");
-                    Console.Write("Type 'yes' to confirm or 'no' to choose again: ");
+                    Console.Write("Type 'y' to confirm or 'n' to choose again: ");
 
                     string? confirmation = Console.ReadLine();
 
-                    if (confirmation != null && confirmation.ToLower() == "yes")
+                    if (confirmation != null && confirmation.ToLower() == "y")
                     {
                         return;
                     }
                 }
+            }
+        }
+
+        private void PrintAdventures()
+        {
+            for (int i = 0; i < adventurers.Length; i++)
+            {
+                Console.WriteLine($"{i + 1}: {adventurers[i].ToString()}");
             }
         }
 
@@ -112,7 +121,8 @@ namespace Expedition178.Game
                     case "fight":
                         return Choice.Fight;
                     case "info":
-                        return Choice.Info;
+                        PrintAdventures();
+                        break;
                     case "help":
                         DisplayHelp();
                         break;
