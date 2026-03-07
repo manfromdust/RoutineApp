@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 using Expedition178.GameMechanics;
+using Expedition178.Interfaces;
 
 namespace Expedition178.Characters
 {
@@ -10,7 +11,9 @@ namespace Expedition178.Characters
     {
         private MonsterType MonsterType { get; init; }
         private Dictionary<AttackType, float> damage = new();
-        public Monster(string name, CharacterType charType, AttackType attackType, MonsterType monType, int wave) : base(name, charType, attackType)
+        public Monster(string name, CharacterType charType, AttackType attackType,
+                       MonsterType monType, int wave, IRandomGenerator generator) :
+                       base(name, charType, attackType, generator)
         {
             // Scale monster stats based on wave number
             Attack += wave * 2;
