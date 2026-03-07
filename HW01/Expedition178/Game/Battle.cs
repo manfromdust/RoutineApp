@@ -21,6 +21,14 @@ namespace Expedition178.Game
             return adventurer.Speed > creature.Speed;
         }
 
+        private void HealAdventurers(Adventurer[] adventurers)
+        {
+            foreach (var adventurer in adventurers)
+            {
+                adventurer.Heal();
+            }
+        }
+
         public Character[] PerformBattle(Adventurer[] player, Monster[] enemy)
         {
             int playerIndex = 0;
@@ -46,6 +54,8 @@ namespace Expedition178.Game
             {
                 adventurer.GainExperience(experienceMultiplier);
             }
+
+
 
             return (playerIndex < enemyIndex) ? player : enemy;
         }
