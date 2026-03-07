@@ -216,7 +216,7 @@ namespace Expedition178.Game
 
         private void Play()
         {
-            while (wave < Parameters.Parameters.MaxWaves)
+            while (wave <= Parameters.Parameters.MaxWaves)
             {
                 Battle battle = new Battle(wave, generator);
                 Choice choice = ChooseInput(battle);
