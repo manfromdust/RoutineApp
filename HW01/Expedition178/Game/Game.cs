@@ -66,6 +66,12 @@ namespace Expedition178.Game
                     continue;
                 }
 
+                if (indexesStr.Distinct().Count() != Parameters.Parameters.MaxAdventurers)
+                {
+                    Console.WriteLine("You cannot choose the same character more than once. Please try again.");
+                    continue;
+                }
+
                 for (int i = 0; i < indexesStr.Length; i++)
                 {
                     if (!int.TryParse(indexesStr[i], out indexes[i]))
