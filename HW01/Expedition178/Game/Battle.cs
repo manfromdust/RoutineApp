@@ -14,5 +14,19 @@ namespace Expedition178.Game
         {
             Monsters = CharacterGenerator.GenerateMonsters(wave);
         }
-    }
+
+        private bool IsAdventurerFaster(Adventurer adventurer, Monster creature)
+        {
+            return adventurer.Attack > creature.Attack;
+        }
+
+        public Character[] PerformBattle(Adventurer[] player, Monster[] enemy)
+        {
+            
+        }
+
+        public Character PerformRound(Adventurer adventurer, Monster creature)
+        {
+
+        }
 }
