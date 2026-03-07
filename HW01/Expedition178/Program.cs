@@ -6,7 +6,8 @@ namespace Expedition178
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Game.Game game = new Game.Game();
+            game.Start();
         }
     }
 }
