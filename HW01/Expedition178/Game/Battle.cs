@@ -39,7 +39,10 @@ namespace Expedition178.Game
                 }
                 else
                 {
-                    playerIndex++;
+                    if (!player[playerIndex].IsAlive())
+                    {
+                        playerIndex++;
+                    }
                 }
             }
 
