@@ -13,9 +13,9 @@ namespace Expedition178.Game
     {
         public Monster[] Monsters { get; init; }
 
-        public Battle(int wave)
+        public Battle(int wave, IRandomGenerator generator)
         {
-            Monsters = CharacterGenerator.GenerateMonsters(wave);
+            Monsters = CharacterGenerator.GenerateMonsters(wave, generator);
         }
 
         private bool IsAdventurerFaster(Adventurer adventurer, Monster creature)
