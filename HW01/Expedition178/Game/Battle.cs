@@ -41,6 +41,7 @@ namespace Expedition178.Game
                 if (winner is Adventurer)
                 {
                     enemyIndex++;
+                    player[playerIndex].GainExperience(Parameters.Parameters.WonRound);
                 }
                 else
                 {
