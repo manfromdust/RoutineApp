@@ -11,10 +11,10 @@ namespace Expedition178.GameMechanics
     {
         public static Adventurer[] GenerateAdventurers(IRandomGenerator generator)
         {
-            var adventurers = new Adventurer[Parameters.MaxAdventurers];
+            var adventurers = new Adventurer[Parameters.AdventuresChoiseCount];
             var names = NameGenerator.GenerateName(Parameters.AdventuresChoiseCount);
 
-            for (int i = 0; i < Parameters.MaxAdventurers; i++)
+            for (int i = 0; i < Parameters.AdventuresChoiseCount; i++)
             {
                 adventurers[i] = new Adventurer(names[i],
                                                 (CharacterType) generator.GetNext(0, Enum.GetValues<CharacterType>().Length - 1),
