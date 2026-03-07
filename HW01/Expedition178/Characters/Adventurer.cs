@@ -20,7 +20,7 @@ namespace Expedition178.Characters
                 Random random = new Random();
                 level++;
                 experience -= 100;
-                maxLife += random.Next(20, 31);
+                MaxLife += random.Next(20, 31);
                 Attack += random.Next(5, 11);
                 Console.WriteLine($"{name} leveled up to level {level}!");
             }
@@ -36,7 +36,7 @@ namespace Expedition178.Characters
         public void Heal(int amount)
         {
             life += amount;
-            if (life > maxLife) life = maxLife;
+            if (life > MaxLife) life = MaxLife;
         }
 
         public override string ToString()
