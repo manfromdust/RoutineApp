@@ -153,6 +153,15 @@ namespace Expedition178.Game
             Array.Sort(indexes, this.adventurers);
         }
 
+        private void PrintMonsters(Monster[] monsters)
+        {
+            Console.WriteLine("Monsters you will fight in next round:");
+            for (int i = 0; i < monsters.Length; i++)
+            {
+                Console.WriteLine($"{i + 1}: {monsters[i]}");
+            }
+        }
+
         // can return only with fight or quit choices
         private Choice ChooseInput(Battle battle)
         {
