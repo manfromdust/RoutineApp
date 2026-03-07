@@ -7,9 +7,11 @@ namespace Expedition178
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Expedition 178!");
+            Console.WriteLine("==========================\n");
+
             while (true)
             {
-                Console.WriteLine("Type 'start' to begin a new game or 'quit' to exit.");
+                Console.WriteLine("Type 'start' to begin a new game or 'quit' to exit.\n");
                 Console.Write("Your choice: ");
 
                 string? input = Console.ReadLine();
