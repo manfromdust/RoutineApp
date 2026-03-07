@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using Expedition178.Characters;
 using Expedition178.Game.Parameters;
+using Expedition178.Interfaces;
 
 namespace Expedition178.GameMechanics
 {
     public static class CharacterGenerator
     {
-        public static Adventurer[] GenerateAdventurers()
+        public static Adventurer[] GenerateAdventurers(IRandomGenerator generator)
         {
             var adventurers = new Adventurer[Parameters.MaxAdventurers];
             var names = NameGenerator.GenerateName(Parameters.AdventuresChoiseCount);
@@ -18,12 +19,13 @@ namespace Expedition178.GameMechanics
             {
                 adventurers[i] = new Adventurer(names[i],
                                                 (CharacterType)random.Next(Enum.GetValues<CharacterType>().Length),
-                                                (AttackType)random.Next(Enum.GetValues<AttackType>().Length));
+                                                (AttackType)random.Next(Enum.GetValues<AttackType>().Length),
+                                                generator);
             }
             return adventurers;
         }
 
-        public static Monster[] GenerateMonsters(int wave)
+        public static Monster[] GenerateMonsters(int wave, IRandomGenerator generator)
         {
             var monsters = new Monster[Parameters.MaxMonsters];
             var names = NameGenerator.GenerateName(Parameters.MaxMonsters);
@@ -34,7 +36,8 @@ namespace Expedition178.GameMechanics
                                           (CharacterType)random.Next(Enum.GetValues<CharacterType>().Length),
                                           (AttackType)random.Next(Enum.GetValues<AttackType>().Length),
                                           (MonsterType)random.Next(Enum.GetValues<MonsterType>().Length),
-                                          wave);
+                                          wave,
+                                          generator);
             }
             return monsters;
         }
