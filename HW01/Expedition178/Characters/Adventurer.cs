@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 using Expedition178.GameMechanics;
+using Expedition178.Interfaces;
 
 namespace Expedition178.Characters
 {
@@ -11,25 +12,24 @@ namespace Expedition178.Characters
         private int level = 1;
         private int experience = 0;
 
-        public Adventurer(string name, CharacterType charType, AttackType attackType) : base(name, charType, attackType) { }
+        public Adventurer(string name, CharacterType charType, AttackType attackType, IRandomGenerator generator) :
+            base(name, charType, attackType, generator) { }
 
         private void CheckLevelUp()
         {
             if (experience >= 100)
             {
-                Random random = new Random();
                 level++;
                 experience -= 100;
-                MaxLife += random.Next(20, 31);
-                Attack += random.Next(5, 11);
+                MaxLife += generator.GetNext(20, 30);
+                Attack += generator.GetNext(5, 10);
                 Console.WriteLine($"{name} leveled up to level {level}!");
             }
         }
 
         public void GainExperience(int multiplier)
         {
-            Random random = new Random();
-            experience += multiplier * random.Next(20, 51);
+            experience += multiplier * generator.GetNext(20, 50);
             CheckLevelUp();
         }
 
