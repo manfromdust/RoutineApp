@@ -32,17 +32,11 @@ namespace Expedition178.Game
 
                 if (winner is Adventurer)
                 {
-                    if (!enemy[enemyIndex].IsAlive())
-                    {
-                        enemyIndex++;
-                    }
+                    enemyIndex++;
                 }
                 else
                 {
-                    if (!player[playerIndex].IsAlive())
-                    {
-                        playerIndex++;
-                    }
+                    playerIndex++;
                 }
             }
 
