@@ -13,7 +13,7 @@ namespace Expedition178.Characters
         public Monster(string name, CharacterType charType, AttackType attackType, MonsterType monType, int wave) : base(name, charType, attackType)
         {
             // Scale monster stats based on wave number
-            attack += wave * 2;
+            Attack += wave * 2;
             life += wave * 20;
             Speed += wave;
             MonsterType = monType;

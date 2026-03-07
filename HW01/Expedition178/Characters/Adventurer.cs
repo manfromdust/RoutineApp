@@ -21,7 +21,7 @@ namespace Expedition178.Characters
                 level++;
                 experience -= 100;
                 maxLife += random.Next(20, 31);
-                attack += random.Next(5, 11);
+                Attack += random.Next(5, 11);
                 Console.WriteLine($"{name} leveled up to level {level}!");
             }
         }
