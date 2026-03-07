@@ -17,7 +17,7 @@ namespace Expedition178.Characters
 
         private void CheckLevelUp()
         {
-            if (experience >= 100)
+            while (experience >= 100)
             {
                 level++;
                 experience -= 100;
