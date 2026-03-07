@@ -33,6 +33,12 @@ namespace Expedition178.Characters
             CheckLevelUp();
         }
 
+        public void Heal(int amount)
+        {
+            life += amount;
+            if (life > maxLife) life = maxLife;
+        }
+
         public override string ToString()
         {
             return $"{base.ToString()}, Level: {level}, Experience {experience}.";
