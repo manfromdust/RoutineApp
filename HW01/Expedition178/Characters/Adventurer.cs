@@ -17,16 +17,19 @@ namespace Expedition178.Characters
         {
             if (experience >= 100)
             {
+                Random random = new Random();
                 level++;
                 experience -= 100;
+                life += random.Next(20, 31);
+                attack += random.Next(5, 11);
                 Console.WriteLine($"{name} leveled up to level {level}!");
             }
         }
 
-        public void GainExperience()
+        public void GainExperience(int amount)
         {
             Random random = new Random();
-            experience += random.Next(40, 81);
+            experience += amount * random.Next(20, 36);
             CheckLevelUp();
         }
 
