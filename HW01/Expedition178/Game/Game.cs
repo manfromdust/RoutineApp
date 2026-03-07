@@ -22,7 +22,7 @@ namespace Expedition178.Game
 
         private void DisplayHelp()
         {
-            Console.WriteLine("Available commands:");
+            Console.WriteLine("\nAvailable commands:");
             Console.WriteLine("  'check': to see what monsters you will fight in next round");
             Console.WriteLine("  'fight': to begin next round");
             Console.WriteLine("  'info': to see your adventurers and their order");
