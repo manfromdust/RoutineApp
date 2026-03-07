@@ -17,8 +17,8 @@ namespace Expedition178.GameMechanics
             for (int i = 0; i < Parameters.MaxAdventurers; i++)
             {
                 adventurers[i] = new Adventurer(names[i],
-                                                (CharacterType) generator.GetNext(0, Enum.GetValues<CharacterType>().Length),
-                                                (AttackType) generator.GetNext(0, Enum.GetValues<AttackType>().Length),
+                                                (CharacterType) generator.GetNext(0, Enum.GetValues<CharacterType>().Length - 1),
+                                                (AttackType) generator.GetNext(0, Enum.GetValues<AttackType>().Length - 1),
                                                 generator);
             }
             return adventurers;
@@ -32,9 +32,9 @@ namespace Expedition178.GameMechanics
             for (int i = 0; i < Parameters.MaxMonsters; i++)
             {
                 monsters[i] = new Monster(names[i],
-                                          (CharacterType) generator.GetNext(0, Enum.GetValues<CharacterType>().Length),
-                                          (AttackType) generator.GetNext(0, Enum.GetValues<AttackType>().Length),
-                                          (MonsterType) generator.GetNext(0, Enum.GetValues<MonsterType>().Length),
+                                          (CharacterType) generator.GetNext(0, Enum.GetValues<CharacterType>().Length - 1),
+                                          (AttackType) generator.GetNext(0, Enum.GetValues<AttackType>().Length - 1),
+                                          (MonsterType) generator.GetNext(0, Enum.GetValues<MonsterType>().Length - 1),
                                           wave,
                                           generator);
             }
