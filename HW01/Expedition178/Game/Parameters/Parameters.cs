@@ -26,5 +26,6 @@ namespace Expedition178.Game.Parameters
         public const int MinTankSpeed = 4;
 
         public const int WonMultiplier = 4;
+        public const int WonRound = 2;
     }
 }
