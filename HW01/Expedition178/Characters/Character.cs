@@ -11,7 +11,7 @@ namespace Expedition178.Characters
     {
         public readonly string name;
         public int Attack { get; protected set; }
-        protected int maxLife;
+        public int MaxLife { get; protected set; }
         protected int life;
         public int Speed { get; protected set; }
         protected readonly CharacterType charType;
@@ -29,14 +29,14 @@ namespace Expedition178.Characters
             {
                 case CharacterType.Tank:
                     Attack = random.Next(Parameters.MinTankAttack, Parameters.MaxTankAttack + 1);
-                    maxLife = random.Next(Parameters.MinTankLife, Parameters.MaxTankLife + 1);
-                    life = maxLife;
+                    MaxLife = random.Next(Parameters.MinTankLife, Parameters.MaxTankLife + 1);
+                    life = MaxLife;
                     Speed = random.Next(Parameters.MinTankSpeed, Parameters.MaxTankSpeed + 1);
                     break;
                 case CharacterType.Dps:
                     Attack = random.Next(Parameters.MinDpsAttack, Parameters.MaxDpsAttack + 1);
-                    maxLife = random.Next(Parameters.MinDpsLife, Parameters.MaxDpsLife + 1);
-                    life = maxLife;
+                    MaxLife = random.Next(Parameters.MinDpsLife, Parameters.MaxDpsLife + 1);
+                    life = MaxLife;
                     Speed = random.Next(Parameters.MinDpsSpeed, Parameters.MaxDpsSpeed + 1);
                     break;
             }
@@ -55,7 +55,7 @@ namespace Expedition178.Characters
 
         public override string ToString()
         {
-            return $"{name} ({charType}, {AttackType}) - Attack: {Attack}, Life: {life}, Speed: {Speed}";
+            return $"{name} ({charType}, {AttackType}) - Attack: {Attack}, Life: {life}/{MaxLife}, Speed: {Speed}";
         }
     }
 }
