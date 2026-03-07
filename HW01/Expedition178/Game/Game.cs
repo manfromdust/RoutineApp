@@ -33,7 +33,7 @@ namespace Expedition178.Game
         private void ChooseAdventurers()
         {
             var chosen = CharacterGenerator.GenerateAdventurers(generator);
-            int[] indexes = new int[Parameters.Parameters.AdventuresChoiseCount];
+            int[] indexes = new int[Parameters.Parameters.MaxAdventurers];
             bool success = true;
 
             while (true)
@@ -86,6 +86,7 @@ namespace Expedition178.Game
                 if (success)
                 {
                     Console.WriteLine("You have chosen:\n");
+
                     int pos = 0;
                     foreach (int i in indexes)
                     {
