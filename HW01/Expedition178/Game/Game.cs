@@ -54,7 +54,7 @@ namespace Expedition178.Game
 
                 if (input == null)
                 {
-                    Console.WriteLine($"You have not chosen any character. You need to choose {Parameters.Parameters.MaxAdventurers}.");
+                    Console.WriteLine($"You have not chosen any character. You need to choose {Parameters.Parameters.MaxAdventurers}.\n");
                     continue;
                 }
 
@@ -62,13 +62,13 @@ namespace Expedition178.Game
 
                 if (indexesStr.Length != Parameters.Parameters.MaxAdventurers)
                 {
-                    Console.WriteLine($"You need to choose exactly {Parameters.Parameters.MaxAdventurers} characters. Please try again.");
+                    Console.WriteLine($"You need to choose exactly {Parameters.Parameters.MaxAdventurers} characters. Please try again.\n");
                     continue;
                 }
 
                 if (indexesStr.Distinct().Count() != Parameters.Parameters.MaxAdventurers)
                 {
-                    Console.WriteLine("You cannot choose the same character more than once. Please try again.");
+                    Console.WriteLine("You cannot choose the same character more than once. Please try again.\n");
                     continue;
                 }
 
@@ -76,7 +76,7 @@ namespace Expedition178.Game
                 {
                     if (!int.TryParse(indexesStr[i], out indexes[i]))
                     {
-                        Console.WriteLine("Invalid input. Please enter numbers corresponding to the adventurers.");
+                        Console.WriteLine("Invalid input. Please enter numbers corresponding to the adventurers.\n");
                         success = false;
                         break;
                     }
