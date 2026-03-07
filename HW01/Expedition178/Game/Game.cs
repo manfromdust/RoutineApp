@@ -155,7 +155,7 @@ namespace Expedition178.Game
 
         private void PrintMonsters(Monster[] monsters)
         {
-            Console.WriteLine("Monsters you will fight in next round:");
+            Console.WriteLine("Monsters you will fight in next wave:");
             for (int i = 0; i < monsters.Length; i++)
             {
                 Console.WriteLine($"{i + 1}: {monsters[i]}");
