@@ -6,9 +6,9 @@ namespace Expedition178.GameMechanics
 {
     public static class NameGenerator
     {
-        private static readonly string Path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-                                                           "..", "..", "..", "GameMechanics", "names.txt");
-        private static readonly string[] names = File.ReadAllLines(path); // throws error file not found
+        private static readonly string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                                                           "..", "..", "..", "Data", "names.txt");
+        private static readonly string[] names = File.ReadAllLines(path);
 
         public static string[] GenerateName(int count)
         {
