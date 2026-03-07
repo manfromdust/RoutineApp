@@ -13,13 +13,12 @@ namespace Expedition178.GameMechanics
         {
             var adventurers = new Adventurer[Parameters.MaxAdventurers];
             var names = NameGenerator.GenerateName(Parameters.AdventuresChoiseCount);
-            Random random = new Random();
 
             for (int i = 0; i < Parameters.MaxAdventurers; i++)
             {
                 adventurers[i] = new Adventurer(names[i],
-                                                (CharacterType)random.Next(Enum.GetValues<CharacterType>().Length),
-                                                (AttackType)random.Next(Enum.GetValues<AttackType>().Length),
+                                                (CharacterType) generator.GetNext(0, Enum.GetValues<CharacterType>().Length),
+                                                (AttackType) generator.GetNext(0, Enum.GetValues<AttackType>().Length),
                                                 generator);
             }
             return adventurers;
@@ -29,13 +28,13 @@ namespace Expedition178.GameMechanics
         {
             var monsters = new Monster[Parameters.MaxMonsters];
             var names = NameGenerator.GenerateName(Parameters.MaxMonsters);
-            Random random = new Random();
+
             for (int i = 0; i < Parameters.MaxMonsters; i++)
             {
                 monsters[i] = new Monster(names[i],
-                                          (CharacterType)random.Next(Enum.GetValues<CharacterType>().Length),
-                                          (AttackType)random.Next(Enum.GetValues<AttackType>().Length),
-                                          (MonsterType)random.Next(Enum.GetValues<MonsterType>().Length),
+                                          (CharacterType) generator.GetNext(0, Enum.GetValues<CharacterType>().Length),
+                                          (AttackType) generator.GetNext(0, Enum.GetValues<AttackType>().Length),
+                                          (MonsterType) generator.GetNext(0, Enum.GetValues<MonsterType>().Length),
                                           wave,
                                           generator);
             }
