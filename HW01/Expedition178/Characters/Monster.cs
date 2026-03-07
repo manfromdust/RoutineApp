@@ -16,9 +16,10 @@ namespace Expedition178.Characters
                        base(name, charType, attackType, generator)
         {
             // Scale monster stats based on wave number
-            Attack += wave * 2;
-            life += wave * 20;
-            Speed += wave;
+            Attack += (wave - 1) * 2;
+            MaxLife += (wave - 1) * 20;
+            life = MaxLife;
+            Speed += (wave - 1) * 3;
             MonsterType = monType;
 
             switch (monType)
