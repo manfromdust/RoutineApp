@@ -17,7 +17,7 @@ namespace Expedition178.Game
 
         private bool IsAdventurerFaster(Adventurer adventurer, Monster creature)
         {
-            return adventurer.Attack > creature.Attack;
+            return adventurer.Speed > creature.Speed;
         }
 
         public Character[] PerformBattle(Adventurer[] player, Monster[] enemy)

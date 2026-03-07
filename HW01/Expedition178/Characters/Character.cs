@@ -10,9 +10,9 @@ namespace Expedition178.Characters
     public abstract class Character
     {
         public readonly string name;
-        public int Attack { get; protected set; }
+        public int attack;
         protected int life;
-        protected int speed;
+        public int Speed { get; protected set; }
         protected readonly CharacterType charType;
         protected readonly AttackType attackType;
 
@@ -27,14 +27,14 @@ namespace Expedition178.Characters
             switch (charType)
             {
                 case CharacterType.Tank:
-                    Attack = random.Next(Parameters.MinTankAttack, Parameters.MaxTankAttack + 1);
+                    attack = random.Next(Parameters.MinTankAttack, Parameters.MaxTankAttack + 1);
                     life = random.Next(Parameters.MinTankLife, Parameters.MaxTankLife + 1);
-                    speed = random.Next(Parameters.MinTankSpeed, Parameters.MaxTankSpeed + 1);
+                    Speed = random.Next(Parameters.MinTankSpeed, Parameters.MaxTankSpeed + 1);
                     break;
                 case CharacterType.Dps:
-                    Attack = random.Next(Parameters.MinDpsAttack, Parameters.MaxDpsAttack + 1);
+                    attack = random.Next(Parameters.MinDpsAttack, Parameters.MaxDpsAttack + 1);
                     life = random.Next(Parameters.MinDpsLife, Parameters.MaxDpsLife + 1);
-                    speed = random.Next(Parameters.MinDpsSpeed, Parameters.MaxDpsSpeed + 1);
+                    Speed = random.Next(Parameters.MinDpsSpeed, Parameters.MaxDpsSpeed + 1);
                     break;
             }
         }
@@ -44,9 +44,15 @@ namespace Expedition178.Characters
             return life > 0;
         }
 
+        public void TakeDamage(int damage)
+        {
+            life -= damage;
+            if (life < 0) life = 0;
+        }
+
         public override string ToString()
         {
-            return $"{name} ({charType}, {attackType}) - Attack: {Attack}, Life: {life}, Speed: {speed}";
+            return $"{name} ({charType}, {attackType}) - Attack: {attack}, Life: {life}, Speed: {Speed}";
         }
     }
 }
