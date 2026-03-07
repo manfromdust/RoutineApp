@@ -15,7 +15,7 @@ namespace Expedition178.Game
         public Game()
         {
             adventurers = new Adventurer[Parameters.Parameters.MaxAdventurers];
-            Console.WriteLine("New game has started.");
+            Console.WriteLine("New game has started.\n");
         }
 
         private void DisplayHelp()
@@ -38,21 +38,21 @@ namespace Expedition178.Game
             {
                 success = true;
 
-                Console.WriteLine("Adventurers to choose from:");
+                Console.WriteLine("Adventurers to choose from:\n");
 
                 for (int i = 0; i < chosen.Length; i++)
                 {
                     Console.WriteLine($"{i + 1}: {chosen[i].ToString()}");
                 }
 
-                Console.WriteLine($"Choose your {Parameters.Parameters.MaxAdventurers} adventurers (in format eg. '4 1 2'");
+                Console.WriteLine($"\nChoose your {Parameters.Parameters.MaxAdventurers} adventurers (in format eg. '4 1 2'\n");
                 Console.Write("Your choice: ");
 
                 string? input = Console.ReadLine();
 
                 if (input == null)
                 {
-                    Console.WriteLine($"You have not chosen any character. You need to choose {Parameters.Parameters.MaxAdventurers}...");
+                    Console.WriteLine($"You have not chosen any character. You need to choose {Parameters.Parameters.MaxAdventurers}.");
                     continue;
                 }
 
@@ -77,13 +77,13 @@ namespace Expedition178.Game
 
                 if (success)
                 {
-                    Console.WriteLine("You have chosen:");
+                    Console.WriteLine("You have chosen:\n");
                     foreach (int i in indexes)
                     {
                         Console.WriteLine(chosen[i].ToString());
                         adventurers[i] = chosen[i];
                     }
-                    Console.WriteLine("Is this your final decision? You can change only their order during the game.");
+                    Console.WriteLine("\nIs this your final decision? You can change only their order during the game.");
                     Console.Write("Type 'y' to confirm or 'n' to choose again: ");
 
                     string? confirmation = Console.ReadLine();
@@ -98,7 +98,7 @@ namespace Expedition178.Game
 
         private void PrintAdventurers()
         {
-            Console.WriteLine("Your adventurers and their order:");
+            Console.WriteLine("Your adventurers and their order:\n");
 
             for (int i = 0; i < adventurers.Length; i++)
             {
@@ -109,7 +109,7 @@ namespace Expedition178.Game
         private void SortAdventurers()
         {
             PrintAdventurers();
-            Console.WriteLine("Enter the new order of your adventurers (e.g., '2 1 3'):");
+            Console.WriteLine("Enter the new order of your adventurers (e.g., '2 1 3'):\n");
             Console.Write("Your new order: ");
 
             int[] indexes = new int[3];
@@ -155,7 +155,7 @@ namespace Expedition178.Game
 
         private void PrintMonsters(Monster[] monsters)
         {
-            Console.WriteLine("Monsters you will fight in next wave:");
+            Console.WriteLine("Monsters you will fight in next wave:\n");
             for (int i = 0; i < monsters.Length; i++)
             {
                 Console.WriteLine($"{i + 1}: {monsters[i]}");
@@ -170,7 +170,7 @@ namespace Expedition178.Game
 
             while (true)
             {
-                Console.WriteLine("Your action:");
+                Console.WriteLine("\nYour action:");
                 Console.Write("[Player]: ");
 
                 string? input = Console.ReadLine();
@@ -218,12 +218,12 @@ namespace Expedition178.Game
 
                 if (winners is Adventurer[])
                 {
-                    Console.WriteLine($"Congratulations! You have won wave {wave}!");
+                    Console.WriteLine($"\nCongratulations! You have won wave {wave}!\n");
                     wave++;
                 }
                 else
                 {
-                    Console.WriteLine("You have lost. Better luck next time!");
+                    Console.WriteLine("\nYou have lost. Better luck next time!\n");
                 }
             }
         }
