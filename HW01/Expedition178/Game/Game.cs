@@ -86,10 +86,11 @@ namespace Expedition178.Game
                 if (success)
                 {
                     Console.WriteLine("You have chosen:\n");
+                    int pos = 0;
                     foreach (int i in indexes)
                     {
                         Console.WriteLine(chosen[i].ToString());
-                        adventurers[i] = chosen[i];
+                        adventurers[pos++] = chosen[i];
                     }
                     Console.WriteLine("\nIs this your final decision? You can change only their order during the game.");
                     Console.Write("Type 'y' to confirm or 'n' to choose again: ");
