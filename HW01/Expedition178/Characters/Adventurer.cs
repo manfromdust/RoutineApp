@@ -26,10 +26,10 @@ namespace Expedition178.Characters
             }
         }
 
-        public void GainExperience(int amount)
+        public void GainExperience(int multiplier)
         {
             Random random = new Random();
-            experience += amount * random.Next(20, 36);
+            experience += multiplier * random.Next(20, 51);
             CheckLevelUp();
         }
 
