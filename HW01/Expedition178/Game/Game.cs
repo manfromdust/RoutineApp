@@ -47,7 +47,7 @@ namespace Expedition178.Game
                     Console.WriteLine($"{i + 1}: {chosen[i].ToString()}");
                 }
 
-                Console.WriteLine($"\nChoose your {Parameters.Parameters.MaxAdventurers} adventurers (in format eg. '4 1 2'\n");
+                Console.WriteLine($"\nChoose your {Parameters.Parameters.MaxAdventurers} adventurers (in format eg. '4 1 2')\n");
                 Console.Write("Your choice: ");
 
                 string? input = Console.ReadLine();
