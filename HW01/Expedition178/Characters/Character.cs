@@ -44,7 +44,7 @@ namespace Expedition178.Characters
             return life > 0;
         }
 
-        public void TakeDamage(int damage)
+        public virtual void TakeDamage(int damage)
         {
             life -= damage;
             if (life < 0) life = 0;
