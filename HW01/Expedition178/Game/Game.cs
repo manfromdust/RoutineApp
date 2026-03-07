@@ -15,7 +15,7 @@ namespace Expedition178.Game
         public Game()
         {
             adventurers = new Adventurer[Parameters.Parameters.MaxAdventurers];
-            Console.WriteLine("Welcome to Expedition 178!");
+            Console.WriteLine("New game has started.");
         }
 
         private void DisplayHelp()
