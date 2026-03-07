@@ -23,7 +23,7 @@ namespace Expedition178
                 switch (input)
                 {
                     case "start":
-                        Game.Game game = new Game.Game();
+                        Game.Game game = new();
                         game.Start();
                         break;
                     case "quit":
