@@ -4,6 +4,7 @@ using System.Text;
 
 using Expedition178.GameMechanics;
 using Expedition178.Game.Parameters;
+using Expedition178.Interfaces;
 
 namespace Expedition178.Characters
 {
@@ -17,27 +18,25 @@ namespace Expedition178.Characters
         protected readonly CharacterType charType;
         public AttackType AttackType { get; protected set; }
 
-        public Character(string name, CharacterType charType, AttackType attackType)
+        public Character(string name, CharacterType charType, AttackType attackType, IRandomGenerator generator)
         {
             this.name = name;
             this.AttackType = attackType;
             this.charType = charType;
 
-            Random random = new Random();
-
             switch (charType)
             {
                 case CharacterType.Tank:
-                    Attack = random.Next(Parameters.MinTankAttack, Parameters.MaxTankAttack + 1);
-                    MaxLife = random.Next(Parameters.MinTankLife, Parameters.MaxTankLife + 1);
+                    Attack = generator.GetNext(Parameters.MinTankAttack, Parameters.MaxTankAttack);
+                    MaxLife = generator.GetNext(Parameters.MinTankLife, Parameters.MaxTankLife);
                     life = MaxLife;
-                    Speed = random.Next(Parameters.MinTankSpeed, Parameters.MaxTankSpeed + 1);
+                    Speed = generator.GetNext(Parameters.MinTankSpeed, Parameters.MaxTankSpeed);
                     break;
                 case CharacterType.Dps:
-                    Attack = random.Next(Parameters.MinDpsAttack, Parameters.MaxDpsAttack + 1);
-                    MaxLife = random.Next(Parameters.MinDpsLife, Parameters.MaxDpsLife + 1);
+                    Attack = generator.GetNext(Parameters.MinDpsAttack, Parameters.MaxDpsAttack);
+                    MaxLife = generator.GetNext(Parameters.MinDpsLife, Parameters.MaxDpsLife);
                     life = MaxLife;
-                    Speed = random.Next(Parameters.MinDpsSpeed, Parameters.MaxDpsSpeed + 1);
+                    Speed = generator.GetNext(Parameters.MinDpsSpeed, Parameters.MaxDpsSpeed);
                     break;
             }
         }
