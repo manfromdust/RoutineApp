@@ -15,12 +15,12 @@ namespace Expedition178.Characters
         protected int life;
         public int Speed { get; protected set; }
         protected readonly CharacterType charType;
-        protected readonly AttackType attackType;
+        public AttackType AttackType { get; protected set; }
 
         public Character(string name, CharacterType charType, AttackType attackType)
         {
             this.name = name;
-            this.attackType = attackType;
+            this.AttackType = attackType;
             this.charType = charType;
 
             Random random = new Random();
@@ -55,7 +55,7 @@ namespace Expedition178.Characters
 
         public override string ToString()
         {
-            return $"{name} ({charType}, {attackType}) - Attack: {Attack}, Life: {life}, Speed: {Speed}";
+            return $"{name} ({charType}, {AttackType}) - Attack: {Attack}, Life: {life}, Speed: {Speed}";
         }
     }
 }
