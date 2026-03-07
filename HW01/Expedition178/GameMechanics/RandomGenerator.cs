@@ -8,9 +8,10 @@ namespace Expedition178.GameMechanics
 {
     public class RandomGenerator : IRandomGenerator
     {
+        private Random random = new();
+
         public int GetNext(int min, int max)
         {
-            Random random = new Random();
             return random.Next(min, max + 1);
         }
     }
