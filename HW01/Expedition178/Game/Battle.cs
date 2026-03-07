@@ -25,7 +25,7 @@ namespace Expedition178.Game
         {
             foreach (var adventurer in adventurers)
             {
-                adventurer.Heal();
+                adventurer.Heal(adventurer.MaxLife);
             }
         }
 
@@ -56,7 +56,7 @@ namespace Expedition178.Game
                 adventurer.GainExperience(experienceMultiplier);
             }
 
-
+            HealAdventurers(player);
 
             return (playerIndex < enemyIndex) ? player : enemy;
         }
