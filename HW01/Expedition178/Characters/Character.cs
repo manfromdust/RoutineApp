@@ -17,12 +17,14 @@ namespace Expedition178.Characters
         public int Speed { get; protected set; }
         protected readonly CharacterType charType;
         public AttackType AttackType { get; protected set; }
+        protected IRandomGenerator generator;
 
         public Character(string name, CharacterType charType, AttackType attackType, IRandomGenerator generator)
         {
             this.name = name;
             this.AttackType = attackType;
             this.charType = charType;
+            this.generator = generator;
 
             switch (charType)
             {
