@@ -142,7 +142,6 @@ namespace Expedition178.Game
                     Console.WriteLine($"Invalid input. Please enter numbers between 1 and {Parameters.Parameters.MaxAdventurers}.");
                     return;
                 }
-                indexes[i] -= 1; // Adjust for 0-based indexing
             }
 
             if (indexes.Length != indexes.Distinct().Count())
@@ -151,14 +150,7 @@ namespace Expedition178.Game
                 return;
             }
 
-            Adventurer[] newOrder = new Adventurer[Parameters.Parameters.MaxAdventurers];
-
-            for (int i = 0; i < indexes.Length; i++)
-            {
-                newOrder[i] = adventurers[indexes[i]];
-            }
-
-            adventurers = newOrder;
+            Array.Sort(indexes, this.adventurers);
         }
 
         // can return only with fight or quit choices
