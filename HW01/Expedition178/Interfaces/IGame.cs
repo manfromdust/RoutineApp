@@ -1,3 +1,6 @@
+
+namespace Expedition178.Interfaces;
+
 public interface IGame
 {
     /// <summary>

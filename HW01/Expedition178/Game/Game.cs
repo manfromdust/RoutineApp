@@ -1,6 +1,7 @@
 ﻿using Expedition178.Characters;
 using Expedition178.GameMechanics;
 using Expedition178.Game.Parameters;
+using Expedition178.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
