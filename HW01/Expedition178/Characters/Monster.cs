@@ -44,10 +44,10 @@ namespace Expedition178.Characters
             }
         }
 
-        public override void TakeDamage(int damage, AttackType attackType)
+        public override void TakeDamage(int damage, AttackType attackType, string enemyName)
         {
             int modifiedDamage = (int)(damage * this.damage[attackType]);
-            base.TakeDamage(modifiedDamage, attackType);
+            base.TakeDamage(modifiedDamage, attackType, enemyName);
         }
     }
 }

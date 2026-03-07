@@ -79,10 +79,10 @@ namespace Expedition178.Game
 
             while (first.IsAlive() && second.IsAlive())
             {
-                second.TakeDamage(first.Attack, first.AttackType);
+                second.TakeDamage(first.Attack, first.AttackType, first.name);
                 if (second.IsAlive())
                 {
-                    first.TakeDamage(second.Attack, second.AttackType);
+                    first.TakeDamage(second.Attack, second.AttackType, second.name);
                 }
             }
 
