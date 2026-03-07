@@ -18,7 +18,7 @@ namespace Expedition178.Game
 
         private bool IsAdventurerFaster(Adventurer adventurer, Monster creature)
         {
-            return adventurer.Speed > creature.Speed;
+            return adventurer.Speed >= creature.Speed;
         }
 
         private void HealAdventurers(Adventurer[] adventurers)
