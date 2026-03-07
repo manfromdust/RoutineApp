@@ -58,6 +58,30 @@ namespace Expedition178.Game
 
         public Character PerformRound(Adventurer adventurer, Monster creature)
         {
+            Character first;
+            Character second;
 
+            if (IsAdventurerFaster(adventurer, creature))
+            {
+                first = adventurer;
+                second = creature;
+            }
+            else
+            {
+                first = creature;
+                second = adventurer;
+            }
+
+            while (first.IsAlive() && second.IsAlive())
+            {
+                second.TakeDamage(first.Attack, first.AttackType);
+                if (second.IsAlive())
+                {
+                    first.TakeDamage(second.Attack, second.AttackType);
+                }
+            }
+
+            return (first.IsAlive()) ? first : second;
         }
+    }
 }
