@@ -12,6 +12,7 @@ namespace Expedition178.Game
     {
         private int wave = 1;
         private Adventurer[] adventurers;
+        private RandomGenerator generator = new();
 
         public Game()
         {
@@ -31,7 +32,7 @@ namespace Expedition178.Game
 
         private void ChooseAdventurers()
         {
-            var chosen = CharacterGenerator.GenerateAdventurers();
+            var chosen = CharacterGenerator.GenerateAdventurers(generator);
             int[] indexes = new int[Parameters.Parameters.AdventuresChoiseCount];
             bool success = true;
 
@@ -163,7 +164,6 @@ namespace Expedition178.Game
             }
         }
 
-        // can return only with fight or quit choices
         private Choice ChooseInput(Battle battle)
         {
             Console.WriteLine("Choose an action (if you're not sure, type 'help'),");
@@ -210,7 +210,7 @@ namespace Expedition178.Game
         {
             while (wave < Parameters.Parameters.MaxWaves)
             {
-                Battle battle = new Battle(wave);
+                Battle battle = new Battle(wave, generator);
                 Choice choice = ChooseInput(battle);
 
                 if (choice == Choice.Quit) return;
