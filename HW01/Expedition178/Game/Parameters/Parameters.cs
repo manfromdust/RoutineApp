@@ -24,5 +24,7 @@ namespace Expedition178.Game.Parameters
         public const int MinTankLife = 90;
         public const int MaxTankSpeed = 7;
         public const int MinTankSpeed = 4;
+
+        public const int WonMultiplier = 4;
     }
 }
