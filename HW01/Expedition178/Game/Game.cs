@@ -195,7 +195,7 @@ namespace Expedition178.Game
             Play();
         }
 
-        public void Play()
+        private void Play()
         {
             while (wave < Parameters.Parameters.MaxWaves)
             {
