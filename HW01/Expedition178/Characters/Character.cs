@@ -39,7 +39,10 @@ namespace Expedition178.Characters
             }
         }
 
-
+        public bool IsAlive()
+        {
+            return life > 0;
+        }
 
         public override string ToString()
         {
