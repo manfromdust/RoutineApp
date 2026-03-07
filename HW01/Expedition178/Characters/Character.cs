@@ -47,10 +47,12 @@ namespace Expedition178.Characters
             return life > 0;
         }
 
-        public virtual void TakeDamage(int damage, AttackType attackType)
+        public virtual void TakeDamage(int damage, AttackType attackType, string enemyName)
         {
             life -= damage;
             if (life < 0) life = 0;
+            Console.WriteLine($"{enemyName} has dealt damage to {this.name}.");
+            Console.WriteLine($"{this.name} now has {this.life} out of {this.MaxLife}.");
         }
 
         public override string ToString()
