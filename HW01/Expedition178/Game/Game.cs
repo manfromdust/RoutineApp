@@ -9,7 +9,7 @@ namespace Expedition178.Game
 {
     public class Game : IGame
     {
-        private int round = 1;
+        private int wave = 1;
         private Adventurer[] adventurers;
 
         public Game()
@@ -158,11 +158,12 @@ namespace Expedition178.Game
         {
             Console.WriteLine("Choose an action (if you're not sure, type 'help'),");
             Console.WriteLine("don't forget to check monsters in next round and choose order of your adventurers.");
-            Console.WriteLine("Your action:");
-            Console.Write("[Player]: ");
 
             while (true)
             {
+                Console.WriteLine("Your action:");
+                Console.Write("[Player]: ");
+
                 string? input = Console.ReadLine();
                 switch (input)
                 {
@@ -191,7 +192,30 @@ namespace Expedition178.Game
         public void Start()
         {
             ChooseAdventurers();
-            // Choice chosen = ChooseInput();
+            Play();
+        }
+
+        public void Play()
+        {
+            while (wave < Parameters.Parameters.MaxWaves)
+            {
+                Battle battle = new Battle(wave);
+                Choice choice = ChooseInput(battle);
+
+                if (choice == Choice.Quit) return;
+
+                Character[] winners = battle.PerformBattle(adventurers, battle.Monsters);
+
+                if (winners is Adventurer[])
+                {
+                    Console.WriteLine($"Congratulations! You have won wave {wave}!");
+                    wave++;
+                }
+                else
+                {
+                    Console.WriteLine("You have lost. Better luck next time!");
+                }
+            }
         }
     }
 }
