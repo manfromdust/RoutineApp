@@ -177,7 +177,8 @@ namespace Expedition178.Game
                 switch (input)
                 {
                     case "check":
-                        return Choice.Check;
+                        PrintMonsters(battle.Monsters);
+                        break;
                     case "fight":
                         return Choice.Fight;
                     case "info":
