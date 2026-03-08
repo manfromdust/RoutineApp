@@ -52,5 +52,10 @@ namespace Expedition178.Characters
             int modifiedDamage = (int)(damage * this.damage[attackType]);
             base.TakeDamage(modifiedDamage, attackType, enemyName);
         }
+
+        public override string ToString()
+        {
+            return $"{base.ToString()}, Type: {MonsterType}.";
+        }
     }
 }
