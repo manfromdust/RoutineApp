@@ -40,7 +40,8 @@ namespace Expedition178.Game
             {
                 var winner = PerformRound(player[playerIndex], enemy[enemyIndex]);
 
-                if (winner is Adventurer)
+                if (winner == null) { continue; }
+                else if (winner is Adventurer)
                 {
                     enemyIndex++;
                     player[playerIndex].GainExperience(Parameters.Parameters.WonRound);
@@ -63,32 +64,31 @@ namespace Expedition178.Game
             return (playerIndex < enemyIndex) ? player : enemy;
         }
 
-        public Character PerformRound(Adventurer adventurer, Monster creature)
+        public Character? PerformRound(Adventurer adventurer, Monster creature)
         {
-            Character first;
-            Character second;
-
             if (IsAdventurerFaster(adventurer, creature))
             {
-                first = adventurer;
-                second = creature;
+                creature.TakeDamage(adventurer.Attack, adventurer.AttackType, adventurer.name);
+                if (creature.IsAlive())
+                {
+                    adventurer.TakeDamage(creature.Attack, creature.AttackType, creature.name);
+                }
             }
             else
             {
-                first = creature;
-                second = adventurer;
-            }
-
-            while (first.IsAlive() && second.IsAlive())
-            {
-                second.TakeDamage(first.Attack, first.AttackType, first.name);
-                if (second.IsAlive())
+                adventurer.TakeDamage(creature.Attack, creature.AttackType, creature.name);
+                if (adventurer.IsAlive())
                 {
-                    first.TakeDamage(second.Attack, second.AttackType, second.name);
+                    creature.TakeDamage(adventurer.Attack, adventurer.AttackType, adventurer.name);
                 }
             }
 
-            return (first.IsAlive()) ? first : second;
+            if (adventurer.IsAlive())
+            {
+                return (creature.IsAlive()) ? null : adventurer;
+            }
+
+            return creature;
         }
     }
 }
