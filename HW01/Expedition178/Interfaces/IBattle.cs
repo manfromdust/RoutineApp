@@ -18,5 +18,5 @@ public Character[] PerformBattle(Adventurer[] player, Monster[] enemy);
 /// <param name="adventurer">The player's adventurer</param>
 /// <param name="creature">The enemy creature</param>
 /// <returns>The character that wins the round</returns>
-public Character PerformRound(Adventurer adventurer, Monster creature);
+public Character? PerformRound(Adventurer adventurer, Monster creature);
 }
