@@ -10,7 +10,8 @@ namespace Expedition178.Characters
     public class Monster : Character
     {
         private MonsterType MonsterType { get; init; }
-        private Dictionary<AttackType, float> damage = new();
+        private Dictionary<AttackType, DmgModifiers> damage = new();
+
         public Monster(string name, CharacterType charType, AttackType attackType,
                        MonsterType monType, int wave, IRandomGenerator generator) :
                        base(name, charType, attackType, generator)
@@ -24,32 +25,48 @@ namespace Expedition178.Characters
             switch (monType)
             {
                 case MonsterType.Natural:
-                    damage[AttackType.Fire] = 1.5f;
-                    damage[AttackType.Frost] = 1.5f;
-                    damage[AttackType.Physical] = 1.0f;
-                    damage[AttackType.Light] = 0.5f;
-                    damage[AttackType.Dark] = 1.0f;
+                    damage[AttackType.Fire] = DmgModifiers.Weakness;
+                    damage[AttackType.Frost] = DmgModifiers.Weakness;
+                    damage[AttackType.Physical] = DmgModifiers.None;
+                    damage[AttackType.Light] = DmgModifiers.Resistance;
+                    damage[AttackType.Dark] = DmgModifiers.None;
                     break;
                 case MonsterType.Radiant:
-                    damage[AttackType.Fire] = 1.0f;
-                    damage[AttackType.Frost] = 1.0f;
-                    damage[AttackType.Physical] = 1.0f;
-                    damage[AttackType.Light] = 0.0f;
-                    damage[AttackType.Dark] = 1.5f;
+                    damage[AttackType.Fire] = DmgModifiers.None;
+                    damage[AttackType.Frost] = DmgModifiers.None;
+                    damage[AttackType.Physical] = DmgModifiers.None;
+                    damage[AttackType.Light] = DmgModifiers.Immunity;
+                    damage[AttackType.Dark] = DmgModifiers.Weakness;
                     break;
                 case MonsterType.Shadow:
-                    damage[AttackType.Fire] = 1.0f;
-                    damage[AttackType.Frost] = 1.0f;
-                    damage[AttackType.Physical] = 0.5f;
-                    damage[AttackType.Light] = 1.5f;
-                    damage[AttackType.Dark] = 0.0f;
+                    damage[AttackType.Fire] = DmgModifiers.None;
+                    damage[AttackType.Frost] = DmgModifiers.None;
+                    damage[AttackType.Physical] = DmgModifiers.Resistance;
+                    damage[AttackType.Light] = DmgModifiers.Weakness;
+                    damage[AttackType.Dark] = DmgModifiers.Immunity;
                     break;
             }
         }
 
         public override void TakeDamage(int damage, AttackType attackType, string enemyName)
         {
-            int modifiedDamage = (int)(damage * this.damage[attackType]);
+            int modifiedDamage = 0;
+            switch (this.damage[attackType])
+            {
+                case DmgModifiers.None:
+                    modifiedDamage = damage;
+                    break;
+                case DmgModifiers.Weakness:
+                    modifiedDamage = (int) Math.Ceiling(damage * ((double)DmgModifiers.Weakness / 10.0));
+                    break;
+                case DmgModifiers.Resistance:
+                    modifiedDamage = (int) Math.Floor(damage * ((double)DmgModifiers.Weakness / 10.0));
+                    break;
+                case DmgModifiers.Immunity:
+                    modifiedDamage = 0;
+                    break;
+            }
+
             base.TakeDamage(modifiedDamage, attackType, enemyName);
         }
 
