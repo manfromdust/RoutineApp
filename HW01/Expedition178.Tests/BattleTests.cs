@@ -107,7 +107,7 @@ namespace Expedition178.Tests
         }
 
         [Fact]
-        public void NormalGameButImmuneMonstersMonstersWins()
+        public void EqualStatsButImmuneMonstersMonstersWins()
         {
             var random = new FakeRandomGenerator();
             var battle = new Battle(1, random);
