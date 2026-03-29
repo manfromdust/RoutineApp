@@ -2,8 +2,8 @@
 
 namespace CrossStitching.ViewModels
 {
-    public class ViewModel : ObservableObject
+    public abstract partial class ViewModel : ObservableObject
     {
-        public INavigation Nagivation { get; set; }
+        public INavigation Navigation { get; set; }
     }
 }

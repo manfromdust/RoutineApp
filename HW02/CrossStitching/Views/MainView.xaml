@@ -12,7 +12,13 @@
             <Grid x:Name="Canvas" Grid.Column="0"/>
             <CollectionView x:Name="Palette"
                             Grid.Column="1"
-                            ItemsLayout="VerticalGrid, 4"/>
+                            ItemsLayout="VerticalGrid, 4">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <BoxView HeightRequest="10" WidthRequest="10"/>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </Grid>
     </ScrollView>
 </ContentPage>
