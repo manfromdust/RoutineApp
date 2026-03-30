@@ -33,9 +33,11 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            
             <CollectionView x:Name="Palette"
                             Grid.Column="1"
-                            ItemsLayout="VerticalGrid, 4">
+                            ItemsLayout="VerticalGrid, 4"
+                            ItemsSource="{Binding Palette}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <BoxView HeightRequest="10" WidthRequest="10"/>

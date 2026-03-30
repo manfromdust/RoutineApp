@@ -1,12 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using CrossStitching.Models;
 
 namespace CrossStitching.ViewModels
 {
-    public partial class PixelViewModel : ViewModel
+    public partial class PaletteViewModel : ViewModel
     {
         [ObservableProperty]
-        private Pixel _pixel;
+        private ThreadColor _threadColor;
     }
 }
