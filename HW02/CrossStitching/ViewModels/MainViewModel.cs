@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 
 using CrossStitching.Models;
 using CommunityToolkit.Mvvm.Messaging;
+using CrossStitching.Views;
 
 namespace CrossStitching.ViewModels
 {
@@ -12,15 +13,18 @@ namespace CrossStitching.ViewModels
         private readonly IServiceProvider _serviceProvider;
 
         [ObservableProperty]
-        private ObservableCollection<ThreadColor> _threadColors;
+        private ObservableCollection<Pixel> _pixels;
 
         [ObservableProperty]
         private int _columns;
 
+        [ObservableProperty]
+        private Color _selectedColor;
+
         public MainViewModel(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            ThreadColors = new ObservableCollection<ThreadColor>();
+            Pixels = new ObservableCollection<Pixel>();
             WeakReferenceMessenger.Default.Register<CanvasDimensions>(this, (r, m) =>
                                                             { CreateCanvas(m.Rows, m.Cols); });
         }
@@ -28,6 +32,18 @@ namespace CrossStitching.ViewModels
         public void CreateCanvas(int rows, int cols)
         {
             Columns = cols;
+        }
+
+        [RelayCommand]
+        public async Task NewCanvasAsync()
+        {
+            await Navigation.PushAsync(_serviceProvider.GetRequiredService<SetupView>());
+        }
+
+        [RelayCommand]
+        public async Task ChangeColorAsync(PixelViewModel pixel)
+        {
+            pixel.SetColor(SelectedColor);
         }
     }
 }

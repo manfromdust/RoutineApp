@@ -3,28 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:CrossStitching.ViewModels"
              x:Class="CrossStitching.Views.MainView"
-             Title="Cross Stitching">
+             Title="Cross Stitching"
+             x:Name="MainPage">
     <ContentPage.BindingContext>
         <vm:MainViewModel />
     </ContentPage.BindingContext>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Create new" />
+        <ToolbarItem Text="Create new" Command="{Binding NewCanvasCommand} "/>
         <ToolbarItem Text="Import" />
     </ContentPage.ToolbarItems>
 
     <ScrollView>
         <Grid ColumnDefinitions="Auto, *">
             <CollectionView x:Name="Canvas" Grid.Column="0"
-                            ItemsSource="" SelectionMode="None">
+                            ItemsSource="{Binding Pixels}" SelectionMode="None">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="{Binding Columns}" />
                 </CollectionView.ItemsLayout>
 
                 <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <BoxView Color="" HeightRequest="30" WidthRequest="30">
+                    <DataTemplate x:DataType="vm:PixelViewModel">
+                        <BoxView Color="{Binding Pixel.Color}" HeightRequest="30" WidthRequest="30">
                             <BoxView.GestureRecognizers>
-                                <TapGestureRecognizer Command="" />
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference MainPage},
+                                                                        Path=BindingContext.ChangeColorCommand}"
+                                                      CommandParameter="{Binding .}" />
                             </BoxView.GestureRecognizers>
                         </BoxView>
                     </DataTemplate>
