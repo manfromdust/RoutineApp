@@ -34,7 +34,8 @@ namespace CrossStitching.Services
                             R = r,
                             G = g,
                             B = b,
-                            Hex = parts[5]
+                            Hex = parts[5],
+                            Color = ConvertColor(r,g,b)
                         };
                         colors.Add(color);
                     }
@@ -42,6 +43,11 @@ namespace CrossStitching.Services
             }
 
             return colors;
+        }
+
+        private static Color ConvertColor(int r, int g, int b)
+        {
+            return Color.FromRgb(r, g, b);
         }
     }
 }

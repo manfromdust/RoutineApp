@@ -40,7 +40,8 @@
                             ItemsSource="{Binding Palette}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="vm:PaletteViewModel">
-                        <BoxView HeightRequest="10" WidthRequest="10">
+                        <BoxView HeightRequest="10" WidthRequest="10" Color="{Binding ThreadColor.Color}"
+                                 ToolTipProperties.Text="{Binding ThreadColor.Name}">
                             <BoxView.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Source={x:Reference MainPage},
                                                                         Path=BindingContext.DifferentThreadColorCommand}"

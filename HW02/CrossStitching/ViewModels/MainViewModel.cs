@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using CrossStitching.Models;
 using CommunityToolkit.Mvvm.Messaging;
 using CrossStitching.Views;
+using CrossStitching.Services;
 
 namespace CrossStitching.ViewModels
 {
@@ -29,14 +30,19 @@ namespace CrossStitching.ViewModels
             _serviceProvider = serviceProvider;
             Pixels = new ObservableCollection<PixelViewModel>();
             Palette = new ObservableCollection<PaletteViewModel>();
-            fillPalette();
+            _ = FillPaletteAsync();
             WeakReferenceMessenger.Default.Register<CanvasDimensions>(this, (r, m) =>
                                                             { CreateCanvas(m.Rows, m.Cols); });
         }
 
-        private void fillPalette()
+        private async Task FillPaletteAsync()
         {
-
+            Palette.Clear();
+            var threadColors = await LoadCustomColors.LoadColorsAsync();
+            foreach (var threadColor in threadColors)
+            {
+                Palette.Add(new PaletteViewModel { ThreadColor = threadColor });
+            }
         }
 
         public void CreateCanvas(int rows, int cols)
@@ -59,7 +65,7 @@ namespace CrossStitching.ViewModels
         [RelayCommand]
         public async Task DifferentThreadColorAsync(PaletteViewModel palette)
         {
-            SelectedColor = palette.ThreadColor.ConvertColor();
+            SelectedColor = palette.ThreadColor.Color;
         }
     }
 }

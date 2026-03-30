@@ -12,9 +12,6 @@ namespace CrossStitching.Models
 
         public string Hex { get; set; }
 
-        public Color ConvertColor()
-        {
-            return Color.FromRgb(R, G, B);
-        }
+        public Color Color { get; set; }
     }
 }
