@@ -12,6 +12,8 @@ namespace CrossStitching.ViewModels
     public partial class MainViewModel : ViewModel
     {
         private readonly IServiceProvider _serviceProvider;
+        private int _rows;
+        private int _cols;
 
         [ObservableProperty]
         private ObservableCollection<PixelViewModel> _pixels;
@@ -31,7 +33,7 @@ namespace CrossStitching.ViewModels
             Pixels = new ObservableCollection<PixelViewModel>();
             Palette = new ObservableCollection<PaletteViewModel>();
             _ = FillPaletteAsync();
-            WeakReferenceMessenger.Default.Register<CanvasDimensions>(this, (r, m) =>
+            WeakReferenceMessenger.Default.Register<CanvasData>(this, (r, m) =>
                                                             { CreateCanvas(m.Rows, m.Cols); });
         }
 
@@ -47,12 +49,17 @@ namespace CrossStitching.ViewModels
 
         public void CreateCanvas(int rows, int cols)
         {
+            Pixels.Clear();
             Columns = cols;
+            _cols = cols;
+            _rows = rows;
             for (int i = 0; i < rows * cols; i++)
             {
                 Pixels.Add(new PixelViewModel { Pixel = new Pixel() });
             }
         }
+
+
 
         [RelayCommand]
         public async Task NewCanvasAsync()

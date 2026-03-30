@@ -8,11 +8,11 @@ namespace CrossStitching.ViewModels
     public partial class SetupViewModel : ViewModel
     {
         [ObservableProperty]
-        CanvasDimensions _dimensions;
+        CanvasData _dimensions;
 
         public SetupViewModel()
         {
-            _dimensions = new CanvasDimensions();
+            _dimensions = new CanvasData();
         }
 
         [RelayCommand]
