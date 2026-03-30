@@ -48,6 +48,10 @@ namespace CrossStitching.ViewModels
         public void CreateCanvas(int rows, int cols)
         {
             Columns = cols;
+            for (int i = 0; i < rows * cols; i++)
+            {
+                Pixels.Add(new PixelViewModel { Pixel = new Pixel() });
+            }
         }
 
         [RelayCommand]

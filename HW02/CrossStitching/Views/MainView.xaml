@@ -14,8 +14,9 @@
     </ContentPage.ToolbarItems>
 
     <ScrollView>
-        <Grid ColumnDefinitions="Auto, *">
-            <CollectionView x:Name="Canvas" Grid.Column="0"
+        
+        <Grid ColumnDefinitions="Auto, *" RowDefinitions="*, Auto">
+            <CollectionView x:Name="Canvas" Grid.Column="0" Grid.Row="0"
                             ItemsSource="{Binding Pixels}" SelectionMode="None">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="{Binding Columns}" />
@@ -35,7 +36,7 @@
             </CollectionView>
             
             <CollectionView x:Name="Palette"
-                            Grid.Column="1"
+                            Grid.Column="1" Grid.Row="0"
                             ItemsLayout="VerticalGrid, 4"
                             ItemsSource="{Binding Palette}">
                 <CollectionView.ItemTemplate>
@@ -51,6 +52,9 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
+            <Button Grid.ColumnSpan="2" Grid.Row="1" Text="Save to file" HorizontalOptions="Center" />
+            
         </Grid>
     </ScrollView>
 </ContentPage>
