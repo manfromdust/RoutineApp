@@ -39,8 +39,14 @@
                             ItemsLayout="VerticalGrid, 4"
                             ItemsSource="{Binding Palette}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <BoxView HeightRequest="10" WidthRequest="10"/>
+                    <DataTemplate x:DataType="vm:PaletteViewModel">
+                        <BoxView HeightRequest="10" WidthRequest="10">
+                            <BoxView.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference MainPage},
+                                                                        Path=BindingContext.DifferentThreadColorCommand}"
+                                                      CommandParameter="{Binding .}" />
+                            </BoxView.GestureRecognizers>
+                        </BoxView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
