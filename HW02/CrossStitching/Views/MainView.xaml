@@ -53,7 +53,8 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <Button Grid.ColumnSpan="2" Grid.Row="1" Text="Save to file" HorizontalOptions="Center" />
+            <Button Grid.ColumnSpan="2" Grid.Row="1" Text="Save to file"
+                    HorizontalOptions="Center" Command="{Binding ExportCanvasCommand}" />
             
         </Grid>
     </ScrollView>

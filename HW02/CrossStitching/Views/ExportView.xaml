@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CrossStitching.ViewModels"
+             x:Class="CrossStitching.Views.ExportView"
+             Title="Export Canvas">
+    <ContentPage.BindingContext>
+        <vm:ExportViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="14" >
+            <Label Text="Exported file name:" FontAttributes="Bold" />
+            <Entry Text="{Binding FileName}" Placeholder="Enter file name" />
+            <Button Text="Export" Command="{Binding ExportToJsonCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

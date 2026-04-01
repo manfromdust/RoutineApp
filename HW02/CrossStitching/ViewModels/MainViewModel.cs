@@ -4,7 +4,7 @@ using CrossStitching.Models;
 using CrossStitching.Services;
 using CrossStitching.Views;
 using System.Collections.ObjectModel;
-using static Android.InputMethodServices.Keyboard;
+
 
 namespace CrossStitching.ViewModels
 {
@@ -76,6 +76,13 @@ namespace CrossStitching.ViewModels
         public async Task DifferentThreadColorAsync(PaletteViewModel palette)
         {
             SelectedColor = palette.ThreadColor.Color;
+        }
+
+        [RelayCommand]
+        public async Task ExportCanvasAsync()
+        {
+            CanvasData.Pixels = Pixels.Select(p => p.Pixel.Color.ToHex()).ToList();
+            await Navigation.PushAsync(new ExportView());
         }
     }
 }
