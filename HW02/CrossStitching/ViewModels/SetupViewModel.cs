@@ -18,9 +18,7 @@ namespace CrossStitching.ViewModels
         [RelayCommand]
         public async Task GenerateCanvasAsync()
         {
-            //WeakReferenceMessenger.Default.Send(Dimensions);
-
-            await Navigation.PopAsync();
+            await Application.Current.MainPage.Navigation.PopAsync();
         }
     }
 }

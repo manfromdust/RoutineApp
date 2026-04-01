@@ -53,7 +53,7 @@ namespace CrossStitching.ViewModels
             finally
             {
                 _completion.SetResult(true);
-                await Navigation.PopAsync();
+                await Application.Current.MainPage.Navigation.PopAsync();
             }
         }
     }

@@ -12,6 +12,7 @@ namespace CrossStitching.ViewModels
     {
         private int _rows;
         private int _cols;
+        private INavigation? _navigation;
 
         [ObservableProperty]
         private ObservableCollection<PixelViewModel> _pixels;
@@ -30,9 +31,21 @@ namespace CrossStitching.ViewModels
             Pixels = new ObservableCollection<PixelViewModel>();
             Palette = new ObservableCollection<PaletteViewModel>();
             SelectedColor = Colors.White;
+            _navigation = GetNavigation();
             _ = FillPaletteAsync();
-            //WeakReferenceMessenger.Default.Register<CanvasData>(this, (r, m) =>
-            //                                                { CreateCanvas(m.Rows, m.Cols); });
+        }
+
+        private INavigation? GetNavigation()
+        {
+            var window = Application.Current?.Windows.FirstOrDefault();
+            var nav = window?.Page?.Navigation;
+
+            if (nav == null)
+            {
+                nav = Application.Current?.MainPage?.Navigation;
+            }
+
+            return nav;
         }
 
         private async Task FillPaletteAsync()
@@ -75,7 +88,12 @@ namespace CrossStitching.ViewModels
         [RelayCommand]
         public async Task NewCanvasAsync()
         {
-            await Navigation.PushAsync(new SetupView());
+            if (_navigation == null)
+            {
+                return;
+            }
+
+            await _navigation.PushAsync(new SetupView());
         }
 
         [RelayCommand]
@@ -93,15 +111,25 @@ namespace CrossStitching.ViewModels
         [RelayCommand]
         public async Task ExportCanvasAsync()
         {
+            if (_navigation == null)
+            {
+                return;
+            }
+
             CanvasData.Pixels = Pixels.Select(p => p.Pixel.Color.ToHex()).ToList();
-            await Navigation.PushAsync(new ExportView());
+            await _navigation.PushAsync(new ExportView());
         }
 
         [RelayCommand]
         public async Task ImportCanvasAsync()
         {
+            if (_navigation == null)
+            {
+                return;
+            }
+
             var tcs = new TaskCompletionSource<bool>();
-            await Navigation.PushAsync(new ImportView(tcs));
+            await _navigation.PushAsync(new ImportView(tcs));
 
             if (await tcs.Task)
             {

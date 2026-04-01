@@ -19,9 +19,9 @@ namespace CrossStitching
                 .RegisterViewModels()
                 .RegisterViews();
 
-#if DEBUG
+        #if DEBUG
             builder.Logging.AddDebug();
-#endif
+        #endif
 
             return builder.Build();
         }
@@ -30,6 +30,8 @@ namespace CrossStitching
         {
             app.Services.AddTransient<ViewModels.MainViewModel>();
             app.Services.AddTransient<ViewModels.SetupViewModel>();
+            app.Services.AddTransient<ViewModels.ImportViewModel>();
+            app.Services.AddTransient<ViewModels.ExportViewModel>();
 
             return app;
         }
@@ -38,6 +40,8 @@ namespace CrossStitching
         {
             app.Services.AddTransient<Views.MainView>();
             app.Services.AddTransient<Views.SetupView>();
+            app.Services.AddTransient<Views.ImportView>();
+            app.Services.AddTransient<Views.ExportView>();
             return app;
         }
     }

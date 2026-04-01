@@ -22,7 +22,7 @@ namespace CrossStitching.ViewModels
             }
 
             ImportExportCanvas.ExportToJson(FileName, CanvasData);
-            await Navigation.PopAsync();
+            await Application.Current.MainPage.Navigation.PopAsync();
         }
     }
 }
