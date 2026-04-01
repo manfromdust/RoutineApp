@@ -16,7 +16,7 @@
     <ScrollView>
         
         <Grid ColumnDefinitions="Auto, *" RowDefinitions="*, Auto">
-            <CollectionView x:Name="Canvas" Grid.Column="0" Grid.Row="0"
+            <CollectionView Grid.Column="0" Grid.Row="0"
                             ItemsSource="{Binding Pixels}" SelectionMode="None">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="{Binding Columns}" />
@@ -35,8 +35,7 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
             
-            <CollectionView x:Name="Palette"
-                            Grid.Column="1" Grid.Row="0"
+            <CollectionView Grid.Column="1" Grid.Row="0"
                             ItemsLayout="VerticalGrid, 4"
                             ItemsSource="{Binding Palette}">
                 <CollectionView.ItemTemplate>
