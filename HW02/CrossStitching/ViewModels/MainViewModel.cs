@@ -11,7 +11,6 @@ namespace CrossStitching.ViewModels
 {
     public partial class MainViewModel : ViewModel
     {
-        private readonly IServiceProvider _serviceProvider;
         private int _rows;
         private int _cols;
 
@@ -27,9 +26,8 @@ namespace CrossStitching.ViewModels
         [ObservableProperty]
         private ObservableCollection<PaletteViewModel> _palette;
 
-        public MainViewModel(IServiceProvider serviceProvider)
+        public MainViewModel()
         {
-            _serviceProvider = serviceProvider;
             Pixels = new ObservableCollection<PixelViewModel>();
             Palette = new ObservableCollection<PaletteViewModel>();
             _ = FillPaletteAsync();
@@ -64,7 +62,7 @@ namespace CrossStitching.ViewModels
         [RelayCommand]
         public async Task NewCanvasAsync()
         {
-            await Navigation.PushAsync(_serviceProvider.GetRequiredService<SetupView>());
+            await Navigation.PushAsync(new SetupView());
         }
 
         [RelayCommand]
