@@ -10,7 +10,7 @@
     </ContentPage.BindingContext>
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Create new" Command="{Binding NewCanvasCommand} "/>
-        <ToolbarItem Text="Import" />
+        <ToolbarItem Text="Import" Command="{Binding ImportCanvasCommand}" />
     </ContentPage.ToolbarItems>
 
     <ScrollView>

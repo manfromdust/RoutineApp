@@ -58,7 +58,19 @@ namespace CrossStitching.ViewModels
             }
         }
 
+        private void CreateCanvasFromImport()
+        {
+            Pixels.Clear();
+            _cols = CanvasData.Cols;
+            _rows = CanvasData.Rows;
+            Columns = _cols;
 
+            foreach (var colorHex in CanvasData.Pixels)
+            {
+                var pixel = new Pixel { Color = Color.Parse(colorHex) };
+                Pixels.Add(new PixelViewModel { Pixel = pixel });
+            }
+        }
 
         [RelayCommand]
         public async Task NewCanvasAsync()
@@ -83,6 +95,18 @@ namespace CrossStitching.ViewModels
         {
             CanvasData.Pixels = Pixels.Select(p => p.Pixel.Color.ToHex()).ToList();
             await Navigation.PushAsync(new ExportView());
+        }
+
+        [RelayCommand]
+        public async Task ImportCanvasAsync()
+        {
+            var tcs = new TaskCompletionSource<bool>();
+            await Navigation.PushAsync(new ImportView(tcs));
+
+            if (await tcs.Task)
+            {
+                CreateCanvasFromImport();
+            }
         }
     }
 }

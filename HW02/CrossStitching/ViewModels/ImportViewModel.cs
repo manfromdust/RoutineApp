@@ -2,21 +2,23 @@
 using CommunityToolkit.Mvvm.Input;
 using CrossStitching.Models;
 using CrossStitching.Services;
-using Java.Nio.FileNio.Attributes;
 using System.Collections.ObjectModel;
 
 namespace CrossStitching.ViewModels
 {
     public partial class ImportViewModel : ViewModel
     {
+        TaskCompletionSource<bool> _completion;
+
         [ObservableProperty]
         private ObservableCollection<string> _importedFiles;
 
         [ObservableProperty]
         private string _chosenFile = "No file chosen";
 
-        public ImportViewModel()
+        public ImportViewModel(TaskCompletionSource<bool> completion)
         {
+            _completion = completion;
             LoadSavedFiles();
         }
 
@@ -47,6 +49,11 @@ namespace CrossStitching.ViewModels
             catch (Exception ex)
             {
                 // error pop up message
+            }
+            finally
+            {
+                _completion.SetResult(true);
+                await Navigation.PopAsync();
             }
         }
     }
