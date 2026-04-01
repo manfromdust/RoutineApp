@@ -1,11 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
-
 using CrossStitching.Models;
-using CommunityToolkit.Mvvm.Messaging;
-using CrossStitching.Views;
 using CrossStitching.Services;
+using CrossStitching.Views;
+using System.Collections.ObjectModel;
+using static Android.InputMethodServices.Keyboard;
 
 namespace CrossStitching.ViewModels
 {
@@ -30,9 +29,10 @@ namespace CrossStitching.ViewModels
         {
             Pixels = new ObservableCollection<PixelViewModel>();
             Palette = new ObservableCollection<PaletteViewModel>();
+            SelectedColor = Colors.White;
             _ = FillPaletteAsync();
-            WeakReferenceMessenger.Default.Register<CanvasData>(this, (r, m) =>
-                                                            { CreateCanvas(m.Rows, m.Cols); });
+            //WeakReferenceMessenger.Default.Register<CanvasData>(this, (r, m) =>
+            //                                                { CreateCanvas(m.Rows, m.Cols); });
         }
 
         private async Task FillPaletteAsync()
@@ -45,13 +45,14 @@ namespace CrossStitching.ViewModels
             }
         }
 
-        public void CreateCanvas(int rows, int cols)
+        public void CreateCanvas()
         {
             Pixels.Clear();
-            Columns = cols;
-            _cols = cols;
-            _rows = rows;
-            for (int i = 0; i < rows * cols; i++)
+            _cols = CanvasData.Cols;
+            _rows = CanvasData.Rows;
+            Columns = _cols;
+            
+            for (int i = 0; i < _rows * _cols; i++)
             {
                 Pixels.Add(new PixelViewModel { Pixel = new Pixel() });
             }

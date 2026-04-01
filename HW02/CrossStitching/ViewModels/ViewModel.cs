@@ -1,9 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CrossStitching.Models;
 
 namespace CrossStitching.ViewModels
 {
     public abstract partial class ViewModel : ObservableObject
     {
         public INavigation Navigation { get; set; }
+        public CanvasData CanvasData { get; set; }
     }
 }

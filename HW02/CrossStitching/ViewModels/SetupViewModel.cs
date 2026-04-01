@@ -12,13 +12,14 @@ namespace CrossStitching.ViewModels
 
         public SetupViewModel()
         {
-            _dimensions = new CanvasData();
+            _dimensions = CanvasData;
         }
 
         [RelayCommand]
         public async Task GenerateCanvasAsync()
         {
-            WeakReferenceMessenger.Default.Send(Dimensions);
+            //WeakReferenceMessenger.Default.Send(Dimensions);
+
             await Navigation.PopAsync();
         }
     }
