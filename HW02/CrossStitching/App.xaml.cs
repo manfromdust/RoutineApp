@@ -10,7 +10,6 @@ namespace CrossStitching
             InitializeComponent();
 
             _initialPage = new NavigationPage(view);
-
         }
 
         protected override Window CreateWindow(IActivationState? activationState)

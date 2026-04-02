@@ -1,13 +1,22 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CrossStitching.Models;
 using CrossStitching.Services;
 
 namespace CrossStitching.ViewModels
 {
     public partial class ExportViewModel : ViewModel
     {
+        private readonly INavigation _navigation;
+        private readonly CanvasData _canvasData;
         [ObservableProperty]
         private string _fileName;
+
+        public ExportViewModel(INavigation navigation, CanvasData data)
+        {
+            _navigation = navigation;
+            _canvasData = data;
+        }
 
         [RelayCommand]
         public async Task ExportToJsonAsync()
@@ -21,8 +30,8 @@ namespace CrossStitching.ViewModels
                 FileName = FileName.EndsWith(".json") ? FileName : FileName + ".json";
             }
 
-            ImportExportCanvas.ExportToJson(FileName, CanvasData);
-            await Application.Current.MainPage.Navigation.PopAsync();
+            ImportExportCanvas.ExportToJson(FileName, _canvasData);
+            await _navigation.PopAsync();
         }
     }
 }

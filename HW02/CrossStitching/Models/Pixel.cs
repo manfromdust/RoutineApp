@@ -3,6 +3,6 @@ namespace CrossStitching.Models
 {
     public class Pixel
     {
-        public Color Color { get; set; } = Color.FromArgb("#ffffff");
+        public Color Color { get; set; } = Colors.Red;   //Color.FromArgb("#ffffff");
     }
 }

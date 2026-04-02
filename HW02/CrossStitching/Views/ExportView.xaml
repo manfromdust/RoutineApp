@@ -4,9 +4,6 @@
              xmlns:vm="clr-namespace:CrossStitching.ViewModels"
              x:Class="CrossStitching.Views.ExportView"
              Title="Export Canvas">
-    <ContentPage.BindingContext>
-        <vm:ExportViewModel />
-    </ContentPage.BindingContext>
 
     <ScrollView>
         <VerticalStackLayout Padding="14" >

@@ -3,58 +3,68 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:CrossStitching.ViewModels"
              x:Class="CrossStitching.Views.MainView"
+             x:DataType="vm:MainViewModel"
              Title="Cross Stitching"
              x:Name="MainPage">
-    <ContentPage.BindingContext>
-        <vm:MainViewModel />
-    </ContentPage.BindingContext>
+
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Create new" Command="{Binding NewCanvasCommand} "/>
         <ToolbarItem Text="Import" Command="{Binding ImportCanvasCommand}" />
     </ContentPage.ToolbarItems>
 
-    <ScrollView>
-        
-        <Grid ColumnDefinitions="Auto, *" RowDefinitions="*, Auto">
-            <CollectionView Grid.Column="0" Grid.Row="0"
-                            ItemsSource="{Binding Pixels}" SelectionMode="None">
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="{Binding Columns}" />
-                </CollectionView.ItemsLayout>
 
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="vm:PixelViewModel">
-                        <BoxView Color="{Binding Pixel.Color}" HeightRequest="30" WidthRequest="30">
-                            <BoxView.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={x:Reference MainPage},
-                                                                        Path=BindingContext.ChangeColorCommand}"
+
+    <Grid ColumnDefinitions="*, *" RowDefinitions="*, Auto">
+        <!--<Label Grid.Column="0" Grid.Row="0" Text="{Binding Pixels.Count, StringFormat='Pixels loaded: {0}'}" />-->
+        <CollectionView Grid.Column="0" Grid.Row="0"
+                        ItemsSource="{Binding Pixels}" SelectionMode="None"
+                        VerticalOptions="Fill">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="{Binding Columns}"
+                                 HorizontalItemSpacing="1"
+                                 VerticalItemSpacing="1"/>
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:PixelViewModel">
+                    <BoxView Color="{Binding Pixel.Color}" HeightRequest="30" WidthRequest="30">
+                        <BoxView.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ChangeColorCommand}"
                                                       CommandParameter="{Binding .}" />
-                            </BoxView.GestureRecognizers>
-                        </BoxView>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                        </BoxView.GestureRecognizers>
+                    </BoxView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <CollectionView Grid.Column="1" Grid.Row="0"
+                        ItemsSource="{Binding Palette}"
+                        HorizontalOptions="End"
+                        VerticalOptions="Start"
+                        WidthRequest="120">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="4"
+                                 HorizontalItemSpacing="5"
+                                 VerticalItemSpacing="5" />
+            </CollectionView.ItemsLayout>
             
-            <CollectionView Grid.Column="1" Grid.Row="0"
-                            ItemsLayout="VerticalGrid, 4"
-                            ItemsSource="{Binding Palette}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="vm:PaletteViewModel">
-                        <BoxView HeightRequest="10" WidthRequest="10" Color="{Binding ThreadColor.Color}"
-                                 ToolTipProperties.Text="{Binding ThreadColor.Name}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:PaletteViewModel">
+                    <ContentView Padding="2">
+                        <BoxView HeightRequest="20" WidthRequest="20" Color="{Binding ThreadColor.Color}"
+                                     ToolTipProperties.Text="{Binding ThreadColor.Name}">
                             <BoxView.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={x:Reference MainPage},
-                                                                        Path=BindingContext.DifferentThreadColorCommand}"
-                                                      CommandParameter="{Binding .}" />
+                                <TapGestureRecognizer Command="{Binding DifferentThreadColorCommand}"
+                                                          CommandParameter="{Binding .}" />
                             </BoxView.GestureRecognizers>
                         </BoxView>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                    </ContentView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
-            <Button Grid.ColumnSpan="2" Grid.Row="1" Text="Save to file"
+        <Button Grid.ColumnSpan="2" Grid.Row="1" Text="Save to file"
                     HorizontalOptions="Center" Command="{Binding ExportCanvasCommand}" />
-            
-        </Grid>
-    </ScrollView>
+
+    </Grid>
 </ContentPage>

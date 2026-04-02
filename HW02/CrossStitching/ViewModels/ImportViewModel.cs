@@ -8,7 +8,9 @@ namespace CrossStitching.ViewModels
 {
     public partial class ImportViewModel : ViewModel
     {
-        TaskCompletionSource<bool> _completion;
+        private readonly INavigation _navigation;
+        private readonly CanvasData _canvasData;
+        private TaskCompletionSource<bool> _completion;
 
         [ObservableProperty]
         private ObservableCollection<string> _importedFiles;
@@ -16,9 +18,14 @@ namespace CrossStitching.ViewModels
         [ObservableProperty]
         private string _chosenFile = "No file chosen";
 
-        public ImportViewModel(TaskCompletionSource<bool> completion)
+        public ImportViewModel(INavigation navigation,
+                               TaskCompletionSource<bool> completion,
+                               CanvasData data)
         {
             _completion = completion;
+            _navigation = navigation;
+            _canvasData = data;
+            ImportedFiles = new ObservableCollection<string>();
             LoadSavedFiles();
         }
 
@@ -44,7 +51,10 @@ namespace CrossStitching.ViewModels
                 {
                     throw new Exception("Failed to import canvas data.");
                 }
-                CanvasData = importedData;
+
+                _canvasData.Rows = importedData.Rows;
+                _canvasData.Cols = importedData.Cols;
+                _canvasData.Pixels = importedData.Pixels;
             }
             catch (Exception ex)
             {
@@ -53,7 +63,7 @@ namespace CrossStitching.ViewModels
             finally
             {
                 _completion.SetResult(true);
-                await Application.Current.MainPage.Navigation.PopAsync();
+                await _navigation.PopAsync();
             }
         }
     }

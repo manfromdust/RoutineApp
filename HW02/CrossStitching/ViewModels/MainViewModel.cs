@@ -12,7 +12,8 @@ namespace CrossStitching.ViewModels
     {
         private int _rows;
         private int _cols;
-        private INavigation? _navigation;
+        private readonly INavigation? _navigation;
+        private CanvasData _data;
 
         [ObservableProperty]
         private ObservableCollection<PixelViewModel> _pixels;
@@ -26,59 +27,65 @@ namespace CrossStitching.ViewModels
         [ObservableProperty]
         private ObservableCollection<PaletteViewModel> _palette;
 
-        public MainViewModel()
+        public MainViewModel(INavigation navigation, CanvasData data)
         {
             Pixels = new ObservableCollection<PixelViewModel>();
             Palette = new ObservableCollection<PaletteViewModel>();
-            SelectedColor = Colors.White;
-            _navigation = GetNavigation();
+            SelectedColor = Colors.Red;
+            _navigation = navigation;
+            _data = data;
             _ = FillPaletteAsync();
-        }
-
-        private INavigation? GetNavigation()
-        {
-            var window = Application.Current?.Windows.FirstOrDefault();
-            var nav = window?.Page?.Navigation;
-
-            if (nav == null)
-            {
-                nav = Application.Current?.MainPage?.Navigation;
-            }
-
-            return nav;
         }
 
         private async Task FillPaletteAsync()
         {
             Palette.Clear();
             var threadColors = await LoadCustomColors.LoadColorsAsync();
-            foreach (var threadColor in threadColors)
+            MainThread.BeginInvokeOnMainThread(() =>
             {
-                Palette.Add(new PaletteViewModel { ThreadColor = threadColor });
-            }
+                foreach (var threadColor in threadColors)
+                {
+                    Palette.Add(new PaletteViewModel { ThreadColor = threadColor,
+                                                       DifferentThreadColorCommand = this.DifferentThreadColorCommand});
+                }
+            });
         }
 
-        public void CreateCanvas()
+        public async Task CreateCanvasAsync()
         {
-            Pixels.Clear();
-            _cols = CanvasData.Cols;
-            _rows = CanvasData.Rows;
-            Columns = _cols;
-            
-            for (int i = 0; i < _rows * _cols; i++)
+            _cols = _data.Cols;
+            _rows = _data.Rows;
+
+            var temp = await Task.Run(() =>
             {
-                Pixels.Add(new PixelViewModel { Pixel = new Pixel() });
-            }
+                var list = new List<PixelViewModel>(_rows * _cols);
+                for (int i = 0; i < _rows * _cols; i++)
+                {
+                    list.Add(new PixelViewModel
+                    {
+                        Pixel = new Pixel(),
+                        ChangeColorCommand = this.ChangeColorCommand
+                    });
+                }
+                return list;
+            });
+
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                Columns = _cols;
+
+                Pixels = new ObservableCollection<PixelViewModel>(temp);
+            });
         }
 
         private void CreateCanvasFromImport()
         {
             Pixels.Clear();
-            _cols = CanvasData.Cols;
-            _rows = CanvasData.Rows;
+            _cols = _data.Cols;
+            _rows = _data.Rows;
             Columns = _cols;
 
-            foreach (var colorHex in CanvasData.Pixels)
+            foreach (var colorHex in _data.Pixels)
             {
                 var pixel = new Pixel { Color = Color.Parse(colorHex) };
                 Pixels.Add(new PixelViewModel { Pixel = pixel });
@@ -93,7 +100,16 @@ namespace CrossStitching.ViewModels
                 return;
             }
 
-            await _navigation.PushAsync(new SetupView());
+            var tcs = new TaskCompletionSource<bool>();
+
+            await _navigation.PushAsync(new SetupView(tcs, _data));
+
+            if (await tcs.Task)
+            {
+                await Task.Delay(100); // Ensure the UI has time to update before creating the canvas
+
+                await CreateCanvasAsync();
+            }
         }
 
         [RelayCommand]
@@ -116,8 +132,8 @@ namespace CrossStitching.ViewModels
                 return;
             }
 
-            CanvasData.Pixels = Pixels.Select(p => p.Pixel.Color.ToHex()).ToList();
-            await _navigation.PushAsync(new ExportView());
+            _data.Pixels = Pixels.Select(p => p.Pixel.Color.ToHex()).ToList();
+            await _navigation.PushAsync(new ExportView(_data));
         }
 
         [RelayCommand]
@@ -129,7 +145,7 @@ namespace CrossStitching.ViewModels
             }
 
             var tcs = new TaskCompletionSource<bool>();
-            await _navigation.PushAsync(new ImportView(tcs));
+            await _navigation.PushAsync(new ImportView(tcs, _data));
 
             if (await tcs.Task)
             {

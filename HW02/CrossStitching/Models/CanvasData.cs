@@ -3,8 +3,8 @@ namespace CrossStitching.Models
 {
     public class CanvasData
     {
-        public int Rows { get; set; } = 100;
-        public int Cols { get; set; } = 100;
+        public int Rows { get; set; }
+        public int Cols { get; set; }
 
         public List<string> Pixels { get; set; }
     }

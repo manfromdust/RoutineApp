@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CrossStitching.Models;
+using System.Windows.Input;
 
 namespace CrossStitching.ViewModels
 {
@@ -7,5 +8,7 @@ namespace CrossStitching.ViewModels
     {
         [ObservableProperty]
         private ThreadColor _threadColor;
+
+        public ICommand DifferentThreadColorCommand { get; set; }
     }
 }
