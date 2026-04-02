@@ -15,6 +15,7 @@ namespace CrossStitching.ViewModels
         private ObservableCollection<string> _importedFiles;
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(GetFileName))]
         private string _chosenFile = "No file chosen";
 
         public ImportViewModel(INavigation navigation,
@@ -25,6 +26,8 @@ namespace CrossStitching.ViewModels
             ImportedFiles = new ObservableCollection<string>();
             LoadSavedFiles();
         }
+
+        public string GetFileName => Path.GetFileNameWithoutExtension(ChosenFile);
 
         private void LoadSavedFiles()
         {
@@ -39,11 +42,12 @@ namespace CrossStitching.ViewModels
         [RelayCommand]
         public async Task ImportFromJsonAsync()
         {
-            var filePath = Path.Combine(FileSystem.AppDataDirectory, ChosenFile);
+            //var filePath = Path.Combine(FileSystem.AppDataDirectory, ChosenFile);
 
             try
             {
-                CanvasData? importedData = ImportExportCanvas.ImportFromJson(filePath);
+                //CanvasData? importedData = ImportExportCanvas.ImportFromJson(filePath);
+                CanvasData? importedData = ImportExportCanvas.ImportFromJson(ChosenFile);
                 if (importedData == null)
                 {
                     throw new Exception("Failed to import canvas data.");
