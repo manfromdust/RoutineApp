@@ -9,6 +9,7 @@ namespace CrossStitching.ViewModels
     {
         private readonly INavigation _navigation;
         private readonly CanvasData _canvasData;
+
         [ObservableProperty]
         private string _fileName;
 
