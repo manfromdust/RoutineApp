@@ -10,7 +10,6 @@ namespace CrossStitching.ViewModels
     {
         private readonly INavigation _navigation;
         private readonly CanvasData _canvasData;
-        private TaskCompletionSource<bool> _completion;
 
         [ObservableProperty]
         private ObservableCollection<string> _importedFiles;
@@ -19,10 +18,8 @@ namespace CrossStitching.ViewModels
         private string _chosenFile = "No file chosen";
 
         public ImportViewModel(INavigation navigation,
-                               TaskCompletionSource<bool> completion,
                                CanvasData data)
         {
-            _completion = completion;
             _navigation = navigation;
             _canvasData = data;
             ImportedFiles = new ObservableCollection<string>();
@@ -58,11 +55,10 @@ namespace CrossStitching.ViewModels
             }
             catch (Exception ex)
             {
-                // error pop up message
+                throw new Exception(ex.Message);
             }
             finally
             {
-                _completion.SetResult(true);
                 await _navigation.PopAsync();
             }
         }

@@ -108,13 +108,7 @@ namespace CrossStitching.ViewModels
                 return;
             }
 
-            var tcs = new TaskCompletionSource<bool>();
-            await _navigation.PushAsync(new ImportView(tcs, _data));
-
-            if (await tcs.Task)
-            {
-                //CreateCanvasFromImport();
-            }
+            await _navigation.PushAsync(new ImportView(_data));
         }
     }
 }
