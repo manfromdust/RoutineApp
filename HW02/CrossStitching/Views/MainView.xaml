@@ -16,9 +16,17 @@
 
 
     <Grid ColumnDefinitions="*" RowDefinitions="Auto, *">
-        <ScrollView Orientation="Both" Grid.Row="2" >
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" HorizontalOptions="Center"
+              ColumnSpacing="2" RowSpacing="3" >
+            <Label Text="Current color:" Grid.Row="0" Grid.Column="0" HorizontalOptions="End" />
+            <BoxView Color="{Binding SelectedColorUI}" Grid.Row="0" Grid.Column="1"
+                     WidthRequest="20" HeightRequest="20" HorizontalOptions="Start" VerticalOptions="Center" />
+        </Grid>
+        
+
+        <ScrollView Orientation="Both" Grid.Row="1" >
             <GraphicsView x:Name="CanvasGV"
-                          Grid.ColumnSpan="2" Grid.Row="1"
+                          Grid.Row="1"
                           WidthRequest="{Binding CanvasWidth}"
                           HeightRequest="{Binding CanvasHeight}"
                           StartInteraction="OnCanvasInteracted"

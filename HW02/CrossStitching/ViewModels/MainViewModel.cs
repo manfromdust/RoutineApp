@@ -18,6 +18,7 @@ namespace CrossStitching.ViewModels
         private float _cellSize;
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(SelectedColorUI))]
         private string _selectedColor;
 
 
@@ -32,6 +33,8 @@ namespace CrossStitching.ViewModels
 
         public float CanvasWidth => _data.Cols * CellSize;
         public float CanvasHeight => _data.Rows * CellSize;
+
+        public Color SelectedColorUI => Color.FromArgb(SelectedColor);
 
         [RelayCommand]
         public void PaintCell(PointF touchPoint)
