@@ -8,8 +8,6 @@ namespace CrossStitching.ViewModels
     public partial class SetupViewModel : ViewModel
     {
         private readonly INavigation _navigation;
-        private TaskCompletionSource<bool> _completion;
-        private bool _isTaskedCompleted = false;
         private CanvasData _data;
 
         [ObservableProperty]
@@ -19,21 +17,10 @@ namespace CrossStitching.ViewModels
         private string _inputCols = "100";
 
         public SetupViewModel(INavigation navigation,
-                              TaskCompletionSource<bool> tcs,
                               CanvasData data)
         {
             _navigation = navigation;
-            _completion = tcs;
             _data = data;
-        }
-
-        public void NotifyDisappeared()
-        {
-            if (!_isTaskedCompleted)
-            {
-                _isTaskedCompleted = true;
-                _completion.TrySetResult(false);
-            }
         }
 
         [RelayCommand]
@@ -47,8 +34,8 @@ namespace CrossStitching.ViewModels
             _data.Cols = setCols;
             _data.Rows = setRows;
 
-            _completion.SetResult(true);
-            _isTaskedCompleted = true;
+            _data.GenerateCanvas();
+
             await _navigation.PopAsync();
         }
     }

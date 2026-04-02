@@ -67,16 +67,7 @@ namespace CrossStitching.ViewModels
                 return;
             }
 
-            var tcs = new TaskCompletionSource<bool>();
-
-            await _navigation.PushAsync(new SetupView(tcs, _data));
-
-            if (await tcs.Task)
-            {
-                await Task.Delay(100); // Ensure the UI has time to update before creating the canvas
-
-                //await CreateCanvasAsync();
-            }
+            await _navigation.PushAsync(new SetupView(_data));
         }
 
         [RelayCommand]
@@ -106,7 +97,6 @@ namespace CrossStitching.ViewModels
                 return;
             }
 
-            //_data.Pixels = Pixels.Select(p => p.Pixel.Color.ToHex()).ToList();
             await _navigation.PushAsync(new ExportView(_data));
         }
 
