@@ -20,6 +20,7 @@ public partial class MainView : ContentPage
 		_drawable.CellSize = mvm.CellSize;
 
 		mvm.RequestRedraw = () => CanvasGV.Invalidate();
+		mvm.UpdateDrawableSize = (newSize) => _drawable.CellSize = newSize;
     }
 
 	private void OnCanvasInteracted(object sender, TouchEventArgs e)

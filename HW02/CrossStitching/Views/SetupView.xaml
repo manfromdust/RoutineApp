@@ -9,11 +9,17 @@
     <ScrollView>
         <VerticalStackLayout Padding="14">
             <Label Text="How many rows?" />
-            <Entry Text="{Binding InputRows}" Placeholder="Default is 100"
+            <Entry Text="{Binding InputRows}" Placeholder="Default is 50. You must write correct number."
                    Keyboard="Numeric" />
+            
             <Label Text="How many columns?" />
-            <Entry Text="{Binding InputCols}" Placeholder="Default is 100"
+            <Entry Text="{Binding InputCols}" Placeholder="Default is 50. You must write correct number."
                    Keyboard="Numeric" />
+
+            <Label Text="How big should the cell be?" />
+            <Entry Text="{Binding InputCellSize}" Placeholder="Default is 12.0. You must write correct number."
+                   Keyboard="Numeric" />
+            
             <Button Text="Generate canvas" Command="{Binding GenerateCanvasCommand}" />
         </VerticalStackLayout>
     </ScrollView>

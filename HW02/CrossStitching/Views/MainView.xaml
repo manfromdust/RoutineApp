@@ -15,7 +15,8 @@
     </ContentPage.ToolbarItems>
 
 
-    <Grid ColumnDefinitions="*" RowDefinitions="Auto, *" HorizontalOptions="Center" >
+    <Grid ColumnDefinitions="*" RowDefinitions="Auto, *" >
+        
         <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" HorizontalOptions="Center"
               ColumnSpacing="2" RowSpacing="3" Margin="0,0,0,10" >
             <Label Text="Current color:" Grid.Row="0" Grid.Column="0" HorizontalOptions="End" />
@@ -25,7 +26,8 @@
         </Grid>
 
 
-        <ScrollView Orientation="Both" Grid.Row="1" >
+        <ScrollView x:Name="CanvasSV" Orientation="Both" Grid.Row="1" >
+
             <GraphicsView x:Name="CanvasGV"
                               Grid.Row="1"
                               HorizontalOptions="Center"
@@ -34,7 +36,7 @@
                               HeightRequest="{Binding CanvasHeight}"
                               StartInteraction="OnCanvasInteracted"
                               DragInteraction="OnCanvasInteracted" />
-
+                
         </ScrollView>
     </Grid>
 </ContentPage>

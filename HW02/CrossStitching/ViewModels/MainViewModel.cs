@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using CrossStitching.Models;
 using CrossStitching.Views;
-using System.Collections.ObjectModel;
 
 
 namespace CrossStitching.ViewModels
@@ -12,9 +11,12 @@ namespace CrossStitching.ViewModels
         private readonly INavigation? _navigation;
         private CanvasData _data;
 
-        public Action RequestRedraw { get; set; } 
+        public Action RequestRedraw { get; set; }
+        public Action<float> UpdateDrawableSize { get; set; }
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(CanvasWidth))]
+        [NotifyPropertyChangedFor(nameof(CanvasHeight))]
         private float _cellSize;
 
         [ObservableProperty]
@@ -25,7 +27,7 @@ namespace CrossStitching.ViewModels
         public MainViewModel(INavigation navigation, CanvasData data)
         {
             SelectedColor = "#000000";
-            CellSize = 12f;
+            CellSize = data.CellSize;
             _navigation = navigation;
             _data = data;
             _data.GenerateCanvas();
@@ -67,7 +69,18 @@ namespace CrossStitching.ViewModels
                 return;
             }
 
-            await _navigation.PushAsync(new SetupView(_data));
+            var tcs = new TaskCompletionSource<bool>();
+
+            await _navigation.PushAsync(new SetupView(_data, tcs));
+
+            bool result = await tcs.Task;
+
+            if (result)
+            {
+                CellSize = _data.CellSize;
+                UpdateDrawableSize?.Invoke(CellSize);
+                RequestRedraw?.Invoke();
+            }
         }
 
         [RelayCommand]
@@ -108,7 +121,18 @@ namespace CrossStitching.ViewModels
                 return;
             }
 
-            await _navigation.PushAsync(new ImportView(_data));
+            var tcs = new TaskCompletionSource<bool>();
+
+            await _navigation.PushAsync(new ImportView(_data, tcs));
+
+            bool result = await tcs.Task;
+
+            if (result)
+            {
+                CellSize = _data.CellSize;
+                UpdateDrawableSize?.Invoke(CellSize);
+                RequestRedraw?.Invoke();
+            }
         }
     }
 }

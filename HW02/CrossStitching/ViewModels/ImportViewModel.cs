@@ -10,6 +10,8 @@ namespace CrossStitching.ViewModels
     {
         private readonly INavigation _navigation;
         private readonly CanvasData _canvasData;
+        private readonly TaskCompletionSource<bool> _tcs;
+        private bool _isTaskCompleted = false;
 
         [ObservableProperty]
         private ObservableCollection<string> _importedFiles;
@@ -19,12 +21,23 @@ namespace CrossStitching.ViewModels
         private string _chosenFile = "No file chosen";
 
         public ImportViewModel(INavigation navigation,
-                               CanvasData data)
+                               CanvasData data,
+                               TaskCompletionSource<bool> tcs)
         {
             _navigation = navigation;
             _canvasData = data;
+            _tcs = tcs;
             ImportedFiles = new ObservableCollection<string>();
             LoadSavedFiles();
+        }
+
+        public void NotifyDisappeared()
+        {
+            if (!_isTaskCompleted)
+            {
+                _isTaskCompleted = true;
+                _tcs?.SetResult(false);
+            }
         }
 
         public string GetFileName => Path.GetFileNameWithoutExtension(ChosenFile);
@@ -42,11 +55,8 @@ namespace CrossStitching.ViewModels
         [RelayCommand]
         public async Task ImportFromJsonAsync()
         {
-            //var filePath = Path.Combine(FileSystem.AppDataDirectory, ChosenFile);
-
             try
             {
-                //CanvasData? importedData = ImportExportCanvas.ImportFromJson(filePath);
                 CanvasData? importedData = ImportExportCanvas.ImportFromJson(ChosenFile);
                 if (importedData == null)
                 {
@@ -55,6 +65,7 @@ namespace CrossStitching.ViewModels
 
                 _canvasData.Rows = importedData.Rows;
                 _canvasData.Cols = importedData.Cols;
+                _canvasData.CellSize = importedData.CellSize;
                 _canvasData.Pixels = importedData.Pixels;
             }
             catch (Exception ex)
@@ -63,6 +74,8 @@ namespace CrossStitching.ViewModels
             }
             finally
             {
+                _isTaskCompleted = true;
+                _tcs?.SetResult(true);
                 await _navigation.PopAsync();
             }
         }
