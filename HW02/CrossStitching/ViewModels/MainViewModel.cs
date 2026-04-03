@@ -6,7 +6,7 @@ using CrossStitching.Views;
 
 namespace CrossStitching.ViewModels
 {
-    public partial class MainViewModel : ViewModel
+    public partial class MainViewModel : ObservableObject
     {
         private readonly INavigation? _navigation;
         private CanvasData _data;

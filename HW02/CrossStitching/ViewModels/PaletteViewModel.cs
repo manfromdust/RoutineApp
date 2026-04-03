@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 
 namespace CrossStitching.ViewModels
 {
-    public partial class PaletteViewModel : ViewModel
+    public partial class PaletteViewModel : ObservableObject
     {
         private readonly Action<string> _callback;
         private readonly Window _window;

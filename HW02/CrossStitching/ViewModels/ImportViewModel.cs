@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 
 namespace CrossStitching.ViewModels
 {
-    public partial class ImportViewModel : ViewModel
+    public partial class ImportViewModel : ObservableObject
     {
         private readonly INavigation _navigation;
         private readonly CanvasData _canvasData;

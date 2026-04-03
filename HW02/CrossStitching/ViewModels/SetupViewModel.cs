@@ -4,7 +4,7 @@ using CrossStitching.Models;
 
 namespace CrossStitching.ViewModels
 {
-    public partial class SetupViewModel : ViewModel
+    public partial class SetupViewModel : ObservableObject
     {
         private readonly INavigation _navigation;
         private readonly TaskCompletionSource<bool> _taskCompletionSource;

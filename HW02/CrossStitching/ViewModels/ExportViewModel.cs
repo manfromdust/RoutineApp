@@ -5,7 +5,7 @@ using CrossStitching.Services;
 
 namespace CrossStitching.ViewModels
 {
-    public partial class ExportViewModel : ViewModel
+    public partial class ExportViewModel : ObservableObject
     {
         private readonly INavigation _navigation;
         private readonly CanvasData _canvasData;
