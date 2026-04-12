@@ -44,13 +44,16 @@ namespace CrossStitching.ViewModels
             int setCols = 50;
             int setRows = 50;
             float setCellSize = 12f;
-            int.TryParse(InputCols, out setCols);
-            int.TryParse(InputRows, out setRows);
 
             if (float.TryParse(InputCellSize.Trim(), out setCellSize) &&
                 int.TryParse(InputCols.Trim(), out setCols) &&
                 int.TryParse(InputRows.Trim(), out setRows))
             {
+                if (setCols < 0 || setRows < 0 ||
+                    setCellSize < 0)
+                {
+                    return;
+                }
                 _data.CellSize = setCellSize;
                 _data.Cols = setCols;
                 _data.Rows = setRows;
