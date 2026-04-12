@@ -27,7 +27,7 @@ namespace CrossStitching.ViewModels
             _navigation = navigation;
             _canvasData = data;
             _tcs = tcs;
-            ImportedFiles = new ObservableCollection<string>();
+            ImportedFiles = [];
             LoadSavedFiles();
         }
 
