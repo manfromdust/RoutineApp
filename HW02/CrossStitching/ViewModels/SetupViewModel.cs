@@ -41,13 +41,9 @@ namespace CrossStitching.ViewModels
         [RelayCommand]
         public async Task GenerateCanvasAsync()
         {
-            int setCols = 50;
-            int setRows = 50;
-            float setCellSize = 12f;
-
-            if (float.TryParse(InputCellSize.Trim(), out setCellSize) &&
-                int.TryParse(InputCols.Trim(), out setCols) &&
-                int.TryParse(InputRows.Trim(), out setRows))
+            if (float.TryParse(InputCellSize.Trim(), out var setCellSize) &&
+                int.TryParse(InputCols.Trim(), out var setCols) &&
+                int.TryParse(InputRows.Trim(), out var setRows))
             {
                 if (setCols < 0 || setRows < 0 ||
                     setCellSize < 0)
