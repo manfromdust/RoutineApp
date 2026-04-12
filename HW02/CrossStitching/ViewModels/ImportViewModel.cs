@@ -57,11 +57,8 @@ namespace CrossStitching.ViewModels
         {
             try
             {
-                CanvasData? importedData = ImportExportCanvas.ImportFromJson(ChosenFile);
-                if (importedData == null)
-                {
+                CanvasData? importedData = ImportExportCanvas.ImportFromJson(ChosenFile) ?? 
                     throw new Exception("Failed to import canvas data.");
-                }
 
                 _canvasData.Rows = importedData.Rows;
                 _canvasData.Cols = importedData.Cols;
