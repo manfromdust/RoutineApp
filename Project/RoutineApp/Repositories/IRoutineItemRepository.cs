@@ -2,7 +2,7 @@
 
 namespace RoutineApp.Repositories
 {
-    public interface IItemRepository
+    public interface IRoutineItemRepository
     {
         event EventHandler<RoutineItem> OnItemAdded;
         event EventHandler<RoutineItem> OnItemRemoved;
