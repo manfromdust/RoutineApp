@@ -76,11 +76,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Models\" />
-	  <Folder Include="Repositories\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <MauiXaml Update="Views\RoutinesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
