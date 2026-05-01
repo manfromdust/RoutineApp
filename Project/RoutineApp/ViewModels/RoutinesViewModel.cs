@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using RoutineApp.Models;
+using RoutineApp.Views;
 using RoutineApp.Repositories;
 using System.Collections.ObjectModel;
 
@@ -13,6 +15,9 @@ namespace RoutineApp.ViewModels
 
         [ObservableProperty]
         ObservableCollection<RoutineItemViewModel> items;
+
+        [ObservableProperty]
+        RoutineItemViewModel selectedItem;
 
         public RoutinesViewModel(INavigation navigation,
                                  IRoutineItemRepository routineRepo,
@@ -39,6 +44,22 @@ namespace RoutineApp.ViewModels
         private RoutineItemViewModel CreateRoutineItemViewModel(RoutineItem item)
         {
             return new RoutineItemViewModel(item);
+        }
+
+        [RelayCommand]
+        public async Task AddRoutineAsync()
+        {
+            var tcs = new TaskCompletionSource<bool>();
+
+            await _navigation.PushAsync(new RoutineAddPage(_routineRepo, tcs));
+
+            bool result = await tcs.Task;
+
+            if (result)
+            {
+                await _navigation.PushAsync(new RoutineEditPage(_quoteRepo));
+                Task.Run(async () => await LoadDataAsync());
+            }
         }
     }
 }
