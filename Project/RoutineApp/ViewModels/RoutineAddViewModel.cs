@@ -2,6 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using RoutineApp.Models;
 using RoutineApp.Repositories;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 
 namespace RoutineApp.ViewModels
 {
@@ -41,7 +43,9 @@ namespace RoutineApp.ViewModels
         {
             if (string.IsNullOrWhiteSpace(Item.Name))
             {
-                // TODO: Show validation error to the user
+                var toast = Toast.Make("Routine name cannot be empty.", ToastDuration.Long, 14);
+                await toast.Show();
+
                 return;
             }
             await RoutineRepo.AddItemAsync(Item);

@@ -20,7 +20,7 @@ namespace RoutineApp
                 });
 
             builder.Services.AddTransient<ViewModels.MainViewModel>();
-            builder.Services.AddTransient<Views.RoutinesPage>();
+            builder.Services.AddTransient<Views.MainPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();
