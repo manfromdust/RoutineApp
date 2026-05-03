@@ -72,7 +72,7 @@ namespace RoutineApp.ViewModels
             {
                 { "RoutineRepo", _routineRepo },
                 { "QuoteRepo", _quoteRepo },
-                { "RoutineItem", item },
+                { "RoutineItem", item.Item },
                 { "CompletionSource", tcs }
             });
 
