@@ -83,4 +83,5 @@ namespace RoutineApp.ViewModels
                 Task.Run(async () => await LoadDataAsync());
             }
         }
+    }
 }
