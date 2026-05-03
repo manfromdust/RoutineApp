@@ -1,4 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using RoutineApp.Models;
 using RoutineApp.Repositories;
 using System.Collections.ObjectModel;
@@ -59,6 +62,21 @@ namespace RoutineApp.ViewModels
             var quotes = await QuoteRepo.GetItemsAsync(RoutineId);
             var quoteVMs = quotes.Select(q => CreateQuoteItemViewModel(q)).ToList();
             Quotes = new ObservableCollection<QuoteItemViewModel>(quoteVMs);
+        }
+
+        [RelayCommand]
+        public async Task AddNewQuoteAsync()
+        {
+            if (string.IsNullOrWhiteSpace(NewQuote.Quote))
+            {
+                var toast = Toast.Make("Quote cannot be empty.", ToastDuration.Long, 14);
+                await toast.Show();
+                return;
+            }
+            NewQuote.RoutineId = RoutineId;
+            await QuoteRepo.AddItemAsync(NewQuote);
+            Quotes.Add(CreateQuoteItemViewModel(NewQuote));
+            NewQuote = new RoutineQuote();
         }
     }
 }
