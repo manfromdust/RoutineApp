@@ -58,13 +58,29 @@ namespace RoutineApp.ViewModels
 
             if (result)
             {
-                await Shell.Current.GoToAsync(nameof(RoutineEditPage), new Dictionary<string, object>
-                {
-                    { "QuoteRepo", _quoteRepo }
-                });
-
                 Task.Run(async () => await LoadDataAsync());
             }
         }
-    }
+
+        [RelayCommand]
+        public async Task EditRoutineAsync(RoutineItemViewModel item)
+        {
+            if (item == null) return;
+            var tcs = new TaskCompletionSource<bool>();
+
+            await Shell.Current.GoToAsync(nameof(RoutineEditPage), new Dictionary<string, object>
+            {
+                { "RoutineRepo", _routineRepo },
+                { "QuoteRepo", _quoteRepo },
+                { "RoutineItem", item },
+                { "CompletionSource", tcs }
+            });
+
+            bool result = await tcs.Task;
+
+            if (result)
+            {
+                Task.Run(async () => await LoadDataAsync());
+            }
+        }
 }
