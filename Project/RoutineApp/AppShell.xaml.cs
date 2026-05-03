@@ -5,6 +5,9 @@
         public AppShell()
         {
             InitializeComponent();
+
+            Routing.RegisterRoute(nameof(Views.RoutineAddPage), typeof(Views.RoutineAddPage));
+            Routing.RegisterRoute(nameof(Views.RoutineEditPage), typeof(Views.RoutineEditPage));
         }
     }
 }

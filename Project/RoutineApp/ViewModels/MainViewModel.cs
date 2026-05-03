@@ -9,7 +9,6 @@ namespace RoutineApp.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        private readonly INavigation _navigation;
         private readonly IRoutineItemRepository _routineRepo;
         private readonly IQuoteItemRepository _quoteRepo;
 
@@ -19,11 +18,9 @@ namespace RoutineApp.ViewModels
         [ObservableProperty]
         RoutineItemViewModel selectedItem;
 
-        public MainViewModel(INavigation navigation,
-                                 IRoutineItemRepository routineRepo,
-                                 IQuoteItemRepository quoteRepo)
+        public MainViewModel(IRoutineItemRepository routineRepo,
+                             IQuoteItemRepository quoteRepo)
         {
-            _navigation = navigation;
             _routineRepo = routineRepo;
             _quoteRepo = quoteRepo;
 
@@ -51,13 +48,21 @@ namespace RoutineApp.ViewModels
         {
             var tcs = new TaskCompletionSource<bool>();
 
-            await _navigation.PushAsync(new RoutineAddPage(_routineRepo, tcs));
+            await Shell.Current.GoToAsync(nameof(RoutineAddPage), new Dictionary<string, object>
+            {
+                { "RoutineRepo", _routineRepo },
+                { "CompletionSource", tcs }
+            });
 
             bool result = await tcs.Task;
 
             if (result)
             {
-                await _navigation.PushAsync(new RoutineEditPage(_quoteRepo));
+                await Shell.Current.GoToAsync(nameof(RoutineEditPage), new Dictionary<string, object>
+                {
+                    { "QuoteRepo", _quoteRepo }
+                });
+
                 Task.Run(async () => await LoadDataAsync());
             }
         }
