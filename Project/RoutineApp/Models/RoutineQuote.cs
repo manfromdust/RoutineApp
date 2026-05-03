@@ -10,5 +10,6 @@ namespace RoutineApp.Models
         [Indexed]
         public int RoutineId { get; set; }
         public string Quote { get; set; } = string.Empty;
+        public bool Active { get; set; }
     }
 }
