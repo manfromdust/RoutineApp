@@ -1,11 +1,29 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using RoutineApp.Models;
+using RoutineApp.Repositories;
 using System.Collections.ObjectModel;
 
 namespace RoutineApp.ViewModels
 {
+    [QueryProperty(nameof(QuoteRepo), "QuoteRepo")]
+    [QueryProperty(nameof(RoutineId), "RoutineId")]
     public partial class QuotesEditViewModel : ObservableObject
     {
+        private IQuoteItemRepository _quoteRepo;
+        private int _routineId;
+
+        public IQuoteItemRepository QuoteRepo
+        {
+            get => _quoteRepo;
+            set => SetProperty(ref _quoteRepo, value);
+        }
+
+        public int RoutineId
+        {
+            get => _routineId;
+            set => SetProperty(ref _routineId, value);
+        }
+
         [ObservableProperty]
         public ObservableCollection<QuoteItemViewModel> quotes;
 
@@ -34,6 +52,13 @@ namespace RoutineApp.ViewModels
             {
                 Task.Run(async () => await QuoteRepo.UpdateItemAsync(quoteVM.Quote));
             }
+        }
+
+        public async Task LoadQuotesAsync()
+        {
+            var quotes = await QuoteRepo.GetItemsAsync(RoutineId);
+            var quoteVMs = quotes.Select(q => CreateQuoteItemViewModel(q)).ToList();
+            Quotes = new ObservableCollection<QuoteItemViewModel>(quoteVMs);
         }
     }
 }

@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RoutineApp.Models;
 using RoutineApp.Repositories;
+using RoutineApp.Views;
 
 namespace RoutineApp.ViewModels
 {
@@ -72,6 +73,16 @@ namespace RoutineApp.ViewModels
             CompletionSource.SetResult(true);
             _isTaskCompleted = true;
             await Shell.Current.GoToAsync("..");
+        }
+
+        [RelayCommand]
+        public async Task ViewQuotesAsync()
+        {
+            await Shell.Current.GoToAsync(nameof(QuotesEditPage), new Dictionary<string, object>
+            {
+                { "QuoteRepo", QuoteRepo },
+                { "RoutineId", Item.Id }
+            });
         }
     }
 }

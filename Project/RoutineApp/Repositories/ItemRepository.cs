@@ -37,7 +37,7 @@ namespace RoutineApp.Repositories
             OnItemUpdated?.Invoke(this, item);
         }
 
-        private async Task CreateConnectionAsync()
+        protected async Task CreateConnectionAsync()
         {
             if (_connection == null)
             {

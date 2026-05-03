@@ -8,7 +8,7 @@ namespace RoutineApp.Repositories
         event EventHandler<RoutineQuote> OnItemRemoved;
         event EventHandler<RoutineQuote> OnItemUpdated;
 
-        Task<List<RoutineQuote>> GetItemsAsync();
+        Task<List<RoutineQuote>> GetItemsAsync(int routineId);
         Task AddItemAsync(RoutineQuote item);
         Task RemoveItemAsync(RoutineQuote item);
         Task UpdateItemAsync(RoutineQuote item);
