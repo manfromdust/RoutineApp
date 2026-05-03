@@ -75,7 +75,9 @@ namespace RoutineApp.ViewModels
             }
             NewQuote.RoutineId = RoutineId;
             await QuoteRepo.AddItemAsync(NewQuote);
-            Quotes.Add(CreateQuoteItemViewModel(NewQuote));
+            QuoteItemViewModel newQuoteVM = CreateQuoteItemViewModel(NewQuote);
+            Quotes.Add(newQuoteVM);
+            SelectedQuote = newQuoteVM;
             var toastSuccess = Toast.Make("Quote added successfully.", ToastDuration.Short, 14);
             await toastSuccess.Show();
             NewQuote = new RoutineQuote();
