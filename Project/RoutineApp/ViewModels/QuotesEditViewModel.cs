@@ -35,7 +35,7 @@ namespace RoutineApp.ViewModels
 
         public QuotesEditViewModel()
         {
-            Quotes = new ObservableCollection<QuoteItemViewModel>();
+            Task.Run(async () => await LoadQuotesAsync());
             NewQuote = new RoutineQuote();
         }
 
@@ -54,7 +54,7 @@ namespace RoutineApp.ViewModels
             }
         }
 
-        public async Task LoadQuotesAsync()
+        private async Task LoadQuotesAsync()
         {
             var quotes = await QuoteRepo.GetItemsAsync(RoutineId);
             var quoteVMs = quotes.Select(q => CreateQuoteItemViewModel(q)).ToList();
