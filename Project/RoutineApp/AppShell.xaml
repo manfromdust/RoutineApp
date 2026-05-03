@@ -10,7 +10,7 @@
     <TabBar>
         <Tab Title="Routines" >
         <!-- later add icon Icon=".png" -->
-            <ShellContent ContentTemplate="{DataTemplate views:RoutinesPage}" />
+            <ShellContent ContentTemplate="{DataTemplate views:MainPage}" />
         </Tab>
     </TabBar>
 
