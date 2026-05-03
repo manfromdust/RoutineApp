@@ -76,7 +76,25 @@ namespace RoutineApp.ViewModels
             NewQuote.RoutineId = RoutineId;
             await QuoteRepo.AddItemAsync(NewQuote);
             Quotes.Add(CreateQuoteItemViewModel(NewQuote));
+            var toastSuccess = Toast.Make("Quote added successfully.", ToastDuration.Short, 14);
+            await toastSuccess.Show();
             NewQuote = new RoutineQuote();
+        }
+
+        [RelayCommand]
+        public async Task RemoveQuoteAsync()
+        {
+            if (SelectedQuote == null)
+            {
+                var toast = Toast.Make("Please select a quote to remove.", ToastDuration.Short, 14);
+                await toast.Show();
+                return;
+            }
+
+            await QuoteRepo.RemoveItemAsync(SelectedQuote.Quote);
+            Quotes.Remove(SelectedQuote);
+            var toastSuccess = Toast.Make("Quote removed successfully.", ToastDuration.Short, 14);
+            await toastSuccess.Show();
         }
     }
 }
