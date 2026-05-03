@@ -12,6 +12,9 @@
         <!-- later add icon Icon=".png" -->
             <ShellContent ContentTemplate="{DataTemplate views:MainPage}" />
         </Tab>
+        <Tab Title="Settings" >
+            <ShellContent ContentTemplate="{DataTemplate views:SettingsPage}" />
+        </Tab>
     </TabBar>
 
 </Shell>
