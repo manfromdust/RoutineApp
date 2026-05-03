@@ -1,12 +1,36 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:RoutineApp.ViewModels"
              x:Class="RoutineApp.Views.MainPage"
+             x:DataType="vm:MainViewModel"
              Title="Main Page">
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <Grid ColumnDefinitions="Auto" RowDefinitions="Auto, *">
+            
+            <Button Grid.Row="0"
+                    Text="Add routine"
+                    Command="{Binding AddRoutineCommand}" />
+            
+            <CollectionView
+             Grid.Row="1"
+             ItemsSource="{Binding Items}"
+             SelectionMode="Single"
+             SelectedItem="{Binding SelectedItem}"
+             SelectionChangedCommand="{Binding EditRoutineCommand}"
+             SelectionChangedCommandParameter="{Binding SelectedItem}" >
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="vm:RoutineItemViewModel">
+
+                        <Grid Padding="10" ColumnDefinitions="Auto, *, Auto">
+                            <Label Text="{Binding Item.Name}" FontSize="Medium"
+                                   Grid.Column="0" VerticalOptions="Center" />
+                        </Grid>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
+        </Grid>
     </VerticalStackLayout>
 </ContentPage>
