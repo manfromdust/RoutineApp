@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace RoutineApp.ViewModels
 {
-    public partial class RoutinesViewModel : ObservableObject
+    public partial class MainViewModel : ObservableObject
     {
         private readonly INavigation _navigation;
         private readonly IRoutineItemRepository _routineRepo;
@@ -19,7 +19,7 @@ namespace RoutineApp.ViewModels
         [ObservableProperty]
         RoutineItemViewModel selectedItem;
 
-        public RoutinesViewModel(INavigation navigation,
+        public MainViewModel(INavigation navigation,
                                  IRoutineItemRepository routineRepo,
                                  IQuoteItemRepository quoteRepo)
         {

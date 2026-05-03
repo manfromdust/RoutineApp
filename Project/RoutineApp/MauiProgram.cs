@@ -19,7 +19,7 @@ namespace RoutineApp
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            builder.Services.AddTransient<ViewModels.RoutinesViewModel>();
+            builder.Services.AddTransient<ViewModels.MainViewModel>();
             builder.Services.AddTransient<Views.RoutinesPage>();
 
 #if DEBUG
