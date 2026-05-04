@@ -75,5 +75,18 @@ namespace RoutineApp.ViewModels
             var toast = Toast.Make("Notification added", ToastDuration.Short, 14);
             await toast.Show();
         }
-    }
+
+        public async Task RemoveNotificationAsync()
+        {
+            if (SelectedNotification == null)
+            {
+                var toast = Toast.Make("Please select a notification to remove.", ToastDuration.Short, 14);
+                await toast.Show();
+                return;
+            }
+            await NotificationRepo.RemoveItemAsync(SelectedNotification.Notification);
+            SelectedNotification = null;
+            var toastSuccess = Toast.Make("Notification removed", ToastDuration.Short, 14);
+            await toastSuccess.Show();
+        }
 }
