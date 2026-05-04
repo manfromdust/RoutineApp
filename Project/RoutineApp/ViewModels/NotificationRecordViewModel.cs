@@ -7,7 +7,7 @@ namespace RoutineApp.ViewModels
     public partial class NotificationRecordViewModel : ObservableObject
     {
         [ObservableProperty]
-        private NotificationRecord notification;
+        NotificationRecord notification;
 
         public event EventHandler ActiveStatusChanged;
 

@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RoutineApp.Models;
 using RoutineApp.Repositories;
@@ -29,7 +31,7 @@ namespace RoutineApp.ViewModels
         ObservableCollection<NotificationRecordViewModel> notifications;
 
         [ObservableProperty]
-        NotificationRecord notificationToAdd;
+        TimeSpan notificationToAdd;
 
         [ObservableProperty]
         NotificationRecordViewModel selectedNotification;
@@ -39,7 +41,9 @@ namespace RoutineApp.ViewModels
             _notificationRepo.OnItemAdded += async (s, e) => Notifications.Add(CreateNotificationRecordViewModel(e));
             _notificationRepo.OnItemUpdated += async (s, e) => Task.Run(async () => await LoadNotificationsAsync());
             _notificationRepo.OnItemRemoved += async (s, e) => Notifications.Remove(Notifications.FirstOrDefault(i => i.Notification.Id == e.Id));
-            NotificationToAdd = new NotificationRecord();
+
+            var now = DateTime.Now.TimeOfDay;
+            NotificationToAdd = new TimeSpan(now.Hours, now.Minutes, 0);
 
             Task.Run(async () => await LoadNotificationsAsync());
         }
@@ -59,12 +63,17 @@ namespace RoutineApp.ViewModels
         [RelayCommand]
         public async Task AddNotificationAsync()
         {
-            NotificationToAdd.RoutineId = RoutineId;
-            await NotificationRepo.AddItemAsync(NotificationToAdd);
-            //NotificationRecordViewModel newNotificationVM = CreateNotificationRecordViewModel(NotificationToAdd);
+            var newNotification = new NotificationRecord
+            {
+                RoutineId = RoutineId,
+                TimeOfDay = NotificationToAdd,
+            };
+            await NotificationRepo.AddItemAsync(newNotification);
+            //NotificationRecordViewModel newNotificationVM = CreateNotificationRecordViewModel(newNotification);
             //Notifications.Add(newNotificationVM);
             //SelectedNotification = newNotificationVM;
-            NotificationToAdd = new NotificationRecord();
+            var toast = Toast.Make("Notification added", ToastDuration.Short, 14);
+            await toast.Show();
         }
     }
 }
