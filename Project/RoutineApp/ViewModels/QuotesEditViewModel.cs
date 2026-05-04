@@ -45,7 +45,7 @@ namespace RoutineApp.ViewModels
         private QuoteItemViewModel CreateQuoteItemViewModel(RoutineQuote quote)
         {
             var quoteVM = new QuoteItemViewModel(quote);
-            quoteVM.routineActiveStatusChanged += QuoteVM_routineActiveStatusChanged;
+            quoteVM.RoutineActiveStatusChanged += QuoteVM_routineActiveStatusChanged;
             return quoteVM;
         }
 
