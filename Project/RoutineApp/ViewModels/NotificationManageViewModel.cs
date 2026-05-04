@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using RoutineApp.Models;
 using RoutineApp.Repositories;
 using System.Collections.ObjectModel;
@@ -27,11 +28,18 @@ namespace RoutineApp.ViewModels
         [ObservableProperty]
         ObservableCollection<NotificationRecordViewModel> notifications;
 
+        [ObservableProperty]
+        NotificationRecord notificationToAdd;
+
+        [ObservableProperty]
+        NotificationRecordViewModel selectedNotification;
+
         public NotificationManageViewModel()
         {
             _notificationRepo.OnItemAdded += async (s, e) => Notifications.Add(CreateNotificationRecordViewModel(e));
             _notificationRepo.OnItemUpdated += async (s, e) => Task.Run(async () => await LoadNotificationsAsync());
             _notificationRepo.OnItemRemoved += async (s, e) => Notifications.Remove(Notifications.FirstOrDefault(i => i.Notification.Id == e.Id));
+            NotificationToAdd = new NotificationRecord();
 
             Task.Run(async () => await LoadNotificationsAsync());
         }
@@ -46,6 +54,17 @@ namespace RoutineApp.ViewModels
         private NotificationRecordViewModel CreateNotificationRecordViewModel(NotificationRecord record)
         {
             return new NotificationRecordViewModel(record);
+        }
+
+        [RelayCommand]
+        public async Task AddNotificationAsync()
+        {
+            NotificationToAdd.RoutineId = RoutineId;
+            await NotificationRepo.AddItemAsync(NotificationToAdd);
+            //NotificationRecordViewModel newNotificationVM = CreateNotificationRecordViewModel(NotificationToAdd);
+            //Notifications.Add(newNotificationVM);
+            //SelectedNotification = newNotificationVM;
+            NotificationToAdd = new NotificationRecord();
         }
     }
 }
