@@ -11,6 +11,7 @@ namespace RoutineApp.ViewModels
     {
         private readonly IRoutineItemRepository _routineRepo;
         private readonly IQuoteItemRepository _quoteRepo;
+        private readonly INotificationRepository _notificationRepo;
 
         [ObservableProperty]
         ObservableCollection<RoutineItemViewModel> items;
@@ -19,10 +20,12 @@ namespace RoutineApp.ViewModels
         RoutineItemViewModel selectedItem;
 
         public MainViewModel(IRoutineItemRepository routineRepo,
-                             IQuoteItemRepository quoteRepo)
+                             IQuoteItemRepository quoteRepo,
+                             INotificationRepository notificationRepo)
         {
             _routineRepo = routineRepo;
             _quoteRepo = quoteRepo;
+            _notificationRepo = notificationRepo;
 
             _routineRepo.OnItemAdded += async (s, e) => Items.Add(CreateRoutineItemViewModel(e));
             _routineRepo.OnItemUpdated += async (s, e) => Task.Run(async () => await LoadDataAsync());
@@ -73,6 +76,7 @@ namespace RoutineApp.ViewModels
                 { "RoutineRepo", _routineRepo },
                 { "QuoteRepo", _quoteRepo },
                 { "RoutineItem", item.Item },
+                { "NotificationRepo", _notificationRepo },
                 { "CompletionSource", tcs }
             });
 

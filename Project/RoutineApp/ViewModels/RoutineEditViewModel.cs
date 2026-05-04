@@ -11,11 +11,13 @@ namespace RoutineApp.ViewModels
     [QueryProperty(nameof(RoutineRepo), "RoutineRepo")]
     [QueryProperty(nameof(QuoteRepo), "QuoteRepo")]
     [QueryProperty(nameof(RoutineItem), "RoutineItem")]
+    [QueryProperty(nameof(NotificationRepo), "NotificationRepo")]
     [QueryProperty(nameof(CompletionSource), "CompletionSource")]
     public partial class RoutineEditViewModel : ObservableObject
     {
         private IRoutineItemRepository _routineRepo;
         private IQuoteItemRepository _quoteRepo;
+        private INotificationRepository _notificationRepo;
         private RoutineItem _routineItem;
         private TaskCompletionSource<bool> _completionSource;
         private bool _isTaskCompleted = false;
@@ -36,6 +38,12 @@ namespace RoutineApp.ViewModels
         {
             get => _routineItem;
             set => SetProperty(ref _routineItem, value);
+        }
+
+        public INotificationRepository NotificationRepo
+        {
+            get => _notificationRepo;
+            set => SetProperty(ref _notificationRepo, value);
         }
 
         public TaskCompletionSource<bool> CompletionSource
@@ -84,5 +92,13 @@ namespace RoutineApp.ViewModels
                 { "RoutineId", Item.Id }
             });
         }
-    }
+
+        public async Task ManageNotificationsAsync()
+        {
+            await Shell.Current.GoToAsync(nameof(NotificationsPage), new Dictionary<string, object>
+            {
+                { "NotificationRepo", NotificationRepo },
+                { "RoutineId", Item.Id }
+            });
+        }
 }
