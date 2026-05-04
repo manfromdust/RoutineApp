@@ -98,7 +98,7 @@ namespace RoutineApp.ViewModels
             }
 
             await QuoteRepo.RemoveItemAsync(SelectedQuote.Quote);
-            Quotes.Remove(SelectedQuote);
+            //Quotes.Remove(SelectedQuote);
             SelectedQuote = null;
             var toastSuccess = Toast.Make("Quote removed successfully.", ToastDuration.Short, 14);
             await toastSuccess.Show();
