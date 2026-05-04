@@ -38,6 +38,10 @@ namespace RoutineApp.ViewModels
 
         public QuotesEditViewModel()
         {
+            _quoteRepo.OnItemAdded += async (s, e) => Quotes.Add(CreateQuoteItemViewModel(e));
+            _quoteRepo.OnItemUpdated += async (s, e) => Task.Run(async () => await LoadQuotesAsync());
+            _quoteRepo.OnItemRemoved += async (s, e) => Quotes.Remove(Quotes.FirstOrDefault(i => i.Quote.Id == e.Id));
+
             Task.Run(async () => await LoadQuotesAsync());
             NewQuote = new RoutineQuote();
         }
