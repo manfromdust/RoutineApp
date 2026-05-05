@@ -48,8 +48,7 @@ namespace RoutineApp.ViewModels
 
         private QuoteItemViewModel CreateQuoteItemViewModel(RoutineQuote quote)
         {
-            var quoteVM = new QuoteItemViewModel(quote);
-            return quoteVM;
+            return new QuoteItemViewModel(quote);
         }
 
         private async Task LoadQuotesAsync()
