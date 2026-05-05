@@ -60,6 +60,20 @@ namespace RoutineApp.ViewModels
             return new NotificationRecordViewModel(record);
         }
 
+        public async Task ChangeActiveAsync()
+        {
+                if (SelectedNotification == null)
+                {
+                    var toast = Toast.Make("Please select a notification to change.", ToastDuration.Short, 14);
+                    await toast.Show();
+                    return;
+                }
+                SelectedNotification.Notification.Active = !SelectedNotification.Notification.Active;
+                await NotificationRepo.UpdateItemAsync(SelectedNotification.Notification);
+                var toastSuccess = Toast.Make("Notification updated", ToastDuration.Short, 14);
+                await toastSuccess.Show();
+        }
+
         [RelayCommand]
         public async Task AddNotificationAsync()
         {
@@ -69,9 +83,6 @@ namespace RoutineApp.ViewModels
                 TimeOfDay = NotificationToAdd,
             };
             await NotificationRepo.AddItemAsync(newNotification);
-            //NotificationRecordViewModel newNotificationVM = CreateNotificationRecordViewModel(newNotification);
-            //Notifications.Add(newNotificationVM);
-            //SelectedNotification = newNotificationVM;
             var toast = Toast.Make("Notification added", ToastDuration.Short, 14);
             await toast.Show();
         }

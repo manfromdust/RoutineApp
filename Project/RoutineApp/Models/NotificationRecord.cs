@@ -11,7 +11,7 @@ namespace RoutineApp.Models
         public int RoutineId { get; set; }
 
         public TimeSpan TimeOfDay { get; set; }
-        public bool IsActive { get; set; } = true;
+        public bool Active { get; set; } = true;
         public int ScheduledNotificationId { get; set; }
     }
 }
