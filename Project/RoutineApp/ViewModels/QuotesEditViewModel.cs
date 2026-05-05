@@ -28,13 +28,13 @@ namespace RoutineApp.ViewModels
         }
 
         [ObservableProperty]
-        public ObservableCollection<QuoteItemViewModel> quotes;
+        ObservableCollection<QuoteItemViewModel> quotes;
 
         [ObservableProperty]
-        public RoutineQuote newQuote;
+        RoutineQuote newQuote;
 
         [ObservableProperty]
-        public QuoteItemViewModel selectedQuote;
+        QuoteItemViewModel selectedQuote;
 
         public QuotesEditViewModel()
         {
@@ -49,16 +49,7 @@ namespace RoutineApp.ViewModels
         private QuoteItemViewModel CreateQuoteItemViewModel(RoutineQuote quote)
         {
             var quoteVM = new QuoteItemViewModel(quote);
-            quoteVM.RoutineActiveStatusChanged += QuoteVM_routineActiveStatusChanged;
             return quoteVM;
-        }
-
-        private void QuoteVM_routineActiveStatusChanged(object sender, EventArgs e)
-        {
-            if (sender is QuoteItemViewModel quoteVM)
-            {
-                Task.Run(async () => await QuoteRepo.UpdateItemAsync(quoteVM.Quote));
-            }
         }
 
         private async Task LoadQuotesAsync()
@@ -66,6 +57,19 @@ namespace RoutineApp.ViewModels
             var quotes = await QuoteRepo.GetItemsAsync(RoutineId);
             var quoteVMs = quotes.Select(q => CreateQuoteItemViewModel(q)).ToList();
             Quotes = new ObservableCollection<QuoteItemViewModel>(quoteVMs);
+        }
+
+        [RelayCommand]
+        public async Task ChangeActiveAsync()
+        {
+            if (SelectedQuote == null)
+            {
+                var toast = Toast.Make("Please select a quote to change active status.", ToastDuration.Short, 14);
+                await toast.Show();
+                return;
+            }
+            SelectedQuote.Quote.Active = !SelectedQuote.Quote.Active;
+            await QuoteRepo.UpdateItemAsync(SelectedQuote.Quote);
         }
 
         [RelayCommand]
@@ -79,9 +83,6 @@ namespace RoutineApp.ViewModels
             }
             NewQuote.RoutineId = RoutineId;
             await QuoteRepo.AddItemAsync(NewQuote);
-            //QuoteItemViewModel newQuoteVM = CreateQuoteItemViewModel(NewQuote);
-            //Quotes.Add(newQuoteVM);
-            //SelectedQuote = newQuoteVM;
             var toastSuccess = Toast.Make("Quote added successfully.", ToastDuration.Short, 14);
             await toastSuccess.Show();
             NewQuote = new RoutineQuote();
@@ -98,7 +99,6 @@ namespace RoutineApp.ViewModels
             }
 
             await QuoteRepo.RemoveItemAsync(SelectedQuote.Quote);
-            //Quotes.Remove(SelectedQuote);
             SelectedQuote = null;
             var toastSuccess = Toast.Make("Quote removed successfully.", ToastDuration.Short, 14);
             await toastSuccess.Show();

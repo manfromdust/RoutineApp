@@ -9,18 +9,9 @@ namespace RoutineApp.ViewModels
         [ObservableProperty]
         public RoutineQuote quote;
 
-        public event EventHandler RoutineActiveStatusChanged;
-
         public QuoteItemViewModel(RoutineQuote quote)
         {
             Quote = quote;
-        }
-
-        [RelayCommand]
-        public void ToggleActiveStatus()
-        {
-            Quote.Active = !Quote.Active;
-            RoutineActiveStatusChanged?.Invoke(this, new EventArgs());
         }
     }
 }
