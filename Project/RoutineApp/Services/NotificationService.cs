@@ -19,7 +19,7 @@ namespace RoutineApp.Services
         {
             if (randomQuotes == null || randomQuotes.Count == 0) return;
 
-            int baseId = notificationId * 1000;
+            int baseId = notificationId * 100;
 
             for (int i = 0; i < 30; i++)
             {
@@ -46,7 +46,7 @@ namespace RoutineApp.Services
 
         public void CancelNotifications(int routineTimeId)
         {
-            int baseId = routineTimeId * 1000;
+            int baseId = routineTimeId * 100;
 
             for (int i = 1; i <= 30; i++)
             {
