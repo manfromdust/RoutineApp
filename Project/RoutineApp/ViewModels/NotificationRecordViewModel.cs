@@ -9,18 +9,13 @@ namespace RoutineApp.ViewModels
         [ObservableProperty]
         NotificationRecord notification;
 
-        public event EventHandler ActiveStatusChanged;
+        [ObservableProperty]
+        string title;
 
         public NotificationRecordViewModel(NotificationRecord notification)
         {
             Notification = notification;
-        }
-
-        [RelayCommand]
-        public void ToggleActiveStatus()
-        {
-            Notification.IsActive = !Notification.IsActive;
-            ActiveStatusChanged?.Invoke(this, new EventArgs());
+            Title = Notification.TimeOfDay.ToString();
         }
     }
 }
