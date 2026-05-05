@@ -19,6 +19,10 @@ namespace RoutineApp
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            builder.Services.AddSingleton<Services.NotificationService>();
+            builder.Services.AddSingleton<Repositories.RoutineItemRepository>();
+            builder.Services.AddSingleton<Repositories.QuoteItemRepository>();
+            builder.Services.AddSingleton<Repositories.NotificationRepository>();
             builder.Services.AddTransient<ViewModels.MainViewModel>();
             builder.Services.AddTransient<Views.MainPage>();
 
