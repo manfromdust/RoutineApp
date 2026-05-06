@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
 using Plugin.LocalNotification;
+using RoutineApp.Repositories;
 
 namespace RoutineApp
 {
@@ -19,9 +20,9 @@ namespace RoutineApp
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            builder.Services.AddSingleton<Repositories.RoutineItemRepository>();
-            builder.Services.AddSingleton<Repositories.QuoteItemRepository>();
-            builder.Services.AddSingleton<Repositories.NotificationRepository>();
+            builder.Services.AddSingleton<IRoutineItemRepository, RoutineItemRepository>();
+            builder.Services.AddSingleton<IQuoteItemRepository, QuoteItemRepository>();
+            builder.Services.AddSingleton<INotificationRepository, NotificationRepository>();
             builder.Services.AddTransient<ViewModels.MainViewModel>();
             builder.Services.AddTransient<Views.MainPage>();
 
