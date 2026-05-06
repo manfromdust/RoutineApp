@@ -9,6 +9,7 @@ namespace RoutineApp.Repositories
         event EventHandler<NotificationRecord> OnItemUpdated;
 
         Task<List<NotificationRecord>> GetItemsAsync(int routineId);
+        Task<List<NotificationRecord>> GetActiveItemsAsync();
         Task AddItemAsync(NotificationRecord item);
         Task RemoveItemAsync(NotificationRecord item);
         Task UpdateItemAsync(NotificationRecord item);

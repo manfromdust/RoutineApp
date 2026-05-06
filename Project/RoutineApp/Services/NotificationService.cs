@@ -3,9 +3,9 @@ using Plugin.LocalNotification.Core.Models;
 
 namespace RoutineApp.Services
 {
-    public class NotificationService
+    public static class NotificationService
     {
-        public async Task<bool> CheckAndRequestPermissionAsync()
+        public static async Task<bool> CheckAndRequestPermissionAsync()
         {
             var isEnabled = await LocalNotificationCenter.Current.AreNotificationsEnabled();
             if (!isEnabled)
@@ -15,7 +15,7 @@ namespace RoutineApp.Services
             return isEnabled;
         }
 
-        public async Task ScheduleDailyQuotesAsync(int notificationId, string routineName,
+        public static async Task ScheduleDailyQuotesAsync(int notificationId, string routineName,
                                                    TimeSpan timeOfDay, List<string> randomQuotes)
         {
             if (randomQuotes == null || randomQuotes.Count == 0) return;
@@ -45,7 +45,7 @@ namespace RoutineApp.Services
             }
         }
 
-        public void CancelNotifications(int notificationId)
+        public static void CancelNotifications(int notificationId)
         {
             int baseId = notificationId * 100;
 
@@ -56,7 +56,7 @@ namespace RoutineApp.Services
             }
         }
 
-        public async Task RefreshDailyQuotesAsync(int notificationId, string routineName,
+        public static async Task RefreshDailyQuotesAsync(int notificationId, string routineName,
                                                   TimeSpan timeOfDay, List<string> randomQuotes)
         {
             CancelNotifications(notificationId);

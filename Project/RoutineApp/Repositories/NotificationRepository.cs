@@ -3,7 +3,7 @@ using RoutineApp.Models;
 
 namespace RoutineApp.Repositories
 {
-    class NotificationRepository : ItemRepository<NotificationRecord>, INotificationRepository
+    public class NotificationRepository : ItemRepository<NotificationRecord>, INotificationRepository
     {
         public async Task<List<NotificationRecord>> GetItemsAsync(int routineId)
         {
@@ -11,6 +11,14 @@ namespace RoutineApp.Repositories
             return await _connection.Table<NotificationRecord>()
                                     .Where(n => n.RoutineId == routineId)
                                     .ToListAsync();
+        }
+
+        public async Task<List<NotificationRecord>> GetActiveItemsAsync()
+        {
+            await CreateConnectionAsync();
+            return await _connection.Table<NotificationRecord>()
+                .Where(item => item.Active)
+                .ToListAsync();
         }
     }
 }

@@ -9,6 +9,7 @@ namespace RoutineApp.Repositories
         event EventHandler<RoutineQuote> OnItemUpdated;
 
         Task<List<RoutineQuote>> GetItemsAsync(int routineId);
+        Task<List<string>> GetRandomQuotes(int routineId, int max);
         Task AddItemAsync(RoutineQuote item);
         Task RemoveItemAsync(RoutineQuote item);
         Task UpdateItemAsync(RoutineQuote item);
