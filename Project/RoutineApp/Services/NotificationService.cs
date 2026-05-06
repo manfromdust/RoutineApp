@@ -15,7 +15,8 @@ namespace RoutineApp.Services
             return isEnabled;
         }
 
-        public async Task ScheduleDailyQuotesAsync(int notificationId, string routineName, TimeSpan timeOfDay, List<string> randomQuotes)
+        public async Task ScheduleDailyQuotesAsync(int notificationId, string routineName,
+                                                   TimeSpan timeOfDay, List<string> randomQuotes)
         {
             if (randomQuotes == null || randomQuotes.Count == 0) return;
 
@@ -44,15 +45,22 @@ namespace RoutineApp.Services
             }
         }
 
-        public void CancelNotifications(int routineTimeId)
+        public void CancelNotifications(int notificationId)
         {
-            int baseId = routineTimeId * 100;
+            int baseId = notificationId * 100;
 
             for (int i = 1; i <= 30; i++)
             {
                 int androidNotificationId = baseId + i;
                 LocalNotificationCenter.Current.Cancel(androidNotificationId);
             }
+        }
+
+        public async Task RefreshDailyQuotesAsync(int notificationId, string routineName,
+                                                  TimeSpan timeOfDay, List<string> randomQuotes)
+        {
+            CancelNotifications(notificationId);
+            await ScheduleDailyQuotesAsync(notificationId, routineName, timeOfDay, randomQuotes);
         }
     }
 }
