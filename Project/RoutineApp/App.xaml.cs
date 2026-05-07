@@ -8,10 +8,12 @@ namespace RoutineApp
         private readonly INotificationRepository _notificationRepository;
         private readonly IRoutineItemRepository _routineItemRepository;
         private readonly IQuoteItemRepository _quoteItemRepository;
+        private readonly DatabaseInitializer _dbInitializer;
 
         public App(INotificationRepository notificationRepo,
                    IRoutineItemRepository routineRepo,
-                   IQuoteItemRepository quoteRepo)
+                   IQuoteItemRepository quoteRepo,
+                   DatabaseInitializer dbInitializer)
         {
             _notificationRepository = notificationRepo;
             _routineItemRepository = routineRepo;
@@ -27,19 +29,25 @@ namespace RoutineApp
         protected override async void OnStart()
         {
             base.OnStart();
+
             await NotificationService.CheckAndRequestPermissionAsync();
 
-            var activeNotifications = await _notificationRepository.GetActiveItemsAsync();
-
-            foreach (var notification in activeNotifications)
+            Task.Run(async () =>
             {
-                var randomQuotes = await _quoteItemRepository.GetRandomQuotes(notification.RoutineId, 30);
-                await NotificationService.ScheduleDailyQuotesAsync(
-                    notification.Id,
-                    (await _routineItemRepository.GetItemByIdAsync(notification.RoutineId)).Name,
-                    notification.TimeOfDay,
-                    randomQuotes);
-            }
+                await _dbInitializer.InitializeAsync();
+
+                var activeNotifications = await _notificationRepository.GetActiveItemsAsync();
+
+                foreach (var notification in activeNotifications)
+                {
+                    var randomQuotes = await _quoteItemRepository.GetRandomQuotes(notification.RoutineId, 30);
+                    await NotificationService.ScheduleDailyQuotesAsync(
+                        notification.Id,
+                        (await _routineItemRepository.GetItemByIdAsync(notification.RoutineId)).Name,
+                        notification.TimeOfDay,
+                        randomQuotes);
+                }
+            });
         }
     }
 }

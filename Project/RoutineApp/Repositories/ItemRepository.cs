@@ -41,7 +41,7 @@ namespace RoutineApp.Repositories
         {
             if (_connection == null)
             {
-                var databasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "routineapp.db");
+                var databasePath = Path.Combine(FileSystem.AppDataDirectory, "routineapp.db");
                 _connection = new SQLiteAsyncConnection(databasePath);
                 await _connection.CreateTableAsync<T>();
             }
