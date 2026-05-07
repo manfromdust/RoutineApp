@@ -52,7 +52,7 @@ namespace RoutineApp.ViewModels
             _quoteRepo.OnItemUpdated += async (s, e) => MainThread.BeginInvokeOnMainThread(async () => await LoadQuotesAsync());
             _quoteRepo.OnItemRemoved += async (s, e) => Quotes.Remove(Quotes.FirstOrDefault(i => i.Quote.Id == e.Id));
 
-            Task.Run(async () => await LoadQuotesAsync());
+            MainThread.BeginInvokeOnMainThread(async () => await LoadQuotesAsync());
         }
 
         public string ActiveButtonText => SelectedQuote != null && SelectedQuote.Quote.Active ? "Deactivate" : "Activate";

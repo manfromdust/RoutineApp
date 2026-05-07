@@ -55,7 +55,7 @@ namespace RoutineApp.ViewModels
             var now = DateTime.Now.TimeOfDay;
             NotificationToAdd = new TimeSpan(now.Hours, now.Minutes, 0);
 
-            Task.Run(async () => await LoadNotificationsAsync());
+            MainThread.BeginInvokeOnMainThread(async () => await LoadNotificationsAsync());
         }
 
         public string ActiveButtonText => SelectedNotification != null && SelectedNotification.Notification.Active ? "Deactivate" : "Activate";
