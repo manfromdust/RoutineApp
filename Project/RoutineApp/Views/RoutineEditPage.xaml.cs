@@ -4,10 +4,11 @@ namespace RoutineApp.Views;
 
 public partial class RoutineEditPage : ContentPage
 {
-	public RoutineEditPage()
+	public RoutineEditPage(RoutineEditViewModel vm)
 	{
 		InitializeComponent();
-	}
+		BindingContext = vm;
+    }
 
 	protected override void OnDisappearing()
 	{

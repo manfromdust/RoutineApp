@@ -23,8 +23,16 @@ namespace RoutineApp
             builder.Services.AddSingleton<IRoutineItemRepository, RoutineItemRepository>();
             builder.Services.AddSingleton<IQuoteItemRepository, QuoteItemRepository>();
             builder.Services.AddSingleton<INotificationRepository, NotificationRepository>();
-            builder.Services.AddTransient<ViewModels.MainViewModel>();
-            builder.Services.AddTransient<Views.MainPage>();
+            builder.Services.AddSingleton<ViewModels.MainViewModel>();
+            builder.Services.AddSingleton<Views.MainPage>();
+            builder.Services.AddTransient<ViewModels.RoutineEditViewModel>();
+            builder.Services.AddTransient<Views.RoutineEditPage>();
+            builder.Services.AddTransient<ViewModels.NotificationManageViewModel>();
+            builder.Services.AddTransient<Views.NotificationsPage>();
+            builder.Services.AddTransient<ViewModels.QuotesEditViewModel>();
+            builder.Services.AddTransient<Views.QuotesEditPage>();
+            builder.Services.AddTransient<ViewModels.RoutineAddViewModel>();
+            builder.Services.AddTransient<Views.RoutineAddPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();
