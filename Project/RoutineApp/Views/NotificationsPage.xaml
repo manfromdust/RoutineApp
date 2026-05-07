@@ -6,36 +6,40 @@
              x:DataType="vm:NotificationManageViewModel"
              Shell.TabBarIsVisible="False"
              Title="Notifications management">
-    <VerticalStackLayout>
-        <Grid ColumnDefinitions="*" RowDefinitions="Auto, *" >
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20" >
 
-            <VerticalStackLayout Grid.Row="0" Padding="20" Spacing="20" >
-                <Label Text="Set notification time" FontSize="20"
-                       HorizontalOptions="Start" FontAttributes="Bold" />
+            <Label Text="Set notification time" FontSize="20"
+                   HorizontalOptions="Start" FontAttributes="Bold" />
                 <Border StrokeShape="RoundRectangle 8" Padding="10" >
                     <TimePicker Format="HH:mm"
                                 FontSize="24"
                                 HorizontalOptions="Center"
                                 Time="{Binding NotificationToAdd}" />
                 </Border>
-                <Button Text="Add new notification"
+            <HorizontalStackLayout>
+                <Button HorizontalOptions="Start" Text="Add new notification"
                         Command="{Binding AddNotificationCommand}" />
-            </VerticalStackLayout>
-            
-            <CollectionView Grid.Row="1"
-                            ItemsSource="{Binding Notifications}"
+                <Button HorizontalOptions="Center" Text="{Binding ActiveButtonText}"
+                        Command="{Binding ChangeActiveCommand}" />
+                <Button HorizontalOptions="End" Text="Delete selected notification"
+                        Command="{Binding RemoveNotificationCommand}" />
+            </HorizontalStackLayout>
+
+            <CollectionView ItemsSource="{Binding Notifications}"
                             SelectionMode="Single"
                             SelectedItem="{Binding SelectedNotification}" >
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="vm:NotificationRecordViewModel">
                         <Grid Padding="10" ColumnDefinitions="Auto, *, Auto">
                             <Label Text="{Binding Title}" FontSize="Medium"
-                                   Grid.Column="0" VerticalOptions="Center"
+                                   Grid.Column="1" VerticalOptions="Center"
                                    HorizontalOptions="Start" />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
+            </CollectionView>
 
-        </Grid>
-    </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
