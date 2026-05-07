@@ -2,6 +2,7 @@
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Controls;
 using RoutineApp.Models;
 using RoutineApp.Repositories;
 using RoutineApp.Views;
@@ -106,10 +107,17 @@ namespace RoutineApp.ViewModels
         [RelayCommand]
         public async Task DeleteRoutineAsync()
         {
-            await _routineRepo.RemoveItemAsync(RoutineItem);
-            CompletionSource.SetResult(true);
-            _isTaskCompleted = true;
-            await Shell.Current.GoToAsync("..");
+            bool isConfirmed = await Shell.Current.DisplayAlertAsync("Confirm Delete", "Are you sure you want to delete this routine?", "Yes", "No");
+
+            if (isConfirmed)
+            {
+                await _routineRepo.RemoveItemAsync(RoutineItem);
+                var toast = Toast.Make("Routine removed successfully.", ToastDuration.Long, 14);
+                await toast.Show();
+                CompletionSource.SetResult(true);
+                _isTaskCompleted = true;
+                await Shell.Current.GoToAsync("..");
+            }
         }
     }
 }
