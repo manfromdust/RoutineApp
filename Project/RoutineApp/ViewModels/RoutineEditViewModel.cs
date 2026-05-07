@@ -88,11 +88,29 @@ namespace RoutineApp.ViewModels
         [RelayCommand]
         public async Task ViewQuotesAsync()
         {
+            var tcs = new TaskCompletionSource<bool>();
             await Shell.Current.GoToAsync(nameof(QuotesEditPage), new Dictionary<string, object>
             {
                 { "QuoteRepo", QuoteRepo },
-                { "RoutineId", Item.Id }
+                { "RoutineId", Item.Id },
+                { "CompletionSource", tcs }
             });
+
+            bool result = await tcs.Task;
+            if (result)
+            {
+                var toast = Toast.Make("Notifications adjusted to updated quotes list.", ToastDuration.Long, 14);
+                await toast.Show();
+                var notifications = await NotificationRepo.GetItemsAsync(RoutineItem.Id);
+                foreach (var notification in notifications)
+                {
+                    var randomQuotes = await QuoteRepo.GetRandomQuotes(RoutineItem.Id, 30); ;
+                    await NotificationService.RefreshDailyQuotesAsync(notification.Id,
+                                                                      RoutineItem.Name,
+                                                                      notification.TimeOfDay,
+                                                                      randomQuotes);
+                }
+            }
         }
 
         [RelayCommand]
