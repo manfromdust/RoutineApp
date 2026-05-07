@@ -35,7 +35,7 @@ namespace RoutineApp.ViewModels
             _routineRepo.OnItemUpdated += (s, e) => MainThread.BeginInvokeOnMainThread(async () => await LoadDataAsync());
             _routineRepo.OnItemRemoved += async (s, e) => Items.Remove(Items.FirstOrDefault(i => i.Item.Id == e.Id));
 
-            Task.Run(async () => await LoadDataAsync());
+            MainThread.BeginInvokeOnMainThread(async () => await LoadDataAsync());
         }
 
         public string ActiveButtonText => SelectedItem != null && SelectedItem.Item.Active ? "Deactivate" : "Activate";
@@ -43,11 +43,14 @@ namespace RoutineApp.ViewModels
         private async Task LoadDataAsync()
         {
             var routines = await _routineRepo.GetItemsAsync();
-            Items.Clear();
-            foreach (var routine in routines)
+            MainThread.BeginInvokeOnMainThread(() =>
             {
-                Items.Add(CreateRoutineItemViewModel(routine));
-            }
+                Items.Clear();
+                foreach (var routine in routines)
+                {
+                    Items.Add(CreateRoutineItemViewModel(routine));
+                }
+            });
         }
 
         private RoutineItemViewModel CreateRoutineItemViewModel(RoutineItem item)
@@ -70,7 +73,7 @@ namespace RoutineApp.ViewModels
 
             if (result)
             {
-                Task.Run(async () => await LoadDataAsync());
+                MainThread.BeginInvokeOnMainThread(async () => await LoadDataAsync());
             }
         }
 
