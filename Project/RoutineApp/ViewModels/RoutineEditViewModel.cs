@@ -53,27 +53,21 @@ namespace RoutineApp.ViewModels
         [RelayCommand]
         public async Task ViewQuotesAsync()
         {
-            var tcs = new TaskCompletionSource<bool>();
             await Shell.Current.GoToAsync(nameof(QuotesEditPage), new Dictionary<string, object>
             {
-                { "RoutineId", Item.Id },
-                { "CompletionSource", tcs }
+                { "RoutineId", Item.Id }
             });
 
-            bool result = await tcs.Task;
-            if (result)
+            var toast = Toast.Make("Notifications adjusted to updated quotes list.", ToastDuration.Long, 14);
+            await toast.Show();
+            var notifications = await _notificationRepo.GetItemsAsync(RoutineItem.Id);
+            foreach (var notification in notifications)
             {
-                var toast = Toast.Make("Notifications adjusted to updated quotes list.", ToastDuration.Long, 14);
-                await toast.Show();
-                var notifications = await _notificationRepo.GetItemsAsync(RoutineItem.Id);
-                foreach (var notification in notifications)
-                {
-                    var randomQuotes = await _quoteRepo.GetRandomQuotes(RoutineItem.Id, 30); ;
-                    await NotificationService.RefreshDailyQuotesAsync(notification.Id,
-                                                                      RoutineItem.Name,
-                                                                      notification.TimeOfDay,
-                                                                      randomQuotes);
-                }
+                var randomQuotes = await _quoteRepo.GetRandomQuotes(RoutineItem.Id, 30); ;
+                await NotificationService.RefreshDailyQuotesAsync(notification.Id,
+                                                                  RoutineItem.Name,
+                                                                  notification.TimeOfDay,
+                                                                  randomQuotes);
             }
         }
 

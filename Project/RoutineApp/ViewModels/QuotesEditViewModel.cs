@@ -9,24 +9,15 @@ using System.Collections.ObjectModel;
 namespace RoutineApp.ViewModels
 {
     [QueryProperty(nameof(RoutineId), "RoutineId")]
-    [QueryProperty(nameof(CompletionSource), "CompletionSource")]
     public partial class QuotesEditViewModel : ObservableObject
     {
         private IQuoteItemRepository _quoteRepo;
         private int _routineId;
-        private TaskCompletionSource<bool> _completionSource;
-        private bool _isTaskCompleted = false;
 
         public int RoutineId
         {
             get => _routineId;
             set => SetProperty(ref _routineId, value);
-        }
-
-        public TaskCompletionSource<bool> CompletionSource
-        {
-            get => _completionSource;
-            set => SetProperty(ref _completionSource, value);
         }
 
         [ObservableProperty]
@@ -50,14 +41,6 @@ namespace RoutineApp.ViewModels
         }
 
         public string ActiveButtonText => SelectedQuote != null && SelectedQuote.Quote.Active ? "Deactivate" : "Activate";
-
-        public void NotifyDisappered()
-        {
-            if (!_isTaskCompleted)
-            {
-                CompletionSource.SetResult(false);
-            }
-        }
 
         private QuoteItemViewModel CreateQuoteItemViewModel(RoutineQuote quote)
         {
@@ -86,8 +69,6 @@ namespace RoutineApp.ViewModels
             SelectedQuote.Quote.Active = !SelectedQuote.Quote.Active;
             await _quoteRepo.UpdateItemAsync(SelectedQuote.Quote);
             OnPropertyChanged(nameof(ActiveButtonText));
-            CompletionSource.SetResult(true);
-            _isTaskCompleted = true;
         }
 
         [RelayCommand]
@@ -109,8 +90,6 @@ namespace RoutineApp.ViewModels
             await _quoteRepo.AddItemAsync(quoteItem);
             var toastSuccess = Toast.Make("Quote added successfully.", ToastDuration.Short, 14);
             await toastSuccess.Show();
-            CompletionSource.SetResult(true);
-            _isTaskCompleted = true;
             NewQuote = string.Empty;
         }
 
@@ -135,8 +114,6 @@ namespace RoutineApp.ViewModels
             SelectedQuote = null;
             var toastSuccess = Toast.Make("Quote removed successfully.", ToastDuration.Short, 14);
             await toastSuccess.Show();
-            CompletionSource.SetResult(true);
-            _isTaskCompleted = true;
         }
     }
 }

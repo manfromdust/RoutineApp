@@ -7,35 +7,16 @@ using CommunityToolkit.Maui.Core;
 
 namespace RoutineApp.ViewModels
 {
-    [QueryProperty(nameof(RoutineRepo), "RoutineRepo")]
-    [QueryProperty(nameof(CompletionSource), "CompletionSource")]
     public partial class RoutineAddViewModel : ObservableObject
     {
         private IRoutineItemRepository _routineRepo;
-        private TaskCompletionSource<bool> _completionSource;
-        private bool _isTaskCompleted = false;
-
-        public IRoutineItemRepository RoutineRepo
-        {
-            get => _routineRepo;
-            set => SetProperty(ref _routineRepo, value);
-        }
-
-        public TaskCompletionSource<bool> CompletionSource
-        {
-            get => _completionSource;
-            set => SetProperty(ref _completionSource, value);
-        }
 
         [ObservableProperty]
         public string item;
 
-        public void NotifyDisappered()
+        public RoutineAddViewModel(IRoutineItemRepository routineRepo)
         {
-            if (!_isTaskCompleted)
-            {
-                CompletionSource.SetResult(false);
-            }
+            _routineRepo = routineRepo;
         }
 
         [RelayCommand]
@@ -48,9 +29,7 @@ namespace RoutineApp.ViewModels
 
                 return;
             }
-            await RoutineRepo.AddItemAsync(new RoutineItem { Name = Item });
-            CompletionSource.SetResult(true);
-            _isTaskCompleted = true;
+            await _routineRepo.AddItemAsync(new RoutineItem { Name = Item });
             await Shell.Current.GoToAsync("..");
         }
     }

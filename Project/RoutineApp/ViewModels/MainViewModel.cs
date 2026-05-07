@@ -61,10 +61,7 @@ namespace RoutineApp.ViewModels
         [RelayCommand]
         public async Task AddRoutineAsync()
         {
-            await Shell.Current.GoToAsync(nameof(RoutineAddPage), new Dictionary<string, object>
-            {
-                { "RoutineRepo", _routineRepo }
-            });
+            await Shell.Current.GoToAsync(nameof(RoutineAddPage));
         }
 
         [RelayCommand]
