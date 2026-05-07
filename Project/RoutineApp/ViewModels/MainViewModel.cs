@@ -6,6 +6,7 @@ using RoutineApp.Repositories;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
+using RoutineApp.Services;
 
 namespace RoutineApp.ViewModels
 {
@@ -81,6 +82,24 @@ namespace RoutineApp.ViewModels
                 var toast = Toast.Make("Please select a routine to change active status.", ToastDuration.Short, 14);
                 await toast.Show();
                 return;
+            }
+            var notifications = await _notificationRepo.GetItemsAsync(SelectedItem.Item.Id);
+            if (SelectedItem.Item.Active)
+            {
+                foreach (var notification in notifications)
+                {
+                    NotificationService.CancelNotifications(notification.Id);
+                }
+            } else
+            {
+                foreach (var notification in notifications)
+                {
+                    var randomQuotes = await _quoteRepo.GetRandomQuotes(SelectedItem.Item.Id, 30);
+                    await NotificationService.ScheduleDailyQuotesAsync(notification.Id,
+                                                                       SelectedItem.Item.Name,
+                                                                       notification.TimeOfDay,
+                                                                       randomQuotes);
+                }
             }
             SelectedItem.Item.Active = !SelectedItem.Item.Active;
             await _routineRepo.UpdateItemAsync(SelectedItem.Item);
