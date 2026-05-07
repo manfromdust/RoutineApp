@@ -10,30 +10,16 @@ using System.Collections.ObjectModel;
 namespace RoutineApp.ViewModels
 {
     [QueryProperty(nameof(RoutineId), "RoutineId")]
-    [QueryProperty(nameof(NotificationRepo), "NotificationRepo")]
-    [QueryProperty(nameof(QuoteRepo), "QuoteRepo")]
     public partial class NotificationManageViewModel : ObservableObject
     {
         private int _routineId;
         private INotificationRepository _notificationRepo;
-        private IQuoteItemRepository _quoteItemRepository;
+        private IQuoteItemRepository _quoteRepo;
 
         public int RoutineId
         {
             get => _routineId;
             set => SetProperty(ref _routineId, value);
-        }
-
-        public INotificationRepository NotificationRepo
-        {
-            get => _notificationRepo;
-            set => SetProperty(ref _notificationRepo, value);
-        }
-
-        public IQuoteItemRepository QuoteRepo
-        {
-            get => _quoteItemRepository;
-            set => SetProperty(ref _quoteItemRepository, value);
         }
 
         [ObservableProperty]
@@ -46,8 +32,12 @@ namespace RoutineApp.ViewModels
         [NotifyPropertyChangedFor(nameof(ActiveButtonText))]
         NotificationRecordViewModel selectedNotification;
 
-        public NotificationManageViewModel()
+        public NotificationManageViewModel(INotificationRepository notificationRepository,
+                                           IQuoteItemRepository quoteItemRepository)
         {
+            _notificationRepo = notificationRepository;
+            _quoteRepo = quoteItemRepository;
+
             _notificationRepo.OnItemAdded += async (s, e) => Notifications.Add(CreateNotificationRecordViewModel(e));
             _notificationRepo.OnItemUpdated += async (s, e) => Task.Run(async () => await LoadNotificationsAsync());
             _notificationRepo.OnItemRemoved += async (s, e) => Notifications.Remove(Notifications.FirstOrDefault(i => i.Notification.Id == e.Id));
@@ -90,14 +80,14 @@ namespace RoutineApp.ViewModels
             }
             else
             {
-                var randomQuotes = await QuoteRepo.GetRandomQuotes(RoutineId, 30);
+                var randomQuotes = await _quoteRepo.GetRandomQuotes(RoutineId, 30);
                 await NotificationService.ScheduleDailyQuotesAsync(SelectedNotification.Notification.Id,
                                                                    "Your Routine",
                                                                    SelectedNotification.Notification.TimeOfDay,
                                                                    randomQuotes);
             }
             SelectedNotification.Notification.Active = !SelectedNotification.Notification.Active;
-            await NotificationRepo.UpdateItemAsync(SelectedNotification.Notification);
+            await _notificationRepo.UpdateItemAsync(SelectedNotification.Notification);
             var toastSuccess = Toast.Make("Notification updated", ToastDuration.Short, 14);
             await toastSuccess.Show();
         }
@@ -110,7 +100,7 @@ namespace RoutineApp.ViewModels
                 RoutineId = RoutineId,
                 TimeOfDay = NotificationToAdd,
             };
-            await NotificationRepo.AddItemAsync(newNotification);
+            await _notificationRepo.AddItemAsync(newNotification);
             var toast = Toast.Make("Notification added", ToastDuration.Short, 14);
             await toast.Show();
         }
@@ -124,7 +114,7 @@ namespace RoutineApp.ViewModels
                 await toast.Show();
                 return;
             }
-            await NotificationRepo.RemoveItemAsync(SelectedNotification.Notification);
+            await _notificationRepo.RemoveItemAsync(SelectedNotification.Notification);
             SelectedNotification = null;
             var toastSuccess = Toast.Make("Notification removed", ToastDuration.Short, 14);
             await toastSuccess.Show();

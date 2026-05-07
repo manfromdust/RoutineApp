@@ -8,7 +8,6 @@ using System.Collections.ObjectModel;
 
 namespace RoutineApp.ViewModels
 {
-    [QueryProperty(nameof(QuoteRepo), "QuoteRepo")]
     [QueryProperty(nameof(RoutineId), "RoutineId")]
     [QueryProperty(nameof(CompletionSource), "CompletionSource")]
     public partial class QuotesEditViewModel : ObservableObject
@@ -17,12 +16,6 @@ namespace RoutineApp.ViewModels
         private int _routineId;
         private TaskCompletionSource<bool> _completionSource;
         private bool _isTaskCompleted = false;
-
-        public IQuoteItemRepository QuoteRepo
-        {
-            get => _quoteRepo;
-            set => SetProperty(ref _quoteRepo, value);
-        }
 
         public int RoutineId
         {
@@ -46,8 +39,9 @@ namespace RoutineApp.ViewModels
         [NotifyPropertyChangedFor(nameof(ActiveButtonText))]
         QuoteItemViewModel selectedQuote;
 
-        public QuotesEditViewModel()
+        public QuotesEditViewModel(IQuoteItemRepository quoteRepo)
         {
+            _quoteRepo = quoteRepo;
             _quoteRepo.OnItemAdded += async (s, e) => Quotes.Add(CreateQuoteItemViewModel(e));
             _quoteRepo.OnItemUpdated += async (s, e) => MainThread.BeginInvokeOnMainThread(async () => await LoadQuotesAsync());
             _quoteRepo.OnItemRemoved += async (s, e) => Quotes.Remove(Quotes.FirstOrDefault(i => i.Quote.Id == e.Id));
@@ -72,7 +66,7 @@ namespace RoutineApp.ViewModels
 
         private async Task LoadQuotesAsync()
         {
-            var quotes = await QuoteRepo.GetItemsAsync(RoutineId);
+            var quotes = await _quoteRepo.GetItemsAsync(RoutineId);
             Quotes.Clear();
             foreach (var quote in quotes)
             {
@@ -90,7 +84,7 @@ namespace RoutineApp.ViewModels
                 return;
             }
             SelectedQuote.Quote.Active = !SelectedQuote.Quote.Active;
-            await QuoteRepo.UpdateItemAsync(SelectedQuote.Quote);
+            await _quoteRepo.UpdateItemAsync(SelectedQuote.Quote);
             OnPropertyChanged(nameof(ActiveButtonText));
             CompletionSource.SetResult(true);
             _isTaskCompleted = true;
@@ -112,7 +106,7 @@ namespace RoutineApp.ViewModels
                 RoutineId = RoutineId,
             };
 
-            await QuoteRepo.AddItemAsync(quoteItem);
+            await _quoteRepo.AddItemAsync(quoteItem);
             var toastSuccess = Toast.Make("Quote added successfully.", ToastDuration.Short, 14);
             await toastSuccess.Show();
             CompletionSource.SetResult(true);
@@ -137,7 +131,7 @@ namespace RoutineApp.ViewModels
                 return;
             }
 
-            await QuoteRepo.RemoveItemAsync(SelectedQuote.Quote);
+            await _quoteRepo.RemoveItemAsync(SelectedQuote.Quote);
             SelectedQuote = null;
             var toastSuccess = Toast.Make("Quote removed successfully.", ToastDuration.Short, 14);
             await toastSuccess.Show();

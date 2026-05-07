@@ -61,20 +61,10 @@ namespace RoutineApp.ViewModels
         [RelayCommand]
         public async Task AddRoutineAsync()
         {
-            var tcs = new TaskCompletionSource<bool>();
-
             await Shell.Current.GoToAsync(nameof(RoutineAddPage), new Dictionary<string, object>
             {
-                { "RoutineRepo", _routineRepo },
-                { "CompletionSource", tcs }
+                { "RoutineRepo", _routineRepo }
             });
-
-            bool result = await tcs.Task;
-
-            if (result)
-            {
-                MainThread.BeginInvokeOnMainThread(async () => await LoadDataAsync());
-            }
         }
 
         [RelayCommand]
@@ -118,23 +108,11 @@ namespace RoutineApp.ViewModels
                 await toast.Show();
                 return;
             }
-            var tcs = new TaskCompletionSource<bool>();
 
             await Shell.Current.GoToAsync(nameof(RoutineEditPage), new Dictionary<string, object>
             {
-                { "RoutineRepo", _routineRepo },
-                { "QuoteRepo", _quoteRepo },
-                { "RoutineItem", SelectedItem.Item },
-                { "NotificationRepo", _notificationRepo },
-                { "CompletionSource", tcs }
+                { "RoutineItem", SelectedItem.Item }
             });
-
-            bool result = await tcs.Task;
-
-            //if (result)
-            //{
-            //    Task.Run(async () => await LoadDataAsync());
-            //}
 
             SelectedItem = null;
         }

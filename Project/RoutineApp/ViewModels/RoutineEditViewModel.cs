@@ -9,31 +9,13 @@ using RoutineApp.Views;
 
 namespace RoutineApp.ViewModels
 {
-    [QueryProperty(nameof(RoutineRepo), "RoutineRepo")]
-    [QueryProperty(nameof(QuoteRepo), "QuoteRepo")]
     [QueryProperty(nameof(RoutineItem), "RoutineItem")]
-    [QueryProperty(nameof(NotificationRepo), "NotificationRepo")]
-    [QueryProperty(nameof(CompletionSource), "CompletionSource")]
     public partial class RoutineEditViewModel : ObservableObject
     {
         private IRoutineItemRepository _routineRepo;
         private IQuoteItemRepository _quoteRepo;
         private INotificationRepository _notificationRepo;
         private RoutineItem _routineItem;
-        private TaskCompletionSource<bool> _completionSource;
-        private bool _isTaskCompleted = false;
-
-        public IRoutineItemRepository RoutineRepo
-        {
-            get => _routineRepo;
-            set => SetProperty(ref _routineRepo, value);
-        }
-
-        public IQuoteItemRepository QuoteRepo
-        {
-            get => _quoteRepo;
-            set => SetProperty(ref _quoteRepo, value);
-        }
 
         public RoutineItem RoutineItem
         {
@@ -41,32 +23,17 @@ namespace RoutineApp.ViewModels
             set => SetProperty(ref _routineItem, value);
         }
 
-        public INotificationRepository NotificationRepo
-        {
-            get => _notificationRepo;
-            set => SetProperty(ref _notificationRepo, value);
-        }
-
-        public TaskCompletionSource<bool> CompletionSource
-        {
-            get => _completionSource;
-            set => SetProperty(ref _completionSource, value);
-        }
-
         [ObservableProperty]
         public RoutineItem item;
 
-        public RoutineEditViewModel()
+        public RoutineEditViewModel(IRoutineItemRepository routineRepo,
+                                    IQuoteItemRepository quoteRepo,
+                                    INotificationRepository notificationRepo)
         {
             item = RoutineItem;
-        }
-
-        public void NotifyDisappered()
-        {
-            if (!_isTaskCompleted)
-            {
-                CompletionSource.SetResult(false);
-            }
+            _routineRepo = routineRepo;
+            _quoteRepo = quoteRepo;
+            _notificationRepo = notificationRepo;
         }
 
         [RelayCommand]
@@ -78,11 +45,9 @@ namespace RoutineApp.ViewModels
                 await toast.Show();
                 return;
             }
-            await RoutineRepo.UpdateItemAsync(Item);
+            await _routineRepo.UpdateItemAsync(Item);
             var toast_s = Toast.Make("Routine renamed successfully.", ToastDuration.Long, 14);
             await toast_s.Show();
-            CompletionSource.SetResult(true);
-            _isTaskCompleted = true;
         }
 
         [RelayCommand]
@@ -91,7 +56,6 @@ namespace RoutineApp.ViewModels
             var tcs = new TaskCompletionSource<bool>();
             await Shell.Current.GoToAsync(nameof(QuotesEditPage), new Dictionary<string, object>
             {
-                { "QuoteRepo", QuoteRepo },
                 { "RoutineId", Item.Id },
                 { "CompletionSource", tcs }
             });
@@ -101,10 +65,10 @@ namespace RoutineApp.ViewModels
             {
                 var toast = Toast.Make("Notifications adjusted to updated quotes list.", ToastDuration.Long, 14);
                 await toast.Show();
-                var notifications = await NotificationRepo.GetItemsAsync(RoutineItem.Id);
+                var notifications = await _notificationRepo.GetItemsAsync(RoutineItem.Id);
                 foreach (var notification in notifications)
                 {
-                    var randomQuotes = await QuoteRepo.GetRandomQuotes(RoutineItem.Id, 30); ;
+                    var randomQuotes = await _quoteRepo.GetRandomQuotes(RoutineItem.Id, 30); ;
                     await NotificationService.RefreshDailyQuotesAsync(notification.Id,
                                                                       RoutineItem.Name,
                                                                       notification.TimeOfDay,
@@ -118,9 +82,7 @@ namespace RoutineApp.ViewModels
         {
             await Shell.Current.GoToAsync(nameof(NotificationsPage), new Dictionary<string, object>
             {
-                { "NotificationRepo", NotificationRepo },
-                { "RoutineId", Item.Id },
-                { "QuoteRepo", QuoteRepo }
+                { "RoutineId", Item.Id }
             });
         }
 
@@ -131,17 +93,15 @@ namespace RoutineApp.ViewModels
 
             if (isConfirmed)
             {
-                var notifications = await NotificationRepo.GetItemsAsync(Item.Id);
+                var notifications = await _notificationRepo.GetItemsAsync(Item.Id);
                 foreach (var notification in notifications)
                 {
                     NotificationService.CancelNotifications(notification.Id);
-                    await NotificationRepo.RemoveItemAsync(notification);
+                    await _notificationRepo.RemoveItemAsync(notification);
                 }
                 await _routineRepo.RemoveItemAsync(RoutineItem);
                 var toast = Toast.Make("Routine and its notifications removed successfully.", ToastDuration.Long, 14);
                 await toast.Show();
-                CompletionSource.SetResult(true);
-                _isTaskCompleted = true;
                 await Shell.Current.GoToAsync("..");
             }
         }
