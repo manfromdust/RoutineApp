@@ -60,6 +60,7 @@ namespace RoutineApp.ViewModels
             return new NotificationRecordViewModel(record);
         }
 
+        [RelayCommand]
         public async Task ChangeActiveAsync()
         {
                 if (SelectedNotification == null)
