@@ -1,13 +1,40 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:RoutineApp.ViewModels"
              x:Class="RoutineApp.Views.QuotesEditPage"
+             x:DataType="vm:QuotesEditViewModel"
              Shell.TabBarIsVisible="False"
              Title="QuotesEditPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout Padding="14">
+            
+            <HorizontalStackLayout>
+                <Button HorizontalOptions="Start"
+                        Text="Add routine"
+                        Command="{Binding AddNewQuoteCommand}" />
+                <Button HorizontalOptions="Center"
+                        Text="Activate"
+                        Command="{Binding ChangeActiveCommand}" />
+                <Button HorizontalOptions="End"
+                        Text="Delete selected routine"
+                        Command="{Binding RemoveQuoteCommand}" />
+            </HorizontalStackLayout>
+
+            <CollectionView ItemsSource="{Binding Quotes}"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding SelectedQuote}" >
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="vm:QuoteItemViewModel" >
+                        <Grid ColumnDefinitions="Auto, *, Auto" >
+                            <Label Text="{Binding Quote.Quote}" FontSize="Medium"
+                                   Grid.Column="1" HorizontalOptions="Start" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
+        </VerticalStackLayout>
+        
+    </ScrollView>
 </ContentPage>
