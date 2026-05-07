@@ -92,10 +92,10 @@ namespace RoutineApp.ViewModels
 
             bool result = await tcs.Task;
 
-            if (result)
-            {
-                Task.Run(async () => await LoadDataAsync());
-            }
+            //if (result)
+            //{
+            //    Task.Run(async () => await LoadDataAsync());
+            //}
 
             SelectedItem = null;
         }
