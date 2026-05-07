@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RoutineApp.Models;
 using RoutineApp.Repositories;
+using RoutineApp.Services;
 using RoutineApp.Views;
 
 namespace RoutineApp.ViewModels
@@ -82,7 +83,6 @@ namespace RoutineApp.ViewModels
             await toast_s.Show();
             CompletionSource.SetResult(true);
             _isTaskCompleted = true;
-            //await Shell.Current.GoToAsync("..");
         }
 
         [RelayCommand]
@@ -113,8 +113,14 @@ namespace RoutineApp.ViewModels
 
             if (isConfirmed)
             {
+                var notifications = await NotificationRepo.GetItemsAsync(Item.Id);
+                foreach (var notification in notifications)
+                {
+                    NotificationService.CancelNotifications(notification.Id);
+                    await NotificationRepo.RemoveItemAsync(notification);
+                }
                 await _routineRepo.RemoveItemAsync(RoutineItem);
-                var toast = Toast.Make("Routine removed successfully.", ToastDuration.Long, 14);
+                var toast = Toast.Make("Routine and its notifications removed successfully.", ToastDuration.Long, 14);
                 await toast.Show();
                 CompletionSource.SetResult(true);
                 _isTaskCompleted = true;
