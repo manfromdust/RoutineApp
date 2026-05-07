@@ -16,9 +16,15 @@ namespace RoutineApp.Repositories
         public async Task<List<NotificationRecord>> GetActiveItemsAsync()
         {
             await CreateConnectionAsync();
-            return await _connection.Table<NotificationRecord>()
-                .Where(item => item.Active)
-                .ToListAsync();
+            string query = @"
+                            SELECT n.* 
+                            FROM NotificationRecord n
+                            INNER JOIN RoutineItem r ON n.RoutineId = r.Id
+                            WHERE n.Active = 1 AND r.Active = 1";
+            return await _connection.QueryAsync<NotificationRecord>(query);
+            //return await _connection.Table<NotificationRecord>()
+            //    .Where(item => item.Active)
+            //    .ToListAsync();
         }
     }
 }
