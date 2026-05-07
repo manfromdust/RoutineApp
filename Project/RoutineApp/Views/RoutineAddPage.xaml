@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:RoutineApp.ViewModels"
              x:Class="RoutineApp.Views.RoutineAddPage"
+             x:DataType="vm:RoutineAddViewModel"
              Shell.TabBarIsVisible="False"
              Title="Add new routine">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ScrollView>
+        
+        <VerticalStackLayout Padding="14" >
+            
+            <Label Text="How should be new routine named?" />
+            <Entry Text="{Binding Item}" />
+            <Button Text="Create" Command="{Binding SaveCommand}" />
+
+        </VerticalStackLayout>
+        
+    </ScrollView>
 </ContentPage>
