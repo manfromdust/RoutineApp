@@ -93,6 +93,7 @@ namespace RoutineApp.ViewModels
             });
         }
 
+        [RelayCommand]
         public async Task ManageNotificationsAsync()
         {
             await Shell.Current.GoToAsync(nameof(NotificationsPage), new Dictionary<string, object>
