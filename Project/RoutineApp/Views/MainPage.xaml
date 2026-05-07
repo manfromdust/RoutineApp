@@ -6,12 +6,15 @@
              x:DataType="vm:MainViewModel"
              Title="Main Page">
     <ScrollView>
-        <Grid ColumnDefinitions="Auto" RowDefinitions="Auto, *">
+        <Grid ColumnDefinitions="Auto, Auto" RowDefinitions="Auto, *">
             
-            <Button Grid.Row="0"
+            <Button Grid.Row="0" Grid.Column="0" HorizontalOptions="Start"
                     Text="Add routine"
                     Command="{Binding AddRoutineCommand}" />
-            
+            <Button Grid.Row="0" Grid.Column="1" HorizontalOptions="End"
+                    Text="Manage selected routine"
+                    Command="{Binding EditRoutineCommand}" />
+
             <CollectionView
              Grid.Row="1"
              ItemsSource="{Binding Items}"
