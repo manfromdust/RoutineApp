@@ -102,4 +102,5 @@ namespace RoutineApp.ViewModels
                 { "RoutineId", Item.Id }
             });
         }
+    }
 }
