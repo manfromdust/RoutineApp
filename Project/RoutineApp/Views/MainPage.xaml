@@ -5,7 +5,7 @@
              x:Class="RoutineApp.Views.MainPage"
              x:DataType="vm:MainViewModel"
              Title="Main Page">
-    <VerticalStackLayout>
+    <ScrollView>
         <Grid ColumnDefinitions="Auto" RowDefinitions="Auto, *">
             
             <Button Grid.Row="0"
@@ -32,5 +32,5 @@
             </CollectionView>
             
         </Grid>
-    </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
