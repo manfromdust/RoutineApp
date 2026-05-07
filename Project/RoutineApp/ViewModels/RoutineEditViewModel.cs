@@ -78,9 +78,11 @@ namespace RoutineApp.ViewModels
                 return;
             }
             await RoutineRepo.UpdateItemAsync(Item);
+            var toast_s = Toast.Make("Routine renamed successfully.", ToastDuration.Long, 14);
+            await toast_s.Show();
             CompletionSource.SetResult(true);
             _isTaskCompleted = true;
-            await Shell.Current.GoToAsync("..");
+            //await Shell.Current.GoToAsync("..");
         }
 
         [RelayCommand]
