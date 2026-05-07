@@ -31,7 +31,7 @@ namespace RoutineApp.ViewModels
         ObservableCollection<QuoteItemViewModel> quotes = new();
 
         [ObservableProperty]
-        RoutineQuote newQuote;
+        string newQuote;
 
         [ObservableProperty]
         QuoteItemViewModel selectedQuote;
@@ -43,7 +43,6 @@ namespace RoutineApp.ViewModels
             _quoteRepo.OnItemRemoved += async (s, e) => Quotes.Remove(Quotes.FirstOrDefault(i => i.Quote.Id == e.Id));
 
             Task.Run(async () => await LoadQuotesAsync());
-            NewQuote = new RoutineQuote();
         }
 
         private QuoteItemViewModel CreateQuoteItemViewModel(RoutineQuote quote)
@@ -77,17 +76,23 @@ namespace RoutineApp.ViewModels
         [RelayCommand]
         public async Task AddNewQuoteAsync()
         {
-            if (string.IsNullOrWhiteSpace(NewQuote.Quote))
+            if (string.IsNullOrWhiteSpace(NewQuote))
             {
                 var toast = Toast.Make("Quote cannot be empty.", ToastDuration.Long, 14);
                 await toast.Show();
                 return;
             }
-            NewQuote.RoutineId = RoutineId;
-            await QuoteRepo.AddItemAsync(NewQuote);
+
+            var quoteItem = new RoutineQuote
+            {
+                Quote = NewQuote,
+                RoutineId = RoutineId,
+            };
+
+            await QuoteRepo.AddItemAsync(quoteItem);
             var toastSuccess = Toast.Make("Quote added successfully.", ToastDuration.Short, 14);
             await toastSuccess.Show();
-            NewQuote = new RoutineQuote();
+            NewQuote = string.Empty;
         }
 
         [RelayCommand]
