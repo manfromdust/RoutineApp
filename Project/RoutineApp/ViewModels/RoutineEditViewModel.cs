@@ -24,13 +24,13 @@ namespace RoutineApp.ViewModels
         }
 
         [ObservableProperty]
-        public RoutineItem item;
+        string newName = string.Empty;
 
         public RoutineEditViewModel(IRoutineItemRepository routineRepo,
                                     IQuoteItemRepository quoteRepo,
                                     INotificationRepository notificationRepo)
         {
-            item = RoutineItem;
+            NewName = RoutineItem?.Name ?? string.Empty;
             _routineRepo = routineRepo;
             _quoteRepo = quoteRepo;
             _notificationRepo = notificationRepo;
@@ -39,13 +39,14 @@ namespace RoutineApp.ViewModels
         [RelayCommand]
         public async Task SaveAsync()
         {
-            if (string.IsNullOrWhiteSpace(Item.Name))
+            if (string.IsNullOrWhiteSpace(NewName))
             {
                 var toast = Toast.Make("Routine name cannot be empty.", ToastDuration.Long, 14);
                 await toast.Show();
                 return;
             }
-            await _routineRepo.UpdateItemAsync(Item);
+            RoutineItem.Name = NewName;
+            await _routineRepo.UpdateItemAsync(RoutineItem);
             var toast_s = Toast.Make("Routine renamed successfully.", ToastDuration.Long, 14);
             await toast_s.Show();
         }
@@ -55,7 +56,7 @@ namespace RoutineApp.ViewModels
         {
             await Shell.Current.GoToAsync(nameof(QuotesEditPage), new Dictionary<string, object>
             {
-                { "RoutineId", Item.Id }
+                { "RoutineId", RoutineItem.Id }
             });
 
             var toast = Toast.Make("Notifications adjusted to updated quotes list.", ToastDuration.Long, 14);
@@ -76,7 +77,7 @@ namespace RoutineApp.ViewModels
         {
             await Shell.Current.GoToAsync(nameof(NotificationsPage), new Dictionary<string, object>
             {
-                { "RoutineId", Item.Id }
+                { "RoutineId", RoutineItem.Id }
             });
         }
 
@@ -87,7 +88,7 @@ namespace RoutineApp.ViewModels
 
             if (isConfirmed)
             {
-                var notifications = await _notificationRepo.GetItemsAsync(Item.Id);
+                var notifications = await _notificationRepo.GetItemsAsync(RoutineItem.Id);
                 foreach (var notification in notifications)
                 {
                     NotificationService.CancelNotifications(notification.Id);

@@ -9,14 +9,4 @@ public partial class RoutineAddPage : ContentPage
 		InitializeComponent();
         BindingContext = vm;
     }
-
-    protected override void OnDisappearing()
-    {
-        base.OnDisappearing();
-
-        if (BindingContext is RoutineAddViewModel viewModel)
-        {
-            viewModel.NotifyDisappered();
-        }
-    }
 }
