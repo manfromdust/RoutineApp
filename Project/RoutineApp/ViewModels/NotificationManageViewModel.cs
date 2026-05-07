@@ -28,7 +28,7 @@ namespace RoutineApp.ViewModels
         }
 
         [ObservableProperty]
-        ObservableCollection<NotificationRecordViewModel> notifications;
+        ObservableCollection<NotificationRecordViewModel> notifications = new();
 
         [ObservableProperty]
         TimeSpan notificationToAdd;
@@ -51,8 +51,11 @@ namespace RoutineApp.ViewModels
         private async Task LoadNotificationsAsync()
         {
             var notifications = await _notificationRepo.GetItemsAsync(RoutineId);
-            var notificationViewModels = notifications.Select(n => CreateNotificationRecordViewModel(n)).ToList();
-            Notifications = new ObservableCollection<NotificationRecordViewModel>(notificationViewModels);
+            Notifications.Clear();
+            foreach (var notification in notifications)
+            {
+                Notifications.Add(CreateNotificationRecordViewModel(notification));
+            }
         }
 
         private NotificationRecordViewModel CreateNotificationRecordViewModel(NotificationRecord record)
