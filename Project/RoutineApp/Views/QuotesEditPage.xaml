@@ -14,7 +14,7 @@
                         Text="Add routine"
                         Command="{Binding AddNewQuoteCommand}" />
                 <Button HorizontalOptions="Center"
-                        Text="Activate"
+                        Text="{Binding ActiveButtonText}"
                         Command="{Binding ChangeActiveCommand}" />
                 <Button HorizontalOptions="End"
                         Text="Delete selected routine"

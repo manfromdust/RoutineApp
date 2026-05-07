@@ -19,6 +19,7 @@ namespace RoutineApp.ViewModels
         ObservableCollection<RoutineItemViewModel> items = new();
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(ActiveButtonText))]
         RoutineItemViewModel selectedItem;
 
         public MainViewModel(IRoutineItemRepository routineRepo,
@@ -35,6 +36,8 @@ namespace RoutineApp.ViewModels
 
             Task.Run(async () => await LoadDataAsync());
         }
+
+        public string ActiveButtonText => SelectedItem != null && SelectedItem.Item.Active ? "Deactivate" : "Activate";
 
         private async Task LoadDataAsync()
         {
@@ -68,6 +71,20 @@ namespace RoutineApp.ViewModels
             {
                 Task.Run(async () => await LoadDataAsync());
             }
+        }
+
+        [RelayCommand]
+        public async Task ChangeActiveAsync()
+        {
+            if (SelectedItem == null)
+            {
+                var toast = Toast.Make("Please select a routine to change active status.", ToastDuration.Short, 14);
+                await toast.Show();
+                return;
+            }
+            SelectedItem.Item.Active = !SelectedItem.Item.Active;
+            await _routineRepo.UpdateItemAsync(SelectedItem.Item);
+            OnPropertyChanged(nameof(ActiveButtonText));
         }
 
         [RelayCommand]

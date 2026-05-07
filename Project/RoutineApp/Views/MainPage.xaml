@@ -6,20 +6,24 @@
              x:DataType="vm:MainViewModel"
              Title="Main Page">
     <ScrollView>
-        <Grid ColumnDefinitions="Auto, Auto" RowDefinitions="Auto, *">
+        <VerticalStackLayout Padding="14" >
+            <HorizontalStackLayout>
+                <Button HorizontalOptions="Start"
+                        Text="Add routine"
+                        Command="{Binding AddRoutineCommand}" />
+                <Button HorizontalOptions="Center"
+                        Text="{Binding ActiveButtonText}"
+                        Command="{Binding ChangeActiveCommand}" />
+                <Button HorizontalOptions="End"
+                        Text="Manage selected routine"
+                        Command="{Binding EditRoutineCommand}" />
+            </HorizontalStackLayout>
             
-            <Button Grid.Row="0" Grid.Column="0" HorizontalOptions="Start"
-                    Text="Add routine"
-                    Command="{Binding AddRoutineCommand}" />
-            <Button Grid.Row="0" Grid.Column="1" HorizontalOptions="End"
-                    Text="Manage selected routine"
-                    Command="{Binding EditRoutineCommand}" />
 
-            <CollectionView
-             Grid.Row="1"
-             ItemsSource="{Binding Items}"
-             SelectionMode="Single"
-             SelectedItem="{Binding SelectedItem}" >
+            <CollectionView Grid.Row="1"
+                            ItemsSource="{Binding Items}"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding SelectedItem}" >
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="vm:RoutineItemViewModel">
 
@@ -32,6 +36,6 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
             
-        </Grid>
+        <VerticalStackLayout/>
     </ScrollView>
 </ContentPage>

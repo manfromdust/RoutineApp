@@ -34,6 +34,7 @@ namespace RoutineApp.ViewModels
         string newQuote;
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(ActiveButtonText))]
         QuoteItemViewModel selectedQuote;
 
         public QuotesEditViewModel()
@@ -44,6 +45,8 @@ namespace RoutineApp.ViewModels
 
             Task.Run(async () => await LoadQuotesAsync());
         }
+
+        public string ActiveButtonText => SelectedQuote != null && SelectedQuote.Quote.Active ? "Deactivate" : "Activate";
 
         private QuoteItemViewModel CreateQuoteItemViewModel(RoutineQuote quote)
         {
@@ -71,6 +74,7 @@ namespace RoutineApp.ViewModels
             }
             SelectedQuote.Quote.Active = !SelectedQuote.Quote.Active;
             await QuoteRepo.UpdateItemAsync(SelectedQuote.Quote);
+            OnPropertyChanged(nameof(ActiveButtonText));
         }
 
         [RelayCommand]
