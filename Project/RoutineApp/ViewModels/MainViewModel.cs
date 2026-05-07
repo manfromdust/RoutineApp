@@ -4,6 +4,8 @@ using RoutineApp.Models;
 using RoutineApp.Views;
 using RoutineApp.Repositories;
 using System.Collections.ObjectModel;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 
 namespace RoutineApp.ViewModels
 {
@@ -66,16 +68,21 @@ namespace RoutineApp.ViewModels
         }
 
         [RelayCommand]
-        public async Task EditRoutineAsync(RoutineItemViewModel item)
+        public async Task EditRoutineAsync()
         {
-            if (item == null) return;
+            if (SelectedItem == null)
+            {
+                var toast = Toast.Make("Please select a routine to edit.", ToastDuration.Short, 14);
+                await toast.Show();
+                return;
+            }
             var tcs = new TaskCompletionSource<bool>();
 
             await Shell.Current.GoToAsync(nameof(RoutineEditPage), new Dictionary<string, object>
             {
                 { "RoutineRepo", _routineRepo },
                 { "QuoteRepo", _quoteRepo },
-                { "RoutineItem", item.Item },
+                { "RoutineItem", SelectedItem.Item },
                 { "NotificationRepo", _notificationRepo },
                 { "CompletionSource", tcs }
             });
