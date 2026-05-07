@@ -1,13 +1,33 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:RoutineApp.ViewModels"
              x:Class="RoutineApp.Views.RoutineEditPage"
+             x:DataType="vm:RoutineEditViewModel"
              Shell.TabBarIsVisible="False"
              Title="Edit existing routine">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    
+    <ScrollView>
+
+        <VerticalStackLayout Padding="14" >
+
+            <HorizontalStackLayout>
+                <Entry Text="{Binding Item.Name}"
+                       Placeholder="{Binding Item.Name}"
+                       HorizontalOptions="Fill" />
+                <Button Text="Rename routine"
+                        Command="{Binding SaveCommand}"
+                        HorizontalOptions="End" />
+            </HorizontalStackLayout>
+            
+            <Button Text="Delete routine"
+                    Command="{Binding DeleteRoutineCommand}" />
+            <Button Text="Manage quotes"
+                    Command="{Binding ViewQuotesCommand}" />
+            <Button Text="Manage notifications"
+                    Command="{Binding ManageNotificationsCommand}" />
+
+        </VerticalStackLayout>
+
+    </ScrollView>
 </ContentPage>
