@@ -101,7 +101,8 @@ namespace RoutineApp.ViewModels
             await Shell.Current.GoToAsync(nameof(NotificationsPage), new Dictionary<string, object>
             {
                 { "NotificationRepo", NotificationRepo },
-                { "RoutineId", Item.Id }
+                { "RoutineId", Item.Id },
+                { "QuoteRepo", QuoteRepo }
             });
         }
 
