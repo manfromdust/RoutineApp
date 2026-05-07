@@ -102,5 +102,14 @@ namespace RoutineApp.ViewModels
                 { "RoutineId", Item.Id }
             });
         }
+
+        [RelayCommand]
+        public async Task DeleteRoutineAsync()
+        {
+            await _routineRepo.RemoveItemAsync(RoutineItem);
+            CompletionSource.SetResult(true);
+            _isTaskCompleted = true;
+            await Shell.Current.GoToAsync("..");
+        }
     }
 }
