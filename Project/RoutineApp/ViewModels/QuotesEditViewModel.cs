@@ -28,7 +28,7 @@ namespace RoutineApp.ViewModels
         }
 
         [ObservableProperty]
-        ObservableCollection<QuoteItemViewModel> quotes;
+        ObservableCollection<QuoteItemViewModel> quotes = new();
 
         [ObservableProperty]
         RoutineQuote newQuote;
@@ -39,7 +39,7 @@ namespace RoutineApp.ViewModels
         public QuotesEditViewModel()
         {
             _quoteRepo.OnItemAdded += async (s, e) => Quotes.Add(CreateQuoteItemViewModel(e));
-            _quoteRepo.OnItemUpdated += async (s, e) => Task.Run(async () => await LoadQuotesAsync());
+            _quoteRepo.OnItemUpdated += async (s, e) => MainThread.BeginInvokeOnMainThread(async () => await LoadQuotesAsync());
             _quoteRepo.OnItemRemoved += async (s, e) => Quotes.Remove(Quotes.FirstOrDefault(i => i.Quote.Id == e.Id));
 
             Task.Run(async () => await LoadQuotesAsync());
@@ -54,8 +54,11 @@ namespace RoutineApp.ViewModels
         private async Task LoadQuotesAsync()
         {
             var quotes = await QuoteRepo.GetItemsAsync(RoutineId);
-            var quoteVMs = quotes.Select(q => CreateQuoteItemViewModel(q)).ToList();
-            Quotes = new ObservableCollection<QuoteItemViewModel>(quoteVMs);
+            Quotes.Clear();
+            foreach (var quote in quotes)
+            {
+                Quotes.Add(CreateQuoteItemViewModel(quote));
+            }
         }
 
         [RelayCommand]
@@ -94,6 +97,13 @@ namespace RoutineApp.ViewModels
             {
                 var toast = Toast.Make("Please select a quote to remove.", ToastDuration.Short, 14);
                 await toast.Show();
+                return;
+            }
+
+            bool isConfirmed = await Shell.Current.DisplayAlertAsync("Confirm Delete", "Are you sure you want to delete this quote?", "Yes", "No");
+            
+            if (!isConfirmed)
+            {
                 return;
             }
 
