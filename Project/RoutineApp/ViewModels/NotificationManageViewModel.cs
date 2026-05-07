@@ -114,6 +114,7 @@ namespace RoutineApp.ViewModels
             await toast.Show();
         }
 
+        [RelayCommand]
         public async Task RemoveNotificationAsync()
         {
             if (SelectedNotification == null)
