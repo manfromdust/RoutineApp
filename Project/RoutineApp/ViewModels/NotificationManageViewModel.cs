@@ -87,7 +87,8 @@ namespace RoutineApp.ViewModels
             if (SelectedNotification.Notification.Active)
             {
                 NotificationService.CancelNotifications(SelectedNotification.Notification.Id);
-            } else
+            }
+            else
             {
                 var randomQuotes = await QuoteRepo.GetRandomQuotes(RoutineId, 30);
                 await NotificationService.ScheduleDailyQuotesAsync(SelectedNotification.Notification.Id,
@@ -128,4 +129,5 @@ namespace RoutineApp.ViewModels
             var toastSuccess = Toast.Make("Notification removed", ToastDuration.Short, 14);
             await toastSuccess.Show();
         }
+    }
 }
