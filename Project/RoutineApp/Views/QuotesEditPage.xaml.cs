@@ -9,13 +9,4 @@ public partial class QuotesEditPage : ContentPage
 		InitializeComponent();
 		BindingContext = vm;
 	}
-
-    protected override void OnDisappearing()
-    {
-        base.OnDisappearing();
-        if (BindingContext is QuotesEditViewModel vm)
-        {
-            vm.NotifyDisappered();
-        }
-    }
 }

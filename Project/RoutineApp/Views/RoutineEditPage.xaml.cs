@@ -9,13 +9,4 @@ public partial class RoutineEditPage : ContentPage
 		InitializeComponent();
 		BindingContext = vm;
     }
-
-	protected override void OnDisappearing()
-	{
-		base.OnDisappearing();
-		if (BindingContext is RoutineEditViewModel vm)
-		{
-			vm.NotifyDisappered();
-		}
-    }
 }
