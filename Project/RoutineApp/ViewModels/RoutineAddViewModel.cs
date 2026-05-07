@@ -28,7 +28,7 @@ namespace RoutineApp.ViewModels
         }
 
         [ObservableProperty]
-        public RoutineItem item = new();
+        public string item;
 
         public void NotifyDisappered()
         {
@@ -41,14 +41,14 @@ namespace RoutineApp.ViewModels
         [RelayCommand]
         public async Task SaveAsync()
         {
-            if (string.IsNullOrWhiteSpace(Item.Name))
+            if (string.IsNullOrWhiteSpace(Item))
             {
                 var toast = Toast.Make("Routine name cannot be empty.", ToastDuration.Long, 14);
                 await toast.Show();
 
                 return;
             }
-            await RoutineRepo.AddItemAsync(Item);
+            await RoutineRepo.AddItemAsync(new RoutineItem { Name = Item });
             CompletionSource.SetResult(true);
             _isTaskCompleted = true;
             await Shell.Current.GoToAsync("..");
