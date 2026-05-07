@@ -8,12 +8,10 @@ namespace RoutineApp
         private readonly INotificationRepository _notificationRepository;
         private readonly IRoutineItemRepository _routineItemRepository;
         private readonly IQuoteItemRepository _quoteItemRepository;
-        private readonly DatabaseInitializer _dbInitializer;
 
         public App(INotificationRepository notificationRepo,
                    IRoutineItemRepository routineRepo,
-                   IQuoteItemRepository quoteRepo,
-                   DatabaseInitializer dbInitializer)
+                   IQuoteItemRepository quoteRepo)
         {
             _notificationRepository = notificationRepo;
             _routineItemRepository = routineRepo;
@@ -34,7 +32,7 @@ namespace RoutineApp
 
             Task.Run(async () =>
             {
-                await _dbInitializer.InitializeAsync();
+                await DatabaseInitializer.InitializeAsync();
 
                 var activeNotifications = await _notificationRepository.GetActiveItemsAsync();
 

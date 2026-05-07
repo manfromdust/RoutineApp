@@ -23,7 +23,6 @@ namespace RoutineApp
             builder.Services.AddSingleton<IRoutineItemRepository, RoutineItemRepository>();
             builder.Services.AddSingleton<IQuoteItemRepository, QuoteItemRepository>();
             builder.Services.AddSingleton<INotificationRepository, NotificationRepository>();
-            builder.Services.AddSingleton<Services.DatabaseInitializer>();
             builder.Services.AddTransient<ViewModels.MainViewModel>();
             builder.Services.AddTransient<Views.MainPage>();
 

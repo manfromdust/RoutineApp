@@ -3,9 +3,9 @@ using RoutineApp.Models;
 
 namespace RoutineApp.Services
 {
-    public class DatabaseInitializer
+    public static class DatabaseInitializer
     {
-        public async Task InitializeAsync()
+        public static async Task InitializeAsync()
         {
             string dbPath = Path.Combine(FileSystem.AppDataDirectory, "routineapp.db");
 
