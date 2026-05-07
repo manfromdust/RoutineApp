@@ -16,7 +16,7 @@ namespace RoutineApp.ViewModels
         private readonly INotificationRepository _notificationRepo;
 
         [ObservableProperty]
-        ObservableCollection<RoutineItemViewModel> items;
+        ObservableCollection<RoutineItemViewModel> items = new();
 
         [ObservableProperty]
         RoutineItemViewModel selectedItem;
@@ -30,7 +30,7 @@ namespace RoutineApp.ViewModels
             _notificationRepo = notificationRepo;
 
             _routineRepo.OnItemAdded += async (s, e) => Items.Add(CreateRoutineItemViewModel(e));
-            _routineRepo.OnItemUpdated += async (s, e) => Task.Run(async () => await LoadDataAsync());
+            _routineRepo.OnItemUpdated += (s, e) => MainThread.BeginInvokeOnMainThread(async () => await LoadDataAsync());
             _routineRepo.OnItemRemoved += async (s, e) => Items.Remove(Items.FirstOrDefault(i => i.Item.Id == e.Id));
 
             Task.Run(async () => await LoadDataAsync());
@@ -39,8 +39,11 @@ namespace RoutineApp.ViewModels
         private async Task LoadDataAsync()
         {
             var routines = await _routineRepo.GetItemsAsync();
-            var routineViewModels = routines.Select(r => CreateRoutineItemViewModel(r)).ToList();
-            Items = new ObservableCollection<RoutineItemViewModel>(routineViewModels);
+            Items.Clear();
+            foreach (var routine in routines)
+            {
+                Items.Add(CreateRoutineItemViewModel(routine));
+            }
         }
 
         private RoutineItemViewModel CreateRoutineItemViewModel(RoutineItem item)
