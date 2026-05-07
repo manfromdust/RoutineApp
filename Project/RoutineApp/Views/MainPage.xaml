@@ -19,9 +19,7 @@
              Grid.Row="1"
              ItemsSource="{Binding Items}"
              SelectionMode="Single"
-             SelectedItem="{Binding SelectedItem}"
-             SelectionChangedCommand="{Binding EditRoutineCommand}"
-             SelectionChangedCommandParameter="{Binding SelectedItem}" >
+             SelectedItem="{Binding SelectedItem}" >
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="vm:RoutineItemViewModel">
 
