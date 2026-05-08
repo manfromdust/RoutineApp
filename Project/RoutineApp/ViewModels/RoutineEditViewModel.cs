@@ -63,17 +63,23 @@ namespace RoutineApp.ViewModels
         [RelayCommand]
         public async Task RegenerateQuotesNotificationAsync()
         {
-            var notifications = await _notificationRepo.GetItemsAsync(RoutineItem.Id);
-            foreach (var notification in notifications)
+            await Task.Run(async () =>
             {
-                var randomQuotes = await _quoteRepo.GetRandomQuotes(RoutineItem.Id, 30); ;
-                await NotificationService.RefreshDailyQuotesAsync(notification.Id,
-                                                                  RoutineItem.Name,
-                                                                  notification.TimeOfDay,
-                                                                  randomQuotes);
-            }
-            var toast = Toast.Make("Notifications successfully set up.", ToastDuration.Long, 14);
-            await toast.Show();
+                var notifications = await _notificationRepo.GetItemsAsync(RoutineItem.Id);
+                foreach (var notification in notifications)
+                {
+                    var randomQuotes = await _quoteRepo.GetRandomQuotes(RoutineItem.Id, 30); ;
+                    await NotificationService.RefreshDailyQuotesAsync(notification.Id,
+                                                                      RoutineItem.Name,
+                                                                      notification.TimeOfDay,
+                                                                      randomQuotes);
+                }
+            });
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                var toast = Toast.Make("Notifications successfully set up.", ToastDuration.Long, 14);
+                await toast.Show();
+            });
         }
 
         [RelayCommand]
