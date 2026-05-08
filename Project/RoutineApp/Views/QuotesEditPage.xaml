@@ -9,23 +9,25 @@
     <ScrollView>
         <VerticalStackLayout Padding="14">
 
-            <HorizontalStackLayout Padding="14">
-                <Entry HorizontalOptions="Start"
-                       Placeholder="Enter new quote"
-                       Text="{Binding NewQuote}" />
-                <Button HorizontalOptions="End"
-                        Text="Add quote"
-                        Command="{Binding AddNewQuoteCommand}" />
-            </HorizontalStackLayout>
+            <Grid ColumnDefinitions="*, Auto" Padding="20">
+                <Entry Placeholder="Enter new quote"
+                       Text="{Binding NewQuote}"
+                       Grid.Column="0" />
+                <Button Text="Add quote"
+                        Command="{Binding AddNewQuoteCommand}"
+                        Grid.Column="1" />
+            </Grid>
 
-            <HorizontalStackLayout Padding="14" >
-                <Button HorizontalOptions="Center"
+            <Grid ColumnDefinitions="Auto,Auto" Padding="14" >
+                <Button Grid.Column="0"
+                        HorizontalOptions="Start"
                         Text="{Binding ActiveButtonText}"
                         Command="{Binding ChangeActiveCommand}" />
-                <Button HorizontalOptions="End"
+                <Button Grid.Column="1"
+                        HorizontalOptions="End"
                         Text="Delete selected quote"
                         Command="{Binding RemoveQuoteCommand}" />
-            </HorizontalStackLayout>
+            </Grid>
 
             <CollectionView ItemsSource="{Binding Quotes}"
                             SelectionMode="Single"

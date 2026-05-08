@@ -11,31 +11,41 @@
 
         <VerticalStackLayout Padding="14" >
 
-            <HorizontalStackLayout>
-                <Label Text="Rename routine" HorizontalOptions="Start" />
+            <Grid ColumnDefinitions="Auto, *, Auto" 
+                  Padding="0,30,0,50" >
+                <Label Grid.Column="0" Text="Rename routine"
+                       VerticalOptions="Center" />
                 <Entry Text="{Binding NewName}"
-                       HorizontalOptions="Start" />
+                       Grid.Column="1" />
                 <Button Text="Rename routine"
                         Command="{Binding SaveCommand}"
-                        HorizontalOptions="End" />
-            </HorizontalStackLayout>
-            
-            <Button Text="Delete routine"
-                    HorizontalOptions="Center"
-                    Padding="14"
-                    Command="{Binding DeleteRoutineCommand}" />
-            <Button Text="Manage quotes"
-                    HorizontalOptions="Center"
-                    Padding="14"
-                    Command="{Binding ViewQuotesCommand}" />
-            <Button Text="Update notifications"
-                    HorizontalOptions="Center"
-                    Padding="14"
-                    Command="{Binding RegenerateQuotesNotificationCommand}" />
-            <Button Text="Manage notifications"
-                    HorizontalOptions="Center"
-                    Padding="14"
-                    Command="{Binding ManageNotificationsCommand}" />
+                        Grid.Column="2" />
+            </Grid>
+
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto"
+                  HorizontalOptions="Center"
+                  Padding="0,20,0, 20" >
+                <Button Text="Delete routine"
+                        Grid.Row="0"
+                        Padding="14"
+                        Margin="5"
+                        Command="{Binding DeleteRoutineCommand}" />
+                <Button Text="Manage quotes"
+                        Grid.Row="1"
+                        Padding="14"
+                        Margin="5"
+                        Command="{Binding ViewQuotesCommand}" />
+                <Button Text="Update notifications"
+                        Grid.Row="2"
+                        Padding="14"
+                        Margin="5"
+                        Command="{Binding RegenerateQuotesNotificationCommand}" />
+                <Button Text="Manage notifications"
+                        Grid.Row="3"
+                        Padding="14"
+                        Margin="5"
+                        Command="{Binding ManageNotificationsCommand}" />
+            </Grid>
 
         </VerticalStackLayout>
 
