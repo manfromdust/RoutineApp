@@ -12,19 +12,22 @@
         <VerticalStackLayout Padding="14" >
 
             <HorizontalStackLayout>
-                <Entry Text="{Binding Item.Name}"
-                       Placeholder="{Binding Item.Name}"
-                       HorizontalOptions="Fill" />
+                <Label Text="Rename routine" HorizontalOptions="Start" />
+                <Entry Text="{Binding NewName}"
+                       HorizontalOptions="Start" />
                 <Button Text="Rename routine"
                         Command="{Binding SaveCommand}"
                         HorizontalOptions="End" />
             </HorizontalStackLayout>
             
             <Button Text="Delete routine"
+                    HorizontalOptions="Center"
                     Command="{Binding DeleteRoutineCommand}" />
             <Button Text="Manage quotes"
+                    HorizontalOptions="Center"
                     Command="{Binding ViewQuotesCommand}" />
             <Button Text="Manage notifications"
+                    HorizontalOptions="Center"
                     Command="{Binding ManageNotificationsCommand}" />
 
         </VerticalStackLayout>
