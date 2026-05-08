@@ -22,9 +22,6 @@ namespace RoutineApp.Repositories
                             INNER JOIN RoutineItem r ON n.RoutineId = r.Id
                             WHERE n.Active = 1 AND r.Active = 1";
             return await _connection.QueryAsync<NotificationRecord>(query);
-            //return await _connection.Table<NotificationRecord>()
-            //    .Where(item => item.Active)
-            //    .ToListAsync();
         }
     }
 }
