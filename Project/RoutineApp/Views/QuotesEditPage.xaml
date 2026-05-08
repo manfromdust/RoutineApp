@@ -8,16 +8,22 @@
              Title="QuotesEditPage">
     <ScrollView>
         <VerticalStackLayout Padding="14">
-            
-            <HorizontalStackLayout>
-                <Button HorizontalOptions="Start"
-                        Text="Add routine"
+
+            <HorizontalStackLayout Padding="14">
+                <Entry HorizontalOptions="Start"
+                       Placeholder="Enter new quote"
+                       Text="{Binding NewQuote}" />
+                <Button HorizontalOptions="End"
+                        Text="Add quote"
                         Command="{Binding AddNewQuoteCommand}" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Padding="14" >
                 <Button HorizontalOptions="Center"
                         Text="{Binding ActiveButtonText}"
                         Command="{Binding ChangeActiveCommand}" />
                 <Button HorizontalOptions="End"
-                        Text="Delete selected routine"
+                        Text="Delete selected quote"
                         Command="{Binding RemoveQuoteCommand}" />
             </HorizontalStackLayout>
 
