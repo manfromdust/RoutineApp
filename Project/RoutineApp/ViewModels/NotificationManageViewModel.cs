@@ -12,18 +12,14 @@ namespace RoutineApp.ViewModels
     [QueryProperty(nameof(RoutineId), "RoutineId")]
     public partial class NotificationManageViewModel : ObservableObject
     {
-        private int _routineId;
         private INotificationRepository _notificationRepo;
         private IQuoteItemRepository _quoteRepo;
 
-        public int RoutineId
-        {
-            get => _routineId;
-            set => SetProperty(ref _routineId, value);
-        }
-
         [ObservableProperty]
         ObservableCollection<NotificationRecordViewModel> notifications = new();
+
+        [ObservableProperty]
+        int routineId;
 
         [ObservableProperty]
         TimeSpan notificationToAdd;
@@ -44,7 +40,10 @@ namespace RoutineApp.ViewModels
 
             var now = DateTime.Now.TimeOfDay;
             NotificationToAdd = new TimeSpan(now.Hours, now.Minutes, 0);
+        }
 
+        partial void OnRoutineIdChanged(int value)
+        {
             MainThread.BeginInvokeOnMainThread(async () => await LoadNotificationsAsync());
         }
 
