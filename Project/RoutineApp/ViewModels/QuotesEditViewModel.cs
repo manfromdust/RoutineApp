@@ -12,16 +12,12 @@ namespace RoutineApp.ViewModels
     public partial class QuotesEditViewModel : ObservableObject
     {
         private IQuoteItemRepository _quoteRepo;
-        private int _routineId;
-
-        public int RoutineId
-        {
-            get => _routineId;
-            set => SetProperty(ref _routineId, value);
-        }
 
         [ObservableProperty]
         ObservableCollection<QuoteItemViewModel> quotes = new();
+
+        [ObservableProperty]
+        int routineId;
 
         [ObservableProperty]
         string newQuote;
@@ -36,7 +32,10 @@ namespace RoutineApp.ViewModels
             _quoteRepo.OnItemAdded += async (s, e) => Quotes.Add(CreateQuoteItemViewModel(e));
             _quoteRepo.OnItemUpdated += async (s, e) => MainThread.BeginInvokeOnMainThread(async () => await LoadQuotesAsync());
             _quoteRepo.OnItemRemoved += async (s, e) => Quotes.Remove(Quotes.FirstOrDefault(i => i.Quote.Id == e.Id));
+        }
 
+        partial void OnRoutineIdChanged(int value)
+        {
             MainThread.BeginInvokeOnMainThread(async () => await LoadQuotesAsync());
         }
 
