@@ -18,14 +18,20 @@
                                 Time="{Binding NotificationToAdd}" />
                 </Border>
             
-            <HorizontalStackLayout Padding="14" >
-                <Button HorizontalOptions="Start" Text="Add new notification"
+            <Grid ColumnDefinitions="Auto,Auto,Auto" >
+                <Button HorizontalOptions="Start" 
+                        Grid.Column="0"
+                        Text="Add new"
                         Command="{Binding AddNotificationCommand}" />
-                <Button HorizontalOptions="Center" Text="{Binding ActiveButtonText}"
+                <Button HorizontalOptions="Center"
+                        Grid.Column="1"
+                        Text="{Binding ActiveButtonText}"
                         Command="{Binding ChangeActiveCommand}" />
-                <Button HorizontalOptions="End" Text="Delete selected notification"
+                <Button HorizontalOptions="End"
+                        Grid.Column="2"
+                        Text="Delete selected"
                         Command="{Binding RemoveNotificationCommand}" />
-            </HorizontalStackLayout>
+            </Grid>
 
             <CollectionView ItemsSource="{Binding Notifications}"
                             SelectionMode="Single"
