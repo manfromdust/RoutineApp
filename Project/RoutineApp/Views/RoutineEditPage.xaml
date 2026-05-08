@@ -22,12 +22,19 @@
             
             <Button Text="Delete routine"
                     HorizontalOptions="Center"
+                    Padding="14"
                     Command="{Binding DeleteRoutineCommand}" />
             <Button Text="Manage quotes"
                     HorizontalOptions="Center"
+                    Padding="14"
                     Command="{Binding ViewQuotesCommand}" />
+            <Button Text="Update notifications"
+                    HorizontalOptions="Center"
+                    Padding="14"
+                    Command="{Binding RegenerateQuotesNotificationCommand}" />
             <Button Text="Manage notifications"
                     HorizontalOptions="Center"
+                    Padding="14"
                     Command="{Binding ManageNotificationsCommand}" />
 
         </VerticalStackLayout>
