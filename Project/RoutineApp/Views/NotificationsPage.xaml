@@ -17,7 +17,8 @@
                                 HorizontalOptions="Center"
                                 Time="{Binding NotificationToAdd}" />
                 </Border>
-            <HorizontalStackLayout>
+            
+            <HorizontalStackLayout Padding="14" >
                 <Button HorizontalOptions="Start" Text="Add new notification"
                         Command="{Binding AddNotificationCommand}" />
                 <Button HorizontalOptions="Center" Text="{Binding ActiveButtonText}"
