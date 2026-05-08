@@ -75,15 +75,15 @@ namespace RoutineApp.ViewModels
             }
             if (SelectedNotification.Notification.Active)
             {
-                NotificationService.CancelNotifications(SelectedNotification.Notification.Id);
+                Task.Run(() => NotificationService.CancelNotifications(SelectedNotification.Notification.Id));
             }
             else
             {
                 var randomQuotes = await _quoteRepo.GetRandomQuotes(RoutineId, 30);
-                await NotificationService.ScheduleDailyQuotesAsync(SelectedNotification.Notification.Id,
+                Task.Run(async () => await NotificationService.ScheduleDailyQuotesAsync(SelectedNotification.Notification.Id,
                                                                    "Your Routine",
                                                                    SelectedNotification.Notification.TimeOfDay,
-                                                                   randomQuotes);
+                                                                   randomQuotes));
             }
             SelectedNotification.Notification.Active = !SelectedNotification.Notification.Active;
             await _notificationRepo.UpdateItemAsync(SelectedNotification.Notification);
