@@ -58,9 +58,11 @@ namespace RoutineApp.ViewModels
             {
                 { "RoutineId", RoutineItem.Id }
             });
+        }
 
-            var toast = Toast.Make("Notifications adjusted to updated quotes list.", ToastDuration.Long, 14);
-            await toast.Show();
+        [RelayCommand]
+        public async Task RegenerateQuotesNotificationAsync()
+        {
             var notifications = await _notificationRepo.GetItemsAsync(RoutineItem.Id);
             foreach (var notification in notifications)
             {
@@ -70,6 +72,8 @@ namespace RoutineApp.ViewModels
                                                                   notification.TimeOfDay,
                                                                   randomQuotes);
             }
+            var toast = Toast.Make("Notifications successfully set up.", ToastDuration.Long, 14);
+            await toast.Show();
         }
 
         [RelayCommand]
