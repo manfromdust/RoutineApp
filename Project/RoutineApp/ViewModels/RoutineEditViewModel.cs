@@ -68,7 +68,7 @@ namespace RoutineApp.ViewModels
                 var notifications = await _notificationRepo.GetItemsAsync(RoutineItem.Id);
                 foreach (var notification in notifications)
                 {
-                    var randomQuotes = await _quoteRepo.GetRandomQuotes(RoutineItem.Id, 30); ;
+                    var randomQuotes = await _quoteRepo.GetRandomQuotes(RoutineItem.Id, NotificationService.DAYS_TO_SCHEDULE); ;
                     await NotificationService.RefreshDailyQuotesAsync(notification.Id,
                                                                       RoutineItem.Name,
                                                                       notification.TimeOfDay,

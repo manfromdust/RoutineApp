@@ -79,7 +79,7 @@ namespace RoutineApp.ViewModels
             }
             else
             {
-                var randomQuotes = await _quoteRepo.GetRandomQuotes(RoutineId, 30);
+                var randomQuotes = await _quoteRepo.GetRandomQuotes(RoutineId, NotificationService.DAYS_TO_SCHEDULE);
                 Task.Run(async () => await NotificationService.ScheduleDailyQuotesAsync(SelectedNotification.Notification.Id,
                                                                    "Your Routine",
                                                                    SelectedNotification.Notification.TimeOfDay,
