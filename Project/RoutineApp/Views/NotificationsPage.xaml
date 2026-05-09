@@ -18,7 +18,9 @@
                                 Time="{Binding NotificationToAdd}" />
                 </Border>
             
-            <Grid ColumnDefinitions="Auto,Auto,Auto" >
+            <Grid ColumnDefinitions="Auto,Auto,Auto"
+                  HorizontalOptions="Center"
+                  ColumnSpacing="4" >
                 <Button HorizontalOptions="Start" 
                         Grid.Column="0"
                         Text="Add new"

@@ -35,17 +35,16 @@
                         Padding="14"
                         Margin="5"
                         Command="{Binding ViewQuotesCommand}" />
-                <Button Text="Refresh notifications"
-                        Grid.Row="2"
-                        Padding="14"
-                        Margin="5"
-                        Command="{Binding RegenerateQuotesNotificationCommand}" />
-
                 <Button Text="Manage notifications"
                         Grid.Row="3"
                         Padding="14"
                         Margin="5"
                         Command="{Binding ManageNotificationsCommand}" />
+                <Button Text="Refresh notifications"
+                        Grid.Row="2"
+                        Padding="14"
+                        Margin="5"
+                        Command="{Binding RegenerateQuotesNotificationCommand}" />
             </Grid>
 
         </VerticalStackLayout>
