@@ -11,6 +11,14 @@
     <Color x:Key="Secondary">#DFD8F7</Color>
     <Color x:Key="SecondaryDarkText">#9880e5</Color>
     <Color x:Key="Tertiary">#2B0B98</Color>
+    
+    <!-- Own colors -->
+    <Color x:Key="BrandBlue">#007AFF</Color>
+    <Color x:Key="BrandBlueDark">#0A5FC4</Color>
+    <Color x:Key="AppBackgroundLight">#F2F2F7</Color>
+    <Color x:Key="AppBackgroundDark">#1C1C1E</Color>
+    <Color x:Key="TextLight">#000000</Color>
+    <Color x:Key="TextDark">#FFFFFF</Color>
 
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
