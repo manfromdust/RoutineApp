@@ -79,17 +79,23 @@ namespace RoutineApp.ViewModels
             {
                 foreach (var notification in notifications)
                 {
-                    NotificationService.CancelNotifications(notification.Id);
+                    if (notification.Active)
+                    {
+                        await NotificationService.CancelNotifications(notification.Id);
+                    }
                 }
             } else
             {
                 foreach (var notification in notifications)
                 {
-                    var randomQuotes = await _quoteRepo.GetRandomQuotes(SelectedItem.Item.Id, 30);
-                    await NotificationService.ScheduleDailyQuotesAsync(notification.Id,
-                                                                       SelectedItem.Item.Name,
-                                                                       notification.TimeOfDay,
-                                                                       randomQuotes);
+                    if (notification.Active)
+                    {
+                        var randomQuotes = await _quoteRepo.GetRandomQuotes(SelectedItem.Item.Id, 30);
+                        await NotificationService.ScheduleDailyQuotesAsync(notification.Id,
+                                                                           SelectedItem.Item.Name,
+                                                                           notification.TimeOfDay,
+                                                                           randomQuotes);
+                    }
                 }
             }
             SelectedItem.Item.Active = !SelectedItem.Item.Active;
