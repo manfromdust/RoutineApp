@@ -101,6 +101,7 @@ namespace RoutineApp.ViewModels
             SelectedItem.Item.Active = !SelectedItem.Item.Active;
             await _routineRepo.UpdateItemAsync(SelectedItem.Item);
             OnPropertyChanged(nameof(ActiveButtonText));
+            await Toast.Make($"{SelectedItem.Item.Name} is now {(SelectedItem.Item.Active ? "active" : "inactive")}.", ToastDuration.Short, 14).Show();
         }
 
         [RelayCommand]
