@@ -18,7 +18,7 @@ namespace RoutineApp.Services
         }
 
         public static async Task ScheduleDailyQuotesAsync(int notificationId, string routineName,
-                                                   TimeSpan timeOfDay, List<string> randomQuotes)
+                                                          TimeSpan timeOfDay, List<string> randomQuotes)
         {
             if (randomQuotes == null || randomQuotes.Count == 0) return;
 
@@ -47,7 +47,7 @@ namespace RoutineApp.Services
             }
         }
 
-        public static void CancelNotifications(int notificationId)
+        public static async Task CancelNotifications(int notificationId)
         {
             int baseId = notificationId * 100;
 
@@ -59,9 +59,9 @@ namespace RoutineApp.Services
         }
 
         public static async Task RefreshDailyQuotesAsync(int notificationId, string routineName,
-                                                  TimeSpan timeOfDay, List<string> randomQuotes)
+                                                         TimeSpan timeOfDay, List<string> randomQuotes)
         {
-            CancelNotifications(notificationId);
+            await CancelNotifications(notificationId);
             await ScheduleDailyQuotesAsync(notificationId, routineName, timeOfDay, randomQuotes);
         }
     }

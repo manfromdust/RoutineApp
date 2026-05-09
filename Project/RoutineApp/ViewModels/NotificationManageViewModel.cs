@@ -35,8 +35,14 @@ namespace RoutineApp.ViewModels
             _quoteRepo = quoteItemRepository;
 
             _notificationRepo.OnItemAdded += async (s, e) => Notifications.Add(CreateNotificationRecordViewModel(e));
+            _notificationRepo.OnItemAdded += async (s, e) => NotificationService.ScheduleDailyQuotesAsync(e.Id,
+                                                                                                          "Routine",
+                                                                                                          e.TimeOfDay,
+                                                                                                          _quoteRepo.GetRandomQuotes(RoutineId,
+                                                                                                          NotificationService.DAYS_TO_SCHEDULE).Result);
             _notificationRepo.OnItemUpdated += async (s, e) => MainThread.BeginInvokeOnMainThread(async () => await LoadNotificationsAsync());
             _notificationRepo.OnItemRemoved += async (s, e) => Notifications.Remove(Notifications.FirstOrDefault(i => i.Notification.Id == e.Id));
+            _notificationRepo.OnItemRemoved += async (s, e) => NotificationService.CancelNotifications(e.Id);
 
             var now = DateTime.Now.TimeOfDay;
             NotificationToAdd = new TimeSpan(now.Hours, now.Minutes, 0);
