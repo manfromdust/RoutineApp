@@ -40,6 +40,7 @@ namespace RoutineApp.ViewModels
                                                                                                           e.TimeOfDay,
                                                                                                           await _quoteRepo.GetRandomQuotes(RoutineId,
                                                                                                           NotificationService.DAYS_TO_SCHEDULE));
+            _notificationRepo.OnItemAdded += async (s, e) => await Toast.Make("Notification added.", ToastDuration.Short, 14).Show();
             _notificationRepo.OnItemUpdated += async (s, e) => MainThread.BeginInvokeOnMainThread(async () => await LoadNotificationsAsync());
             _notificationRepo.OnItemRemoved += async (s, e) => Notifications.Remove(Notifications.FirstOrDefault(i => i.Notification.Id == e.Id));
             _notificationRepo.OnItemRemoved += async (s, e) => await NotificationService.CancelNotifications(e.Id);
@@ -106,8 +107,6 @@ namespace RoutineApp.ViewModels
                 TimeOfDay = NotificationToAdd,
             };
             await _notificationRepo.AddItemAsync(newNotification);
-            var toast = Toast.Make("Notification added", ToastDuration.Short, 14);
-            await toast.Show();
         }
 
         [RelayCommand]

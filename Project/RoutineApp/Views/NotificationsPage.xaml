@@ -11,17 +11,17 @@
 
             <Label Text="Set notification time" FontSize="20"
                    HorizontalOptions="Start" FontAttributes="Bold" />
-                <Border StrokeShape="RoundRectangle 8" Padding="10" >
-                    <TimePicker Format="HH:mm"
+            <Border StrokeShape="RoundRectangle 8" Padding="10" >
+                <TimePicker Format="HH:mm"
                                 FontSize="24"
                                 HorizontalOptions="Center"
                                 Time="{Binding NotificationToAdd}" />
-                </Border>
-            
+            </Border>
+
             <Grid ColumnDefinitions="Auto,Auto,Auto"
                   HorizontalOptions="Center"
                   ColumnSpacing="4" >
-                <Button HorizontalOptions="Start" 
+                <Button HorizontalOptions="Start"
                         Grid.Column="0"
                         Text="Add new"
                         Command="{Binding AddNotificationCommand}" />
