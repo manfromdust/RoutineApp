@@ -34,9 +34,31 @@
                             SelectedItem="{Binding SelectedQuote}" >
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="vm:QuoteItemViewModel" >
-                        <Grid ColumnDefinitions="Auto, *, Auto" >
+                        <Grid ColumnDefinitions="Auto, *, Auto" Padding="10"
+                              ColumnSpacing="5" >
+
+                            <BoxView Grid.Column="0"
+                                     WidthRequest="27"
+                                     HeightRequest="27"
+                                     CornerRadius="4"
+                                     VerticalOptions="Center">
+                                <BoxView.Triggers>
+                                    <DataTrigger TargetType="BoxView"
+                                                 Binding="{Binding Quote.Active}"
+                                                 Value="True">
+                                        <Setter Property="Color" Value="Green" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="BoxView"
+                                                 Binding="{Binding Quote.Active}"
+                                                 Value="False">
+                                        <Setter Property="Color" Value="Red" />
+                                    </DataTrigger>
+                                </BoxView.Triggers>
+                            </BoxView>
+
                             <Label Text="{Binding Quote.Quote}" FontSize="Medium"
                                    Grid.Column="1" HorizontalOptions="Start" />
+                            
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

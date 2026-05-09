@@ -27,9 +27,33 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="vm:RoutineItemViewModel">
 
-                        <Grid Padding="10" ColumnDefinitions="Auto, *, Auto">
+                        <Grid Padding="10"
+                              ColumnDefinitions="Auto, *, Auto"
+                              ColumnSpacing="5" >
+                            
+                            <BoxView Grid.Column="0"
+                                     WidthRequest="27"
+                                     HeightRequest="27"
+                                     CornerRadius="4"
+                                     VerticalOptions="Center">
+                                <BoxView.Triggers>
+                                    <DataTrigger TargetType="BoxView"
+                                                 Binding="{Binding Item.Active}"
+                                                 Value="True">
+                                        <Setter Property="Color" Value="Green" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="BoxView"
+                                                 Binding="{Binding Item.Active}"
+                                                 Value="False">
+                                        <Setter Property="Color" Value="Red" />
+                                    </DataTrigger>
+                                </BoxView.Triggers>
+                            </BoxView>
+                            
                             <Label Text="{Binding Item.Name}" FontSize="Medium"
-                                   Grid.Column="0" VerticalOptions="Center" />
+                                   Grid.Column="1" VerticalOptions="Center"
+                                   HorizontalOptions="Start" />
+                            
                         </Grid>
 
                     </DataTemplate>
