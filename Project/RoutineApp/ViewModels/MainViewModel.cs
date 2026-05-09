@@ -42,6 +42,7 @@ namespace RoutineApp.ViewModels
 
         private async Task LoadDataAsync()
         {
+            await DatabaseInitializer.WaitForReadyAsync();
             var routines = await _routineRepo.GetItemsAsync();
             MainThread.BeginInvokeOnMainThread(() =>
             {

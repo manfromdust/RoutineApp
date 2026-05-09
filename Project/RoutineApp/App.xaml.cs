@@ -32,7 +32,7 @@ namespace RoutineApp
 
             Task.Run(async () =>
             {
-                await DatabaseInitializer.InitializeAsync();
+                await DatabaseInitializer.WaitForReadyAsync();
 
                 var activeNotifications = await _notificationRepository.GetActiveItemsAsync();
 

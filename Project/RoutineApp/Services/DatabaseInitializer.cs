@@ -5,7 +5,11 @@ namespace RoutineApp.Services
 {
     public static class DatabaseInitializer
     {
-        public static async Task InitializeAsync()
+        private static readonly Task _initTask = Task.Run(InitializeAsync);
+
+        public static Task WaitForReadyAsync() => _initTask;
+
+        private static async Task InitializeAsync()
         {
             string dbPath = Path.Combine(FileSystem.AppDataDirectory, "routineapp.db");
 

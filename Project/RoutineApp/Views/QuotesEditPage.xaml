@@ -56,7 +56,7 @@
                                 </BoxView.Triggers>
                             </BoxView>
 
-                            <Label Text="{Binding Quote.Quote}" FontSize="Medium"
+                            <Label Text="{Binding Quote.Quote}" FontSize="Small"
                                    Grid.Column="1" HorizontalOptions="Start" />
                             
                         </Grid>

@@ -33,6 +33,8 @@ namespace RoutineApp
             builder.Services.AddTransient<Views.QuotesEditPage>();
             builder.Services.AddTransient<ViewModels.RoutineAddViewModel>();
             builder.Services.AddTransient<Views.RoutineAddPage>();
+            builder.Services.AddSingleton<ViewModels.SettingsViewModel>();
+            builder.Services.AddSingleton<Views.SettingsPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();
