@@ -102,7 +102,7 @@ namespace RoutineApp.ViewModels
         {
             if (SelectedItem == null)
             {
-                var toast = Toast.Make("Please select a routine to edit.", ToastDuration.Short, 14);
+                var toast = Toast.Make("Please select a routine to manage.", ToastDuration.Short, 14);
                 await toast.Show();
                 return;
             }
