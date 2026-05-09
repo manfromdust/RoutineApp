@@ -26,8 +26,7 @@
                 <Button HorizontalOptions="Center"
                         Grid.Column="1"
                         Text="{Binding ActiveButtonText}"
-                        Command="{Binding ChangeActiveCommand}"
-                        IsEnabled="{Binding ChangeActiveCommand.IsRunning, Converter={StaticResource InverseBooleanConverter}}" />
+                        Command="{Binding ChangeActiveCommand}" />
                 <Button HorizontalOptions="End"
                         Grid.Column="2"
                         Text="Delete selected"
