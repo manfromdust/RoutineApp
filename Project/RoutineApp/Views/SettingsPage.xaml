@@ -6,11 +6,29 @@
              x:DataType="vm:SettingsViewModel"
              Title="Settings">
     <ScrollView>
-        <VerticalStackLayout>
+        <VerticalStackLayout Padding="15" Spacing="14">
             <Button Text="Clear all data"
                     Command="{Binding ClearDataCommand}"
                     HorizontalOptions="Center"
                     Margin="14" />
+
+            <Border Padding="10"
+                    StrokeShape="RoundRectangle 8" >
+                <Grid ColumnDefinitions="Auto, *"
+                      ColumnSpacing="7" >
+                    
+                    <Label Text="App theme:"
+                           FontSize="Medium"
+                           VerticalOptions="Center"
+                           Grid.Column="0"/>
+                    <Picker ItemsSource="{Binding AppearanceOptions}"
+                            SelectedItem="{Binding SelectedAppearance}"
+                            Title="Choose a theme"
+                            Grid.Column="1" />
+                    
+                </Grid>
+
+            </Border>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

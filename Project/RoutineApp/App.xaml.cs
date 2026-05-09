@@ -1,5 +1,6 @@
 ﻿using RoutineApp.Repositories;
 using RoutineApp.Services;
+using RoutineApp.ViewModels;
 
 namespace RoutineApp
 {
@@ -17,6 +18,8 @@ namespace RoutineApp
             _routineItemRepository = routineRepo;
             _quoteItemRepository = quoteRepo;
             InitializeComponent();
+            string savedTheme = Preferences.Get("AppTheme", "System Default");
+            SettingsViewModel.ChangeAppThemeColor(savedTheme);
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
