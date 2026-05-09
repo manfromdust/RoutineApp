@@ -40,8 +40,10 @@
                             SelectedItem="{Binding SelectedNotification}" >
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="vm:NotificationRecordViewModel">
-                        <Grid Padding="10" ColumnDefinitions="Auto, *, Auto"
-                              ColumnSpacing="5" >
+                        <Grid Padding="10"
+                              ColumnDefinitions="Auto, *, Auto"
+                              ColumnSpacing="5"
+                              Style="{StaticResource SelectableListItemStyle}" >
                             
                             <BoxView Grid.Column="0"
                                      WidthRequest="27"

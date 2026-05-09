@@ -34,8 +34,10 @@
                             SelectedItem="{Binding SelectedQuote}" >
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="vm:QuoteItemViewModel" >
-                        <Grid ColumnDefinitions="Auto, *, Auto" Padding="10"
-                              ColumnSpacing="5" >
+                        <Grid ColumnDefinitions="Auto, *, Auto"
+                              Padding="10"
+                              ColumnSpacing="5"
+                              Style="{StaticResource SelectableListItemStyle}" >
 
                             <BoxView Grid.Column="0"
                                      WidthRequest="27"

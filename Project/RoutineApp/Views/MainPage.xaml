@@ -7,7 +7,7 @@
              Title="Main Page">
     <ScrollView>
         <VerticalStackLayout Padding="14" >
-            <HorizontalStackLayout>
+            <HorizontalStackLayout Padding="0,0,0,10">
                 <Button HorizontalOptions="Start"
                         Text="Add routine"
                         Command="{Binding AddRoutineCommand}" />
@@ -29,7 +29,8 @@
 
                         <Grid Padding="10"
                               ColumnDefinitions="Auto, *, Auto"
-                              ColumnSpacing="5" >
+                              ColumnSpacing="5"
+                              Style="{StaticResource SelectableListItemStyle}" >
                             
                             <BoxView Grid.Column="0"
                                      WidthRequest="27"
