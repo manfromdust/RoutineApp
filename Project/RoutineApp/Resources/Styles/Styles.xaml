@@ -66,6 +66,11 @@
         </Setter>
     </Style>
 
+    <Style TargetType="ContentPage">
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource AppBackgroundLight}, Dark={StaticResource AppBackgroundDark}}" />
+    </Style>
+
     <Style TargetType="DatePicker">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
@@ -184,11 +189,6 @@
         <Setter Property="FontSize" Value="24" />
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
-    </Style>
-
-    <Style TargetType="ContentPage">
-        <Setter Property="BackgroundColor"
-                Value="{AppThemeBinding Light={StaticResource AppBackgroundLight}, Dark={StaticResource AppBackgroundDark}}" />
     </Style>
 
     <Style TargetType="Picker">
