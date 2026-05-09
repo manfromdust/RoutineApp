@@ -81,9 +81,9 @@ namespace RoutineApp.ViewModels
             {
                 var randomQuotes = await _quoteRepo.GetRandomQuotes(RoutineId, NotificationService.DAYS_TO_SCHEDULE);
                 Task.Run(async () => await NotificationService.ScheduleDailyQuotesAsync(SelectedNotification.Notification.Id,
-                                                                   "Your Routine",
-                                                                   SelectedNotification.Notification.TimeOfDay,
-                                                                   randomQuotes));
+                                                                                        "Routine",
+                                                                                        SelectedNotification.Notification.TimeOfDay,
+                                                                                        randomQuotes));
             }
             SelectedNotification.Notification.Active = !SelectedNotification.Notification.Active;
             await _notificationRepo.UpdateItemAsync(SelectedNotification.Notification);
