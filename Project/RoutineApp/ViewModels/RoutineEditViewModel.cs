@@ -104,7 +104,7 @@ namespace RoutineApp.ViewModels
                 var notifications = await _notificationRepo.GetItemsAsync(RoutineItem.Id);
                 foreach (var notification in notifications)
                 {
-                    NotificationService.CancelNotifications(notification.Id);
+                    await NotificationService.CancelNotifications(notification.Id);
                     await _notificationRepo.RemoveItemAsync(notification);
                 }
                 await _routineRepo.RemoveItemAsync(RoutineItem);
