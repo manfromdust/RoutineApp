@@ -6,7 +6,7 @@ namespace RoutineApp.Services
 {
     public static class NotificationService
     {
-        public const int DAYS_TO_SCHEDULE = 14;
+        public const int DAYS_TO_SCHEDULE = 7;
         public static async Task<bool> CheckAndRequestPermissionAsync()
         {
             var isEnabled = await LocalNotificationCenter.Current.AreNotificationsEnabled();
